@@ -1,0 +1,3 @@
+E:/TUSUR/3 семак/СД/VCS/lab2/build/CMakeFiles/lab2.dir
+E:/TUSUR/3 семак/СД/VCS/lab2/build/CMakeFiles/edit_cache.dir
+E:/TUSUR/3 семак/СД/VCS/lab2/build/CMakeFiles/rebuild_cache.dir

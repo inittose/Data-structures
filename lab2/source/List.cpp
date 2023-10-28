@@ -347,7 +347,7 @@ List& List::Sort()
 /// <summary>
 /// �������� �����
 /// </summary>
-/// <param name="value"> - ��������</param>
+/// <param name="value"> - ���</param>
 /// <returns>������</returns>
 int List::LinearSearch(const int& value)
 {
