@@ -53,61 +53,54 @@ char MenuMessage(const List& list)
 /// <param name="mode"> - режим работы</param>
 void ModeControl(List& list, const char& mode)
 {
-	static int index;
-	static int value;
-	static int searchingIndex;
+	static int firstValue;
+	static int secondValue;
+	static int valuesInList;
 	switch (mode)
 	{
 	case '1':
 		cout << "Enter value of adding element: ";
-		ValidInput(value);
-		list.InsertAtEnd(value);
+		ValidInput(firstValue);
+		list.InsertAtEnd(firstValue);
 		break;
 	case '2':
 		cout << "Enter index of deleting element: ";
-		ValidInput(index);
-		list.DeleteElement(index);
+		ValidInput(firstValue);
+		list.DeleteElement(firstValue);
 		break;
 	case '3':
 		cout << "Enter value of element inserting into begining: ";
-		ValidInput(value);
-		list.InsertAtBeginning(value);
+		ValidInput(firstValue);
+		list.InsertAtBeginning(firstValue);
 		break;
 	case '4':
 		cout << "Enter value of element inserting into end: ";
-		ValidInput(value);
-		list.InsertAtEnd(value);
+		ValidInput(firstValue);
+		list.InsertAtEnd(firstValue);
 		break;
 	case '5':
 		cout << "Enter value of element: ";
-		ValidInput(value);
+		ValidInput(firstValue);
 		cout << "Enter the index after which to insert the element: ";
-		ValidInput(index);
-		list.InsertAfter(value, index);
+		ValidInput(secondValue);
+		list.InsertAfter(firstValue, secondValue);
 		break;
 	case '6':
 		cout << "Enter value of element: ";
-		ValidInput(value);
+		ValidInput(firstValue);
 		cout << "Enter the index before which to insert the element: ";
-		ValidInput(index);
-		list.InsertBefore(value, index);
+		ValidInput(secondValue);
+		list.InsertBefore(firstValue, secondValue);
 		break;
 	case '7':
 		cout << "Array sorted" << endl;
-		//list.Sort();
+		list.Sort();
 		break;
 	case '8':
 		cout << "Enter value of element needed to linear search: ";
-		ValidInput(value);
-		//searchingIndex = list.LinearSearch(value);
-		if (searchingIndex == -1)
-		{
-			cout << "No elements found" << endl;
-		}
-		else
-		{
-			cout << "Index of searching element: " << searchingIndex + 1 << endl;
-		}
+		ValidInput(firstValue);
+		valuesInList = list.LinearSearch(firstValue);
+		cout << "In list " << valuesInList << " occurrences" << endl;
 		break;
 	default:
 		break;

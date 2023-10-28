@@ -288,56 +288,19 @@ List& List::Swap(ListItem* fItem, ListItem* sItem)
 	return *this;
 }
 
-/*
-
 /// <summary>
-/// Обмен элементами
-/// </summary>
-/// <param name="fIndex"> - </param>
-/// <param name="sIndex"> - </param>
-/// <returns>Этот же объект</returns>
-List& List::Swap(const int& fIndex, const int& sIndex)
-{
-	if (fIndex < 0 || fIndex >= _length || sIndex < 0 || sIndex >= _length)
-	{
-		cout << "SWAP_EXCEPTION: index out of range\n";
-		return *this;
-	}
-	ListItem* fItem = _head;
-	ListItem* sItem = _head;
-
-	for (int i = 0; i < fIndex; i++)
-	{
-		fItem = fItem->_next;
-	}
-
-	for (int i = 0; i < sIndex; i++)
-	{
-		sItem = sItem->_next;
-	}
-
-	return Swap(fItem, sItem);
-}
-
-/// <summary>
-/// Сортировка
+/// Сортировка списка
 /// </summary>
 /// <returns>Этот же объект</returns>
 List& List::Sort()
 {
-	if (!_head)
+	for (ListItem * i = _head; i; i = i->_next)
 	{
-		cout << "There are no elements!\n";
-		return *this;
-	}
-
-	for (int i = 0; i < _length; i++)
-	{
-		for (int j = i; j < _length; j++)
+		for (ListItem * j = i; j; j = j->_next)
 		{
-			if ((*this)[i]->_data > (*this)[j]->_data)
+			if (i->_data > j->_data)
 			{
-				Swap((*this)[i], (*this)[j]);
+				Swap(j, i);
 			}
 		}
 	}
@@ -345,23 +308,26 @@ List& List::Sort()
 }
 
 /// <summary>
-/// �������� �����
+/// Линейный поиск
 /// </summary>
-/// <param name="value"> - ���</param>
-/// <returns>������</returns>
+/// <param name="value"> - значение</param>
+/// <returns>Количество вхождений элемента в список</returns>
 int List::LinearSearch(const int& value)
 {
-	for (int i = 0; i < _length; i++)
+	int counter = 0;
+
+	ListItem* temp = _head;
+	while (temp)
 	{
-		if ((*this)[i]->_data == value)
+		if (temp->_data = value)
 		{
-			return i;
+			counter++;
 		}
+		temp = temp->_next;
 	}
 
-	return -1;
+	return counter;
 }
-*/
 
 /// <summary>
 /// Перегрузка оператора потокового вывода
