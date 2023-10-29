@@ -1,13 +1,26 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
-project(lab2)
+project(lab2 LANGUAGES CXX)
 
-set(SOURCE_EXE main.cpp)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(source)
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-add_executable(lab2 ${SOURCE_EXE})
+# defines targets and sources
+add_subdirectory(src)
 
-add_subdirectory(source)
+# contains an "external" library we will link to
+#add_subdirectory(external)
 
-target_link_libraries(lab2 source)	
+# enable testing and define tests
+#enable_testing()
+#add_subdirectory(tests)
+

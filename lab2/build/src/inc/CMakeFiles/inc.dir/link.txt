@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libinc.a CMakeFiles/inc.dir/List.cpp.o CMakeFiles/inc.dir/ListItem.cpp.o CMakeFiles/inc.dir/Menu.cpp.o
+/usr/bin/ranlib ../../lib/libinc.a

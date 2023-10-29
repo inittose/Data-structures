@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include <stdlib.h>
 
 using std::cout;
 using std::cin;
@@ -12,19 +13,13 @@ using std::endl;
 template <typename T>
 void ValidInput(T& variable)
 {
-	while (true)
+	cin >> variable;
+	while (cin.fail())
 	{
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "Please enter correct value: ";
 		cin >> variable;
-		if (cin.fail())
-		{
-			cin.clear();
-			while (cin.get() != '\n');
-			cout << "Please enter correct value: ";
-		}
-		else
-		{
-			return;
-		}
 	}
 }
 
@@ -34,7 +29,7 @@ void ValidInput(T& variable)
 /// <param name="list"> - список</param>
 /// <returns>Режим работы
 /// </returns>
-char MenuMessage(const List& list)
+char MenuMessage()
 {
 	char result;
 	cout << "\nChoose one of activity: \n1 - Add element \n2 - Delete element \n3 - Insert element into begining \n"
@@ -105,27 +100,6 @@ void ModeControl(List& list, const char& mode)
 	default:
 		break;
 	}
-	UpdateList(list);
-}
-
-/// <summary>
-/// Визуально обновить список
-/// </summary>
-/// <param name="list"> - список</param>
-void UpdateList(const List& list)
-{
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD coord = { 0, 0 };
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(hStdOut, &csbi);
-
-	SetConsoleCursorPosition(hStdOut, COORD(coord));
-	cout << "                                            \n                                             ";
-
-	SetConsoleCursorPosition(hStdOut, COORD(coord));
-	cout << list;
-
-	SetConsoleCursorPosition(hStdOut, csbi.dwCursorPosition);      
 }
 
 /// <summary>
@@ -133,17 +107,5 @@ void UpdateList(const List& list)
 /// </summary>
 void ClearMenu()
 {
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD coord = {0, 3};
-
-	SetConsoleCursorPosition(hStdOut, coord);
-
-	const char* space = "                                                           ";
-
-	for (int i = 0; i < 20; i++)
-	{
-		cout << space << endl;
-	}
-
-	SetConsoleCursorPosition(hStdOut, coord);
+	system("clear");
 }

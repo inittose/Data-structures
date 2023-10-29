@@ -1,8 +1,8 @@
 #include <iostream>
 #include <chrono>
 #include <cmath>
-#include "source/List.h"
-#include "source/Menu.h"
+#include "inc/List.h"
+#include "inc/Menu.h"
 #include "fstream"
 
 using namespace std;
@@ -20,10 +20,10 @@ void MainProgram()
 {
 	List list;
 	char mode = '\0';
-	cout << list;
 	while (mode != 'q')
 	{
-		mode = MenuMessage(list);
+		cout << list;
+		mode = MenuMessage();
 		ModeControl(list, mode);
 	}
 }
