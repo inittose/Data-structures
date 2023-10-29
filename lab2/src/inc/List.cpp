@@ -296,11 +296,12 @@ List& List::Sort()
 {
 	for (ListItem * i = _head; i; i = i->_next)
 	{
-		for (ListItem * j = i; j; j = j->_next)
+		for (ListItem * j = i->_next; j; j = j->_next)
 		{
 			if (i->_data > j->_data)
 			{
-				Swap(j, i);
+				Swap(i, j);
+				i = j;
 			}
 		}
 	}
@@ -319,7 +320,7 @@ int List::LinearSearch(const int& value)
 	ListItem* temp = _head;
 	while (temp)
 	{
-		if (temp->_data = value)
+		if (temp->_data == value)
 		{
 			counter++;
 		}
