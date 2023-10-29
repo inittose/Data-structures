@@ -1,8 +1,0 @@
-/home/inittose/Data-structures/lab2/build/CMakeFiles/edit_cache.dir
-/home/inittose/Data-structures/lab2/build/CMakeFiles/rebuild_cache.dir
-/home/inittose/Data-structures/lab2/build/src/CMakeFiles/automata.dir
-/home/inittose/Data-structures/lab2/build/src/CMakeFiles/edit_cache.dir
-/home/inittose/Data-structures/lab2/build/src/CMakeFiles/rebuild_cache.dir
-/home/inittose/Data-structures/lab2/build/src/inc/CMakeFiles/inc.dir
-/home/inittose/Data-structures/lab2/build/src/inc/CMakeFiles/edit_cache.dir
-/home/inittose/Data-structures/lab2/build/src/inc/CMakeFiles/rebuild_cache.dir
