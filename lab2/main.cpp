@@ -1,8 +1,8 @@
 #include <iostream>
 #include <chrono>
 #include <cmath>
-#include "List.h"
-#include "Menu.h"
+#include "source/List.h"
+#include "source/Menu.h"
 #include "fstream"
 
 using namespace std;
@@ -49,8 +49,8 @@ void ResearchTime()
 		list.DeleteElement(i);
 		chrono::steady_clock::time_point end = chrono::steady_clock::now();
 
-		//std::cout << "Delete index = " << i << "\tTime difference = "
-			//<< std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+		// std::cout << "Delete index = " << i << "\tTime difference = "
+		//<< std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
 		delout << i << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << endl;
 
 		begin = chrono::steady_clock::now();
@@ -58,8 +58,8 @@ void ResearchTime()
 		list.InsertBefore(i, i);
 		end = chrono::steady_clock::now();
 
-		//std::cout << "Insert index = " << i << "\tTime difference = "
-			//<< std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+		// std::cout << "Insert index = " << i << "\tTime difference = "
+		//<< std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
 		insout << i << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << endl;
 	}
 	delout.close();
