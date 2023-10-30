@@ -47,16 +47,15 @@ bool Stack::IsEmpty()
 
 ostream& operator<<(ostream& os, const Stack& stack)
 {
-    os << "Stack: [ ";
+    os << "Stack: \t\t" << "Size: " << stack._size << endl;
 
     StackItem *temp = stack._top;
     while(temp)
     {
-        os << temp->Data << " ";
+        os << "\t| " << temp->Data << " |" << endl;
         temp = temp->Prev;
     }
-    os << "]" << endl;
-    os << "Size: " << stack._size << endl;
+    os << "\t`````" << endl;
 
     return os;
 }
