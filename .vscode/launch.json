@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "//wsl.localhost/Ubuntu/home/inittose/Data-structures/lab2/src",
-      "program": "//wsl.localhost/Ubuntu/home/inittose/Data-structures/lab2/src/build/Debug/outDebug",
+      "cwd": "//wsl.localhost/Ubuntu/home/inittose/Data-structures/lab2/src/inc",
+      "program": "//wsl.localhost/Ubuntu/home/inittose/Data-structures/lab2/src/inc/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
