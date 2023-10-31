@@ -30,11 +30,13 @@ int Stack::Pop()
 {
     if (!_top)
     {
+        cout << "No elements in stack" << endl;
         return -1;
     }
     StackItem *temp = _top;
     int result = temp->Data;
     _top = _top->Prev;
+    cout << "Pop element: " << result << endl;
     delete temp;
     _size--;
     return result;
@@ -58,4 +60,36 @@ ostream& operator<<(ostream& os, const Stack& stack)
     os << "\t`````" << endl;
 
     return os;
+}
+
+char Stack::Controller()
+{
+    const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\nq - quit\nYour choice: ";
+    char mode = '\0';
+
+    cout << *this;
+    while (true)
+    {
+        int value;
+        cout << menu;
+        cin >> mode;
+        system("clear");
+        switch (mode)
+        {
+        case '.':
+            return '.';
+        case '1':
+            cout << "Enter push element: ";
+            cin >> value;
+            this->Push(value);
+            break;
+        case '2':
+            this->Pop();
+            break;
+        case 'q':
+            return 'q';
+        }
+        cout << *this;
+    }
+    return '\0';
 }

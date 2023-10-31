@@ -1,6 +1,8 @@
 #pragma once
 #include "StackItem.h"
-#include <ostream>
+#include <iostream>
+using std::cout;
+using std::cin;
 using std::endl;
 using std::ostream;
 
@@ -18,5 +20,6 @@ public:
     int Pop();
     bool IsEmpty();
 
+    char Controller();
     friend ostream& operator<<(ostream& os, const Stack& stack);
 };

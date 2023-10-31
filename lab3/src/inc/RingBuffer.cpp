@@ -2,7 +2,7 @@
 
 RingBuffer::RingBuffer()
 {
-    _data = new int[_sizeBuffer];
+    _data = new char[_sizeBuffer];
     _head = -1;
     _tail = 0;
 }
@@ -26,7 +26,7 @@ int RingBuffer::GetOccupiedSpace()
     return _sizeBuffer - GetFreeSpace();
 }
 
-void RingBuffer::Push(const int & value)
+void RingBuffer::Push(const char & value)
 {
     if (_head == _tail)
     {
@@ -43,20 +43,23 @@ void RingBuffer::Push(const int & value)
     }
 }
 
-int RingBuffer::Pop()
+char RingBuffer::Pop()
 {
-    int result;
+    char result;
     if (_head == -1)
     {
+        cout << "No element in ring buffer" << endl;
         return 0;
     }
     result = _data[_head];
-    _data[_head++] = 0;
+    _data[_head++] = '\0';
+    _head %= _sizeBuffer;
 
     if (_head == _tail)
     {
         _head = -1;
     }
+    cout << "Pop element: " << result << endl;
     return result;
 }
 
@@ -68,9 +71,17 @@ ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
     os << "Ring Buffer: [ ";
     for (int i = 0; i < ringBuffer._sizeBuffer; i++)
     {
-        bool range = i >= head && i < tail;
+        /*bool range = i >= head && i < tail && head != -1;
         bool reverseRange = i >= head && i < size || i >= 0 && i < tail;
-        if (tail > head && range || !(tail > head) && reverseRange)
+        if (tail >= head && range || !(tail >= head) && reverseRange)
+        {
+            os << ringBuffer._data[i] << " ";
+        }
+        else
+        {
+            os << "* ";
+        }*/
+        if (ringBuffer._data[i])
         {
             os << ringBuffer._data[i] << " ";
         }
@@ -83,4 +94,44 @@ ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
     os << "]" << endl;
 
     return os;
+}
+
+char RingBuffer::Controller()
+{
+    const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\n3 - Show free space\n4 - Show occupied space\nq - quit\nYour choice: ";
+    char mode = '\0';
+
+    cout << *this;
+    while (true)
+    {
+        char value;
+        cout << menu;
+        cin.get(mode);
+        while(cin.get() != '\n');
+        system("clear");
+        switch (mode)
+        {
+        case '.':
+            return '.';
+        case '1':
+            cout << "Enter push element: ";
+            cin.get(value);
+            while(cin.get() != '\n');
+            this->Push(value);
+            break;
+        case '2':
+            this->Pop();
+            break;
+        case '3':
+            cout << "Free space: " << this->GetFreeSpace() << endl;
+            break;
+        case '4':
+            cout << "Occupied space: " << this->GetOccupiedSpace() << endl;
+            break;
+        case 'q':
+            return 'q';
+        }
+        cout << *this;
+    }
+    return '\0';
 }
