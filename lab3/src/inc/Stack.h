@@ -23,3 +23,7 @@ public:
     char Controller();
     friend ostream& operator<<(ostream& os, const Stack& stack);
 };
+
+
+template <typename T>
+void ValidInput(T &variable);

@@ -44,7 +44,7 @@ int Stack::Pop()
 
 bool Stack::IsEmpty()
 {
-    return _top;
+    return !_top;
 }
 
 ostream& operator<<(ostream& os, const Stack& stack)
@@ -72,7 +72,7 @@ char Stack::Controller()
     {
         int value;
         cout << menu;
-        cin >> mode;
+        ValidInput(mode);
         system("clear");
         switch (mode)
         {
@@ -80,7 +80,7 @@ char Stack::Controller()
             return '.';
         case '1':
             cout << "Enter push element: ";
-            cin >> value;
+            ValidInput(value);
             this->Push(value);
             break;
         case '2':
@@ -92,4 +92,18 @@ char Stack::Controller()
         cout << *this;
     }
     return '\0';
+}
+
+template <typename T>
+void ValidInput(T& variable)
+{
+	cin >> variable;
+	while (cin.fail())
+	{
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "Please enter correct value: ";
+		cin >> variable;
+	}
+	while (cin.get() != '\n');
 }
