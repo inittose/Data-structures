@@ -149,14 +149,20 @@ List& List::InsertBefore(const int& value, const int& rightValue)
 /// <returns>Этот же объект</returns>
 List& List::DeleteElement(const int& value)
 {
+	if (!_head)
+	{
+		cout << "No elements in list" << endl;
+		return *this;
+	}
 	ListItem* run = _head;
 	while (run)
 	{
-		if (run->_data == value)
+		ListItem* temp = run;
+		ListItem* leftItem = temp->_prev;
+		ListItem* rightItem = temp->_next;
+		run = run->_next;
+		if (temp->_data == value)
 		{
-			ListItem* temp = run;
-			ListItem* leftItem = temp->_prev;
-			ListItem* rightItem = temp->_next;
 			if (leftItem)
 			{
 				leftItem->SetNext(rightItem);
@@ -173,12 +179,7 @@ List& List::DeleteElement(const int& value)
 			{
 				_tail = leftItem;
 			}
-			run = run->_next;
 			delete temp;
-		}
-		else
-		{
-			run = run->_next;
 		}
 	}
 	return *this;

@@ -12,22 +12,32 @@ void ResearchTime();
 
 int main()
 {
-	ResearchTime();
+	MainProgram();
 	return 0;
 }
 
+/// <summary>
+/// Главная функция с меню
+/// </summary>
 void MainProgram()
 {
 	List list;
-	char mode = '\0';
-	while (mode != 'q')
+	int mode = 1;
+
+	ClearMenu();
+	
+	while (mode != 0)
 	{
 		cout << list;
 		mode = MenuMessage();
 		ModeControl(list, mode);
 	}
+	ClearMenu();
 }
 
+/// <summary>
+/// Исследование времени действия функций
+/// </summary>
 void ResearchTime()
 {
 	int numberOfLists = 9;
