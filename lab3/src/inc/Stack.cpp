@@ -52,7 +52,7 @@ ostream& operator<<(ostream& os, const Stack& stack)
     os << "Stack: \t\t" << "Size: " << stack._size << endl;
 
     StackItem *temp = stack._top;
-    while(temp)
+    for (int i = 0; i < stack._size; i++)
     {
         os << "\t| " << temp->Data << " |" << endl;
         temp = temp->Prev;

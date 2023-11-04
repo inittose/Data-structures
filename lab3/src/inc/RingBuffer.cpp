@@ -1,18 +1,26 @@
 #include "RingBuffer.h"
 
-RingBuffer::RingBuffer()
+RingBuffer::RingBuffer(const int &size)
 {
-    _data = new char[_sizeBuffer];
+    _sizeBuffer = size;
+    _data = new int*[_sizeBuffer];
     _head = -1;
     _tail = 0;
 }
 
 RingBuffer::~RingBuffer()
 {
+    for (int i = 0; i < _sizeBuffer; i++)
+    {
+        if (_data[i])
+        {
+            delete _data[i];
+        }
+    }
     delete[] _data;
 }
 
-int RingBuffer::GetFreeSpace()
+int RingBuffer::GetFreeSpace() const
 {
     if (_head == -1)
     {
@@ -21,12 +29,12 @@ int RingBuffer::GetFreeSpace()
     return _tail > _head ? _sizeBuffer - _tail + _head : _head - _tail;
 }
 
-int RingBuffer::GetOccupiedSpace()
+int RingBuffer::GetOccupiedSpace() const
 {
     return _sizeBuffer - GetFreeSpace();
 }
 
-void RingBuffer::Push(const char & value)
+void RingBuffer::Push(const int & value)
 {
     if (_head == _tail)
     {
@@ -34,7 +42,7 @@ void RingBuffer::Push(const char & value)
         _head %= _sizeBuffer;
     }
 
-    _data[_tail++] = value;
+    _data[_tail++] = new int(value);
     _tail %= _sizeBuffer;
 
     if (_head == -1)
@@ -43,18 +51,19 @@ void RingBuffer::Push(const char & value)
     }
 }
 
-char RingBuffer::Pop()
+int RingBuffer::Pop()
 {
-    char result;
+    int result;
     if (_head == -1)
     {
         cout << "No element in ring buffer" << endl;
         return 0;
     }
-    result = _data[_head];
-    _data[_head++] = '\0';
-    _head %= _sizeBuffer;
+    result = *_data[_head];
+    delete _data[_head];
+    _data[_head++] = nullptr;
 
+    _head %= _sizeBuffer;
     if (_head == _tail)
     {
         _head = -1;
@@ -65,31 +74,17 @@ char RingBuffer::Pop()
 
 ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
 {
-    int head = ringBuffer._head;
-    int tail = ringBuffer._tail;
-    int size = ringBuffer._sizeBuffer;
     os << "Ring Buffer: [ ";
     for (int i = 0; i < ringBuffer._sizeBuffer; i++)
     {
-        /*bool range = i >= head && i < tail && head != -1;
-        bool reverseRange = i >= head && i < size || i >= 0 && i < tail;
-        if (tail >= head && range || !(tail >= head) && reverseRange)
-        {
-            os << ringBuffer._data[i] << " ";
-        }
-        else
-        {
-            os << "* ";
-        }*/
         if (ringBuffer._data[i])
         {
-            os << ringBuffer._data[i] << " ";
+            os << *ringBuffer._data[i] << " ";   
         }
         else
         {
-            os << "* ";
+            os << "* "; 
         }
-        
     }
     os << "]" << endl;
 
@@ -98,13 +93,15 @@ ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
 
 char RingBuffer::Controller()
 {
-    const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\n3 - Show free space\n4 - Show occupied space\nq - quit\nYour choice: ";
+    const char* menu = 
+    "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\n3 - Show free space\n4 - Show occupied space\nq - quit\nYour choice: ";
+
     char mode = '\0';
 
     cout << *this;
     while (true)
     {
-        char value;
+        int value;
         cout << menu;
         cin.get(mode);
         while(cin.get() != '\n');
@@ -115,7 +112,7 @@ char RingBuffer::Controller()
             return '.';
         case '1':
             cout << "Enter push element: ";
-            cin.get(value);
+            cin >> value;
             while(cin.get() != '\n');
             this->Push(value);
             break;

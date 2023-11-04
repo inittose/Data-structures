@@ -8,20 +8,20 @@ using std::ostream;
 class RingBuffer
 {
 private:
-    char *_data;
-    const int _sizeBuffer = 8;
+    int **_data;
+    int _sizeBuffer;
     int _head;
     int _tail;
 
 public:
-    RingBuffer();
+    RingBuffer(const int &size = 8);
     ~RingBuffer();
 
-    int GetFreeSpace();
-    int GetOccupiedSpace();
+    int GetFreeSpace() const;
+    int GetOccupiedSpace() const;
 
-    void Push(const char & value);
-    char Pop();
+    void Push(const int & value);
+    int Pop();
 
     char Controller();
     friend ostream& operator<<(ostream& os, const RingBuffer& ringBuffer);

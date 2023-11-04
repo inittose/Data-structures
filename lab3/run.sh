@@ -1,2 +1,2 @@
-cmake --build ./build
+make -C ./build
 ./build/bin/automata
