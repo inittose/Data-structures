@@ -49,6 +49,7 @@ bool Stack::IsEmpty()
 
 ostream& operator<<(ostream& os, const Stack& stack)
 {
+    os << stack._size << endl;
     os << "Stack: \t\t" << "Size: " << stack._size << endl;
 
     StackItem *temp = stack._top;
