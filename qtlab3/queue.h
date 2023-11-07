@@ -1,6 +1,6 @@
 #ifndef QUEUE_H
 #define QUEUE_H
-#include "Stack.h"
+#include "stack.h"
 
 class Queue
 {
@@ -13,7 +13,7 @@ public:
     int Dequeue();
 
     char Controller();
-    friend ostream &operator<<(ostream & os, Queue stack);
+    friend ostream &operator<<(ostream & os, Queue queue);
 };
 
 

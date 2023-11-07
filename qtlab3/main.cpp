@@ -2,6 +2,7 @@
 #include "stack.h"
 #include "ringbuffer.h"
 #include "queue.h"
+#include "iotool.h"
 using std::cin;
 using std::cout;
 using std::endl;
@@ -17,8 +18,8 @@ int main()
     cout << MENU_MESSAGE;
     while(mode != 'q')
     {
-        cin >> mode;
-        system("clear");
+        ValidInput(mode);
+        ClearTerminal();
         switch(mode)
         {
         case '1':
@@ -36,8 +37,7 @@ int main()
         }
         cout << MENU_MESSAGE;
     }
-    cout << endl;
-    system("clear");
+    ClearTerminal();
     return 0;
 }
 

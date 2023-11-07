@@ -24,9 +24,9 @@ int Queue::Dequeue()
     return result;
 }
 
-ostream &operator<<(ostream & os, Queue stack)
+ostream &operator<<(ostream & os, Queue queue)
 {
-    os << "S1 = " << stack.S1 << "S2 = " << stack.S2;
+    os << "S1 = " << queue.S1 << "S2 = " << queue.S2;
     return os;
 }
 
@@ -41,7 +41,7 @@ char Queue::Controller()
         int value;
         cout << menu;
         ValidInput(mode);
-        system("clear");
+        ClearTerminal();
         switch (mode)
         {
         case '.':

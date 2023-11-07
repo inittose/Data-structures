@@ -6,6 +6,10 @@ RingBuffer::RingBuffer(const int &size)
     _data = new int*[_sizeBuffer];
     _head = -1;
     _tail = 0;
+    for (int i = 0; i < _sizeBuffer; i++)
+    {
+        _data[i] = nullptr;
+    }
 }
 
 RingBuffer::~RingBuffer()
@@ -103,17 +107,15 @@ char RingBuffer::Controller()
     {
         int value;
         cout << menu;
-        cin.get(mode);
-        while(cin.get() != '\n');
-        system("clear");
+        ValidInput(mode);
+        ClearTerminal();
         switch (mode)
         {
         case '.':
             return '.';
         case '1':
             cout << "Enter push element: ";
-            cin >> value;
-            while(cin.get() != '\n');
+            ValidInput(value);
             this->Push(value);
             break;
         case '2':

@@ -1,63 +1,74 @@
 #include "Stack.h"
 
 
-Stack::Stack()
+Stack::Stack(const int & size)
 {
-    _top = nullptr;
-    _size = 0;
+    _sizeBuffer = size;
+    _data = new int[_sizeBuffer];
+    _lenght = 0;
 }
 
 Stack::~Stack()
 {
-    StackItem *run = _top;
-    while(run)
-    {
-        StackItem *temp = run;
-        run = run->Prev;
-        delete temp;
-    }
+    delete[] _data;
 }
 
-void Stack::Push(const int & data)
+void Stack::ResizeStack(bool increase)
 {
-    StackItem *newItem = new StackItem(data);
-    newItem->Prev = _top;
-    _top = newItem;
-    _size++;
+    _sizeBuffer = increase ? _sizeBuffer * 2 : _sizeBuffer / 2;
+    int* newData = new int[_sizeBuffer];
+
+    for (int i = 0; i < _lenght; i++)
+    {
+        newData[i] = _data[i];
+    }
+    delete[] _data;
+    _data = newData;
+}
+
+void Stack::Push(const int & value)
+{
+    if (_lenght == _sizeBuffer)
+    {
+        ResizeStack(true);
+    }
+    _data[_lenght] = value;
+    _lenght++;
 }
 
 int Stack::Pop()
 {
-    if (!_top)
+    if (!_lenght)
     {
-        cout << "No elements in stack" << endl;
+        cout << "No elements in stack!\n";
         return -1;
     }
-    StackItem *temp = _top;
-    int result = temp->Data;
-    _top = _top->Prev;
-    cout << "Pop element: " << result << endl;
-    delete temp;
-    _size--;
+
+    int result = _data[_lenght - 1];
+    _lenght--;
+
+    if (_lenght <= _sizeBuffer / 2 && _lenght >= 4)
+    {
+        ResizeStack(false);
+    }
+
     return result;
 }
 
 bool Stack::IsEmpty()
 {
-    return !_top;
+    return !_lenght;
 }
 
 ostream& operator<<(ostream& os, const Stack& stack)
 {
-    os << stack._size << endl;
-    os << "Stack: \t\t" << "Size: " << stack._size << endl;
+    os << "Stack: \t\t" << "Lenght: " << stack._lenght << "\tBuffer size: " << stack._sizeBuffer << endl;
 
-    StackItem *temp = stack._top;
-    for (int i = 0; i < stack._size; i++)
+    for (int i = stack._lenght - 1; i >= 0; i--)
     {
-        os << "\t| " << temp->Data << " |" << endl;
-        temp = temp->Prev;
+        cout << "\t| " << stack._data[i] << " |" << endl;
     }
+
     os << "\t`````" << endl;
 
     return os;
@@ -74,7 +85,7 @@ char Stack::Controller()
         int value;
         cout << menu;
         ValidInput(mode);
-        system("clear");
+        ClearTerminal();
         switch (mode)
         {
         case '.':
@@ -85,7 +96,14 @@ char Stack::Controller()
             this->Push(value);
             break;
         case '2':
-            this->Pop();
+            if (IsEmpty())
+            {
+                cout << "No elements in stack!\n";
+            }
+            else
+            {
+                cout << "Pop element: " << this->Pop() << endl;
+            }
             break;
         case 'q':
             return 'q';
@@ -93,18 +111,4 @@ char Stack::Controller()
         cout << *this;
     }
     return '\0';
-}
-
-template <typename T>
-void ValidInput(T& variable)
-{
-    cin >> variable;
-    while (cin.fail())
-    {
-        cin.clear();
-        while (cin.get() != '\n');
-        cout << "Please enter correct value: ";
-        cin >> variable;
-    }
-    while (cin.get() != '\n');
 }

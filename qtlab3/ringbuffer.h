@@ -1,6 +1,7 @@
 #ifndef RINGBUFFER_H
 #define RINGBUFFER_H
 #include <iostream>
+#include "iotool.h"
 using std::cout;
 using std::cin;
 using std::endl;
