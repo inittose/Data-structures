@@ -72,7 +72,7 @@ int RingBuffer::Pop()
     {
         _head = -1;
     }
-    cout << "Pop element: " << result << endl;
+    //cout << "Pop element: " << result << endl;
     return result;
 }
 
@@ -119,7 +119,14 @@ char RingBuffer::Controller()
             this->Push(value);
             break;
         case '2':
-            this->Pop();
+            if (GetOccupiedSpace())
+            {
+                cout << "Pop element: " << this->Pop() << endl;
+            }
+            else
+            {
+                cout << "No element in ring buffer\n";
+            }
             break;
         case '3':
             cout << "Free space: " << this->GetFreeSpace() << endl;

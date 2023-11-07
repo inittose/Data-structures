@@ -2,32 +2,56 @@
 
 void Queue::Enqueue(const int & value)
 {
-    S1.Push(value);
+    _stackIn.Push(value);
 }
 
 int Queue::Dequeue()
 {
-    if (S2.IsEmpty())
+    if (_stackOut.IsEmpty())
     {
-        if (S1.IsEmpty())
+        if (_stackIn.IsEmpty())
         {
             cout << "Queue is empty" << endl;
             return 0;
         }
-        while (!S1.IsEmpty())
+        while (!_stackIn.IsEmpty())
         {
-            S2.Push(S1.Pop());
+            _stackOut.Push(_stackIn.Pop());
         }
     }
-    int result = S2.Pop();
+    int result = _stackOut.Pop();
     cout << "Dequeue element: " << result << endl;
     return result;
 }
 
-ostream &operator<<(ostream & os, Queue queue)
+void Queue::ShowStacks()
 {
-    os << "S1 = " << queue.S1 << "S2 = " << queue.S2;
-    return os;
+    cout << "Stack in\tStack out\n";
+    int maxLenght = _stackIn._lenght > _stackOut._lenght ? _stackIn._lenght : _stackOut._lenght;
+    for (int i = maxLenght; i >= 0; i--)
+    {
+        if (i == 0)
+        {
+            cout << "`````\t\t`````\n";
+            break;
+        }
+        if (i <= _stackIn._lenght)
+        {
+            cout << "| " << _stackIn._data[i - 1] << " |\t\t";
+        }
+        else
+        {
+            cout << "|   |\t\t";
+        }
+        if (i <= _stackOut._lenght)
+        {
+            cout << "| " << _stackOut._data[i - 1] << " |\n";
+        }
+        else
+        {
+            cout << "|   |\n";
+        }
+    }
 }
 
 char Queue::Controller()
@@ -35,10 +59,10 @@ char Queue::Controller()
     const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Enqueue\n2 - Dequeue\nq - quit\nYour choice: ";
     char mode = '\0';
 
-    cout << *this;
     while (true)
     {
         int value;
+        ShowStacks();
         cout << menu;
         ValidInput(mode);
         ClearTerminal();
@@ -47,17 +71,16 @@ char Queue::Controller()
         case '.':
             return '.';
         case '1':
-            cout << "Enter Enqueue element: ";
+            cout << "Enter enqueue element: ";
             ValidInput(value);
-            this->Enqueue(value);
+            Enqueue(value);
             break;
         case '2':
-            this->Dequeue();
+            Dequeue();
             break;
         case 'q':
             return 'q';
         }
-        cout << *this;
     }
     return mode;
 }

@@ -3,6 +3,7 @@
 #include "ringbuffer.h"
 #include "queue.h"
 #include "iotool.h"
+#include "queuering.h"
 using std::cin;
 using std::cout;
 using std::endl;
@@ -29,7 +30,7 @@ int main()
             mode = MainController<RingBuffer>();
             break;
         case '3':
-
+            mode = MainController<QueueRing>();
             break;
         case '4':
             mode = MainController<Queue>();

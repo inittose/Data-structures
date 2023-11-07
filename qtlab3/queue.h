@@ -5,15 +5,15 @@
 class Queue
 {
 private:
-    Stack S1;
-    Stack S2;
+    Stack _stackIn;
+    Stack _stackOut;
 
 public:
     void Enqueue(const int & value);
     int Dequeue();
 
+    void ShowStacks();
     char Controller();
-    friend ostream &operator<<(ostream & os, Queue queue);
 };
 
 

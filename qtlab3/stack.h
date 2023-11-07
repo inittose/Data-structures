@@ -8,16 +8,14 @@ using std::cin;
 using std::endl;
 using std::ostream;
 
-class Stack
+struct Stack
 {
-private:
     int* _data;
     int _sizeBuffer;
     int _lenght;
 
     void ResizeStack(bool increase);
 
-public:
     Stack(const int & size = 4);
     ~Stack();
 

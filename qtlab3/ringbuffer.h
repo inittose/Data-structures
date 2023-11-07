@@ -7,16 +7,14 @@ using std::cin;
 using std::endl;
 using std::ostream;
 
-class RingBuffer
+struct RingBuffer
 {
-private:
     int **_data;
     int _sizeBuffer;
     int _head;
     int _tail;
 
-public:
-    RingBuffer(const int &size = 8);
+    RingBuffer(const int &size = 4);
     ~RingBuffer();
 
     int GetFreeSpace() const;

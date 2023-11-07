@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-56393e8131a8c53a6e01.json",
+					"jsonFile" : "directory-.-Debug-c036c66c925d1e82f005.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.5"
@@ -40,7 +40,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "qtlab3::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-qtlab3-Debug-ee641e112087c1a43734.json",
+					"jsonFile" : "target-qtlab3-Debug-93cc6bb77e041f6d29eb.json",
 					"name" : "qtlab3",
 					"projectIndex" : 0
 				}
