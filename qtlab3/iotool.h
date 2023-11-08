@@ -6,10 +6,9 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-/**
- *  Ввод с проверкой
- *
- *  @param "var" - переменная стандартного типа данных
+/*!
+ * \brief Ввод с проверкой
+ * \param var Переменная стандартного типа данных
  */
 template <typename Type>
 void ValidInput(Type & var)

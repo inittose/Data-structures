@@ -42,6 +42,10 @@ int main()
     return 0;
 }
 
+/*!
+ * \brief Вызвать меню определенного класса
+ * \return Возвращает символ при выходе из меню класса
+ */
 template<typename Type>
 char MainController()
 {

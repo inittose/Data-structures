@@ -1,10 +1,18 @@
 #include "queue.h"
 
+/*!
+ * \brief Поставить элемент в очередь
+ * \param value Значение элемента
+ */
 void Queue::Enqueue(const int & value)
 {
     _stackIn.Push(value);
 }
 
+/*!
+ * \brief Убрать элемент из очереди
+ * \return Возвращает значение убранного элемента
+ */
 int Queue::Dequeue()
 {
     if (_stackOut.IsEmpty())
@@ -24,6 +32,9 @@ int Queue::Dequeue()
     return result;
 }
 
+/*!
+ * \brief Вывести 2 стека на экран
+ */
 void Queue::ShowStacks()
 {
     cout << "Stack in\tStack out\n";
@@ -54,6 +65,10 @@ void Queue::ShowStacks()
     }
 }
 
+/*!
+ * \brief Управляет очередью по средствам меню
+ * \return Возвращает символ при выходе из меню
+ */
 char Queue::Controller()
 {
     const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Enqueue\n2 - Dequeue\nq - quit\nYour choice: ";

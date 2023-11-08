@@ -8,10 +8,24 @@ using std::cin;
 using std::endl;
 using std::ostream;
 
+/*!
+ * \brief Стек
+ */
 struct Stack
 {
+    /*!
+     * \brief Данные стека
+     */
     int* _data;
-    int _sizeBuffer;
+
+    /*!
+     * \brief Размер стека
+     */
+    int _sizeStack;
+
+    /*!
+     * \brief Длина занятого стека
+     */
     int _lenght;
 
     void ResizeStack(bool increase);

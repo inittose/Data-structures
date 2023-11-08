@@ -1,16 +1,26 @@
 #include "queuering.h"
 
+/*!
+ * \brief Конструктор очереди
+ */
 QueueRing::QueueRing()
 {
     _sizeBuffer = 4;
     _ringBuffer = new RingBuffer(_sizeBuffer);
 }
 
+/*!
+ * \brief Деструктор очереди
+ */
 QueueRing::~QueueRing()
 {
     delete _ringBuffer;
 }
 
+/*!
+ * \brief Поменять размер буфера
+ * \param increase Флаг увелечения буфера
+ */
 void QueueRing::ResizeBuffer(bool increase)
 {
     _sizeBuffer = increase ? _sizeBuffer * 2 : _sizeBuffer / 2;
@@ -25,6 +35,10 @@ void QueueRing::ResizeBuffer(bool increase)
     _ringBuffer = newBuffer;
 }
 
+/*!
+ * \brief Добавить элемент в очередь
+ * \param value Значение элемента
+ */
 void QueueRing::Enqueue(const int & value)
 {
     if (!_ringBuffer->GetFreeSpace())
@@ -34,6 +48,10 @@ void QueueRing::Enqueue(const int & value)
     _ringBuffer->Push(value);
 }
 
+/*!
+ * \brief Снять элемент из очереди
+ * \return Значение снятого элемента
+ */
 int QueueRing::Dequeue()
 {
     int result = _ringBuffer->Pop();
@@ -44,17 +62,24 @@ int QueueRing::Dequeue()
     return result;
 }
 
+/*!
+ * \brief Вывести на экран очередь
+ */
 void QueueRing::ShowQueue()
 {
-    cout << "Queue: ";
+    cout << "Queue: in | ";
     for (int i = 0; i < _ringBuffer->GetOccupiedSpace(); i++)
     {
         int temp = (_ringBuffer->_tail - 1 - i + _ringBuffer->_sizeBuffer) % _ringBuffer->_sizeBuffer;
         cout << *_ringBuffer->_data[temp] << " ";
     }
-    cout << "\nBuffer size: " << _ringBuffer->_sizeBuffer << endl;
+    cout << "| out\nBuffer size: " << _ringBuffer->_sizeBuffer << endl;
 }
 
+/*!
+ * \brief Управляет очередью по средствам меню
+ * \return Возвращает символ при выходе из меню
+ */
 char QueueRing::Controller()
 {
     const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Enqueue\n2 - Dequeue\nq - quit\nYour choice: ";

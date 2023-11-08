@@ -2,14 +2,13 @@
 
 
 
-/**
- *  Очистка окна вывода
+/*!
+ * \brief Очистка терминала
  */
 void ClearTerminal()
 {
-    /*
-     *  "cls" - на OS Windows
-     *  "clear" - на OS Unix
-     */
-    system("cls");
+    if (system("clear"))
+    {
+        system("cls");
+    }
 }

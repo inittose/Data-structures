@@ -3,10 +3,20 @@
 
 #include "ringbuffer.h"
 
+/*!
+ * \brief Очередь из кольцевого буфера
+ */
 class QueueRing
 {
 private:
+    /*!
+     * \brief Указатель на кольцевой буфер
+     */
     RingBuffer* _ringBuffer;
+
+    /*!
+     * \brief Размер буфера
+     */
     int _sizeBuffer;
 
     void ResizeBuffer(bool increase);

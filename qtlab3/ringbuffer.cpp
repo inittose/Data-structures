@@ -1,5 +1,9 @@
 #include "RingBuffer.h"
 
+/*!
+ * \brief Конструктор кольцевого буфера
+ * \param size Размер буфера
+ */
 RingBuffer::RingBuffer(const int &size)
 {
     _sizeBuffer = size;
@@ -12,6 +16,9 @@ RingBuffer::RingBuffer(const int &size)
     }
 }
 
+/*!
+ * \brief Деструктор кольцевого буфера
+ */
 RingBuffer::~RingBuffer()
 {
     for (int i = 0; i < _sizeBuffer; i++)
@@ -24,6 +31,10 @@ RingBuffer::~RingBuffer()
     delete[] _data;
 }
 
+/*!
+ * \brief Найти свободное место в буфере
+ * \return Количество свободного места
+ */
 int RingBuffer::GetFreeSpace() const
 {
     if (_head == -1)
@@ -33,11 +44,19 @@ int RingBuffer::GetFreeSpace() const
     return _tail > _head ? _sizeBuffer - _tail + _head : _head - _tail;
 }
 
+/*!
+ * \brief Найти занятое место в буфере
+ * \return Количество занятого места
+ */
 int RingBuffer::GetOccupiedSpace() const
 {
     return _sizeBuffer - GetFreeSpace();
 }
 
+/*!
+ * \brief Добавить элемент в буфер
+ * \param value Значение элемента
+ */
 void RingBuffer::Push(const int & value)
 {
     if (_head == _tail)
@@ -55,6 +74,10 @@ void RingBuffer::Push(const int & value)
     }
 }
 
+/*!
+ * \brief Вытолкнуть элемент из буфера
+ * \return Значение элемента
+ */
 int RingBuffer::Pop()
 {
     int result;
@@ -76,6 +99,12 @@ int RingBuffer::Pop()
     return result;
 }
 
+/*!
+ * \brief Вывести кольцевой буфер
+ * \param os Объект потокового вывода
+ * \param ringBuffer Кольцевой буфер
+ * \return Объект потокового вывода
+ */
 ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
 {
     os << "Ring Buffer: [ ";
@@ -95,6 +124,10 @@ ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
     return os;
 }
 
+/*!
+ * \brief Управляет кольцевым буфером по средствам меню
+ * \return Возвращает символ при выходе из меню
+ */
 char RingBuffer::Controller()
 {
     const char* menu =
