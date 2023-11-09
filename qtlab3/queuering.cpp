@@ -91,8 +91,7 @@ char QueueRing::Controller()
         int value;
         ShowQueue();
         cout << menu;
-        ValidInput(mode, bWrongInput);
-        bWrongInput = false;
+        bWrongInput = ValidInput(mode, bWrongInput);
         ClearTerminal();
         switch (mode)
         {
@@ -100,7 +99,10 @@ char QueueRing::Controller()
             return '.';
         case '1':
             cout << "Enter enqueue element: ";
-            ValidInput(value);
+            while(ValidInput(value))
+            {
+                cout << "Enter correct integer: ";
+            }
             Enqueue(value);
             break;
         case '2':

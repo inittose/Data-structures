@@ -141,8 +141,7 @@ char RingBuffer::Controller()
     {
         int value;
         cout << menu;
-        ValidInput(mode, bWrongInput);
-        bWrongInput = false;
+        bWrongInput = ValidInput(mode, bWrongInput);
         ClearTerminal();
         switch (mode)
         {
@@ -150,7 +149,10 @@ char RingBuffer::Controller()
             return '.';
         case '1':
             cout << "Enter push element: ";
-            ValidInput(value);
+            while(ValidInput(value))
+            {
+                cout << "Enter correct integer: ";
+            }
             this->Push(value);
             break;
         case '2':

@@ -12,6 +12,7 @@ add_executable(qtlab3 main.cpp
     stackitem.h stackitem.cpp
     iotool.h iotool.cpp
     queuering.h queuering.cpp
+    iotool.cpp iotool.h main.cpp queue.cpp queue.h queuering.cpp queuering.h ringbuffer.cpp ringbuffer.h stack.cpp stack.h stackitem.cpp stackitem.h
 )
 
 include(GNUInstallDirs)

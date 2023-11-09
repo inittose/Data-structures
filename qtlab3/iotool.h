@@ -9,22 +9,28 @@ using std::endl;
 /*!
  * \brief Ввод с проверкой
  * \param var Переменная стандартного типа данных
+ * \param bWrongInput Верен ли предыдущий ввод
+ * \return Статус ввода
  */
 template <typename Type>
-void ValidInput(Type & var, bool bWrongInput = false)
+bool ValidInput(Type & var, bool bWrongInput = false)
 {
     if (bWrongInput)
     {
-        cout << "\nPlease enter correct value: ";
+        cout << "\nPlease enter the correct menu item: ";
     }
 
     cin >> var;
-    while (cin.fail() || cin.get() != '\n')
+    if (cin.fail() || cin.get() != '\n')
     {
         cin.clear();
         while (cin.get() != '\n');
-        cout << "Please enter correct value: ";
-        cin >> var;
+        var = '\0';
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

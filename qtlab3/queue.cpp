@@ -78,10 +78,10 @@ char Queue::Controller()
     while (true)
     {
         int value;
+        bool bValueInput;
         ShowStacks();
         cout << menu;
-        ValidInput(mode, bWrongInput);
-        bWrongInput = false;
+        bWrongInput = ValidInput(mode, bWrongInput);
         ClearTerminal();
         switch (mode)
         {
@@ -89,7 +89,10 @@ char Queue::Controller()
             return '.';
         case '1':
             cout << "Enter enqueue element: ";
-            ValidInput(value);
+            while(ValidInput(value))
+            {
+                cout << "Enter correct integer: ";
+            }
             Enqueue(value);
             break;
         case '2':

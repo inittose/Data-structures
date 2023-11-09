@@ -16,11 +16,11 @@ int main()
 {
     char mode = '\0';
     char bWrongInput = false;
-    const char *MENU_MESSAGE = "\nChoose one of structures: \n1 - Stack \n2 - Ring buffer \n3 - Queue (Ring) \n4 - Queue (Stack) \nq - Quit \nYour choice: ";
+    const char *MENU_MESSAGE = "Choose one of structures: \n1 - Stack \n2 - Ring buffer \n3 - Queue (Ring) \n4 - Queue (Stack) \nq - Quit \nYour choice: ";
     cout << MENU_MESSAGE;
     while(mode != 'q')
     {
-        ValidInput(mode, bWrongInput);
+        bWrongInput = ValidInput(mode, bWrongInput);
         ClearTerminal();
         switch(mode)
         {
