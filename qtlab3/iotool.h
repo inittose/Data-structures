@@ -11,8 +11,13 @@ using std::endl;
  * \param var Переменная стандартного типа данных
  */
 template <typename Type>
-void ValidInput(Type & var)
+void ValidInput(Type & var, bool bWrongInput = false)
 {
+    if (bWrongInput)
+    {
+        cout << "\nPlease enter correct value: ";
+    }
+
     cin >> var;
     while (cin.fail() || cin.get() != '\n')
     {

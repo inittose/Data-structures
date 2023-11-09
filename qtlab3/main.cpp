@@ -15,11 +15,12 @@ char MainController();
 int main()
 {
     char mode = '\0';
+    char bWrongInput = false;
     const char *MENU_MESSAGE = "\nChoose one of structures: \n1 - Stack \n2 - Ring buffer \n3 - Queue (Ring) \n4 - Queue (Stack) \nq - Quit \nYour choice: ";
     cout << MENU_MESSAGE;
     while(mode != 'q')
     {
-        ValidInput(mode);
+        ValidInput(mode, bWrongInput);
         ClearTerminal();
         switch(mode)
         {
@@ -35,6 +36,9 @@ int main()
         case '4':
             mode = MainController<Queue>();
             break;
+        default:
+            bWrongInput = true;
+            break;
         }
         cout << MENU_MESSAGE;
     }
@@ -43,7 +47,7 @@ int main()
 }
 
 /*!
- * \brief Вызвать меню определенного класса
+ * \brief Вызов меню определенного класса
  * \return Возвращает символ при выходе из меню класса
  */
 template<typename Type>

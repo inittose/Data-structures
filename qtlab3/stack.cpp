@@ -110,13 +110,15 @@ char Stack::Controller()
 {
     const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\nq - quit\nYour choice: ";
     char mode = '\0';
+    bool bWrongInput = false;
 
     cout << *this;
     while (true)
     {
         int value;
         cout << menu;
-        ValidInput(mode);
+        ValidInput(mode, bWrongInput);
+        bWrongInput = false;
         ClearTerminal();
         switch (mode)
         {
@@ -139,6 +141,9 @@ char Stack::Controller()
             break;
         case 'q':
             return 'q';
+        default:
+            bWrongInput = true;
+            break;
         }
         cout << *this;
     }

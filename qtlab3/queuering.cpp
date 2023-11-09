@@ -84,13 +84,15 @@ char QueueRing::Controller()
 {
     const char* menu = "Choose one of activity:\n. - Choose another structure\n1 - Enqueue\n2 - Dequeue\nq - quit\nYour choice: ";
     char mode = '\0';
+    bool bWrongInput = false;
 
     while (true)
     {
         int value;
         ShowQueue();
         cout << menu;
-        ValidInput(mode);
+        ValidInput(mode, bWrongInput);
+        bWrongInput = false;
         ClearTerminal();
         switch (mode)
         {
@@ -113,6 +115,9 @@ char QueueRing::Controller()
             break;
         case 'q':
             return 'q';
+        default:
+            bWrongInput = true;
+            break;
         }
     }
     return mode;
