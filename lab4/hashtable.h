@@ -27,9 +27,13 @@ public:
 
     void Add(const string & key, const string & value);
     bool Delete(const string & key);
-    HashTableItem * Search(const string & key, const int & hashCode);
-    void ShowPearsonTable();
-    void Show();
+    HashTableItem * Search(const string & key, int hashCode = -1);
+    void ShowPearsonTable() const;
+    void Show() const;
+
+    HashTableItem** GetData() const;
+    int GetCapacity() const;
+    int GetLenght() const;
 };
 
 #endif // HASHTABLE_H

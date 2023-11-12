@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(lab4 main.cpp
     hashtableitem.h hashtableitem.cpp
-    hashtable.h hashtable.cpp)
+    hashtable.h hashtable.cpp
+    dictionary.h dictionary.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS lab4
