@@ -4,6 +4,9 @@
 #include "hashtableitem.h"
 #include <random>
 #include <ctime>
+#include <iostream>
+using std::cout;
+using std::endl;
 
 class HashTable
 {
@@ -16,16 +19,17 @@ private:
     void MakePearsonTable();
     int GetHashCode(const string &key);
     void Rehashig(const int & capacity);
-    void ResolveCollision(HashTableItem* item);
+    void ResolveCollision(HashTableItem* item, const string & key, const string & value);
 
 public:
-    HashTable(const int & capacity = 8);
+    HashTable(const int & capacity = 4);
     ~HashTable();
 
     void Add(const string & key, const string & value);
-    void Delete(const string & key);
-    string Search(const string & key);
-
+    bool Delete(const string & key);
+    HashTableItem * Search(const string & key, const int & hashCode);
+    void ShowPearsonTable();
+    void Show();
 };
 
 #endif // HASHTABLE_H

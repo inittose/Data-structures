@@ -12,7 +12,7 @@ struct HashTableItem
     HashTableItem *Prev;
 
     HashTableItem();
-    HashTableItem(const string &key, const string &value);
+    HashTableItem(const string &key, const string &value, HashTableItem *prev = nullptr, HashTableItem *next = nullptr);
 };
 
 #endif // HASHTABLEITEM_H

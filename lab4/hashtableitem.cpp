@@ -6,11 +6,11 @@ HashTableItem::HashTableItem()
     Prev = nullptr;
 }
 
-HashTableItem::HashTableItem(const string  &key, const string &value)
+HashTableItem::HashTableItem(const string  &key, const string &value, HashTableItem *prev, HashTableItem *next)
 {
     Key = key;
     Value = value;
-    Next = nullptr;
-    Prev = nullptr;
+    Next = next;
+    Prev = prev;
 }
 
