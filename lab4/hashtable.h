@@ -4,21 +4,28 @@
 #include "hashtableitem.h"
 #include <random>
 #include <ctime>
-using std::uint8_t;
 
 class HashTable
 {
 private:
-    static const int BYTE = 256;
-    uint8_t _pearsonTable[BYTE];
+    int _capacity;
+    int _lenght;
+    int *_pearsonTable;
     HashTableItem** _data;
 
     void MakePearsonTable();
     int GetHashCode(const string &key);
+    void Rehashig(const int & capacity);
+    void ResolveCollision(HashTableItem* item);
 
 public:
-    HashTable();
+    HashTable(const int & capacity = 8);
     ~HashTable();
+
+    void Add(const string & key, const string & value);
+    void Delete(const string & key);
+    string Search(const string & key);
+
 };
 
 #endif // HASHTABLE_H

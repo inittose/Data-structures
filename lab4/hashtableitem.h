@@ -8,6 +8,8 @@ struct HashTableItem
 {
     string Key;
     string Value;
+    HashTableItem *Next;
+    HashTableItem *Prev;
 
     HashTableItem();
     HashTableItem(const string &key, const string &value);
