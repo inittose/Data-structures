@@ -20,6 +20,9 @@ int main()
     return 0;
 }
 
+/*!
+ * \brief Меню и управление словарем
+ */
 void Menu()
 {
     string menu = "Choose one of activity:\n1 - Add\n2 - Search\n3 - Delete\n4 - Show hash table\nq - Quit\nYour choice: ";
@@ -76,6 +79,11 @@ void Menu()
     }
 }
 
+/*!
+ * \brief Дополняет имена типов данных
+ * \param letter Первая буква типа данных
+ * \return Полное название типа данных
+ */
 string GetTypeName(const char *letter)
 {
     switch (*letter) {
@@ -87,11 +95,17 @@ string GetTypeName(const char *letter)
         return "float";
     case 'd':
         return "double";
+    case 's':
+        return "string";
     default:
         return "UNKNOWN_TYPE";
     }
 }
 
+/*!
+ * \brief Ввод с проверкой
+ * \param variable Переменная любого типа данных
+ */
 template <typename T>
 void ValidInput(T &variable)
 {
@@ -105,6 +119,9 @@ void ValidInput(T &variable)
     }
 }
 
+/*!
+ * \brief Очистить окно терминала
+ */
 void ClearTerminal()
 {
     if (system("cls"))

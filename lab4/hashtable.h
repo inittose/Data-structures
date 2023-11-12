@@ -8,12 +8,30 @@
 using std::cout;
 using std::endl;
 
+/*!
+ * \brief Класс хеш-таблицы
+ */
 class HashTable
 {
 private:
+    /*!
+     * \brief Мощность
+     */
     int _capacity;
+
+    /*!
+     * \brief Длина
+     */
     int _lenght;
+
+    /*!
+     * \brief Таблицы Пирсона
+     */
     int *_pearsonTable;
+
+    /*!
+     * \brief Данные таблицы
+     */
     HashTableItem** _data;
 
     void MakePearsonTable();

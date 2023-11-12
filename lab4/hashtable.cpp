@@ -1,5 +1,8 @@
 #include "hashtable.h"
 
+/*!
+ * \brief Создание новой таблицы Пирсона
+ */
 void HashTable::MakePearsonTable()
 {
     std::srand(std::time(nullptr));
@@ -16,6 +19,10 @@ void HashTable::MakePearsonTable()
     }
 }
 
+/*!
+ * \brief Конструктор
+ * \param capacity Мощность хеш-таблицы
+ */
 HashTable::HashTable(const int & capacity)
 {
     _capacity = capacity;
@@ -29,6 +36,9 @@ HashTable::HashTable(const int & capacity)
     }
 }
 
+/*!
+ * \brief Деструктор
+ */
 HashTable::~HashTable()
 {
     for (int i = 0; i < _capacity; i++)
@@ -45,6 +55,11 @@ HashTable::~HashTable()
     delete[] _pearsonTable;
 }
 
+/*!
+ * \brief Найти хеш-код
+ * \param key Ключ
+ * \return Хеш-код
+ */
 int HashTable::GetHashCode(const string &key)
 {
     int hash = key.length();
@@ -55,6 +70,10 @@ int HashTable::GetHashCode(const string &key)
     return hash;
 }
 
+/*!
+ * \brief Перехеширование
+ * \param capacity Новая мощность хеш-таблицы
+ */
 void HashTable::Rehashig(const int & capacity)
 {
     int prevCapacity = _capacity;
@@ -79,6 +98,12 @@ void HashTable::Rehashig(const int & capacity)
     delete[] oldData;
 }
 
+/*!
+ * \brief Разрешение коллизии
+ * \param item Конфликтный элемент
+ * \param key Ключ
+ * \param value Значение
+ */
 void HashTable::ResolveCollision(HashTableItem* item, const string & key, const string & value)
 {
     HashTableItem *enumerate = item;
@@ -97,6 +122,11 @@ void HashTable::ResolveCollision(HashTableItem* item, const string & key, const 
     _lenght++;
 }
 
+/*!
+ * \brief Добавление ключ-значения в таблицу
+ * \param key Ключ
+ * \param value Значение
+ */
 void HashTable::Add(const string & key, const string & value)
 {
     int hashCode = GetHashCode(key);
@@ -115,6 +145,11 @@ void HashTable::Add(const string & key, const string & value)
     }
 }
 
+/*!
+ * \brief Удаление ключ-значения из таблицы
+ * \param key Ключ
+ * \return Статус удаления
+ */
 bool HashTable::Delete(const string & key)
 {
     int hashCode = GetHashCode(key);
@@ -146,6 +181,12 @@ bool HashTable::Delete(const string & key)
     return false;
 }
 
+/*!
+ * \brief Поиск значения по ключу
+ * \param key Ключ
+ * \param hashCode Хеш-код, если есть
+ * \return Нужный элемент хеш-таблицы
+ */
 HashTableItem * HashTable::Search(const string & key, int hashCode)
 {
     if (hashCode == -1)
@@ -164,6 +205,9 @@ HashTableItem * HashTable::Search(const string & key, int hashCode)
     return nullptr;
 }
 
+/*!
+ * \brief Вывод таблицы Пирсона в терминал
+ */
 void HashTable::ShowPearsonTable() const
 {
     cout << "Pearson table: ";
@@ -174,6 +218,9 @@ void HashTable::ShowPearsonTable() const
     cout << endl;
 }
 
+/*!
+ * \brief Вывод хеш-таблицы в терминал
+ */
 void HashTable::Show() const
 {
     ShowPearsonTable();
@@ -197,16 +244,28 @@ void HashTable::Show() const
     }
 }
 
+/*!
+ * \brief Взятие данных хеш-таблицы из класса
+ * \return Данные хеш-таблицы
+ */
 HashTableItem** HashTable::GetData() const
 {
     return _data;
 }
 
+/*!
+ * \brief Взятие мощности хеш-таблицы
+ * \return Мощность
+ */
 int HashTable::GetCapacity() const
 {
     return _capacity;
 }
 
+/*!
+ * \brief Взятие занятого пространства хеш-таблицы
+ * \return длина хеш-таблицы
+ */
 int HashTable::GetLenght() const
 {
     return _lenght;

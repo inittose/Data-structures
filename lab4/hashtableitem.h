@@ -4,11 +4,29 @@
 #include <string>
 using std::string;
 
+/*!
+ * \brief Структура элемента хеш-таблицы
+ */
 struct HashTableItem
 {
+    /*!
+     * \brief Ключ
+     */
     string Key;
+
+    /*!
+     * \brief Значение
+     */
     string Value;
+
+    /*!
+     * \brief Указатель на следующий элемент
+     */
     HashTableItem *Next;
+
+    /*!
+     * \brief Указатель на предыдущий элемент
+     */
     HashTableItem *Prev;
 
     HashTableItem();

@@ -3,9 +3,15 @@
 
 #include "hashtable.h"
 
+/*!
+ * \brief Класс словаря
+ */
 class Dictionary
 {
 private:
+    /*!
+     * \brief Хеш-таблица
+     */
     HashTable _hashTable;
 
 public:
