@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void Menu();
+void MenuController();
 template <typename T>
 void ValidInput(T &variable);
 string GetTypeName(const char *letter);
@@ -15,7 +15,7 @@ void ClearTerminal();
 
 int main()
 {
-    Menu();
+    MenuController();
 
     return 0;
 }
@@ -23,7 +23,7 @@ int main()
 /*!
  * \brief Меню и управление словарем
  */
-void Menu()
+void MenuController()
 {
     string menu = "Choose one of activity:\n1 - Add\n2 - Search\n3 - Delete\n4 - Show hash table\nq - Quit\nYour choice: ";
     string key;
@@ -95,10 +95,10 @@ string GetTypeName(const char *letter)
         return "float";
     case 'd':
         return "double";
-    case 's':
+    case 'N':
         return "string";
     default:
-        return "UNKNOWN_TYPE";
+        return string("UNKNOWN_TYPE (") + letter + string(")");
     }
 }
 
