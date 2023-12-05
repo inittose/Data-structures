@@ -22,6 +22,9 @@ _deps
 # Built Visual Studio Code Extensions
 *.vsix
 
+# Qt creator built
+build*
+
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
