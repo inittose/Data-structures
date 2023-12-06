@@ -34,7 +34,7 @@ BinaryTree::~BinaryTree()
     {
         return;
     }
-    Queue queue;
+    Queue<BinaryTreeNode> queue;
     queue.Push(_root);
     while(!queue.IsEmpty())
     {
@@ -203,7 +203,7 @@ void BinaryTree::Show()
         return;
     }
     cout << "Binary tree:" << endl;
-    Queue queue;
+    Queue<BinaryTreeNode> queue;
     queue.Push(_root, 1);
     int depthObserver = 1;
     while(!queue.IsEmpty())

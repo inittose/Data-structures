@@ -3,13 +3,19 @@
 
 #include "binarytreenode.h"
 
+template <typename type>
 struct QueueNode
 {
-    BinaryTreeNode* Data;
+    type* Data;
     QueueNode* Next;
     int Depth;
 
-    QueueNode(BinaryTreeNode* data = nullptr, const int & depth = 0, QueueNode* Next = nullptr);
+    QueueNode(type* data = nullptr, const int & depth = 0, QueueNode* next = nullptr)
+    {
+        Data = data;
+        Depth = depth;
+        Next = next;
+    }
 };
 
 #endif // QUEUENODE_H

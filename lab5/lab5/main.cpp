@@ -3,10 +3,12 @@
 #include <bitset>
 #include <string>
 #include "binarytree.h"
+#include "treap.h"
 
 using namespace std;
 
-void MenuController();
+void ControllerBinaryTree();
+void ControllerTreap();
 template <typename T>
 void ValidInput(T &variable);
 string GetTypeName(const char *letter);
@@ -15,7 +17,7 @@ void ClearTerminal();
 
 int main()
 {
-    MenuController();
+    ControllerTreap();
 
     return 0;
 }
@@ -23,7 +25,7 @@ int main()
 /*!
  * \brief Меню и управление бинарным деревом поиска
  */
-void MenuController()
+void ControllerBinaryTree()
 {
     string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search max value\n5 - Search min value\n6 - Show details of element\nq - Quit\nYour choice: ";
     int data;
@@ -90,6 +92,58 @@ void MenuController()
             cout << "Enter value for details: ";
             ValidInput(data);
             binaryTree.ShowDetails(data);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+/*!
+ * \brief Меню и управление бинарным деревом поиска
+ */
+void ControllerTreap()
+{
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\nq - Quit\nYour choice: ";
+    int data;
+    Treap treap;
+    char mode = '\0';
+
+    while (mode != 'q')
+    {
+        treap.Show();
+        cout << menu;
+        ValidInput(mode);
+        ClearTerminal();
+        switch (mode) {
+        case '1':
+            cout << "Enter value for adding: ";
+            ValidInput(data);
+            treap.Add(data);
+            break;
+        case '2':
+            cout << "Enter value for deletion: ";
+            ValidInput(data);
+            if (treap.Remove(data))
+            {
+                cout << "Deletion successful!\n";
+            }
+            else
+            {
+                cout << "No value " << data << " in treap!\n";
+            }
+            break;
+        case '3':
+            cout << "Enter value for search: ";
+            ValidInput(data);
+            if (treap.Search(data))
+            {
+                cout << "Value " << data << " is contained in treap!\n";
+            }
+            else
+            {
+                cout << "No value " << data << " in treap!\n";
+            }
             break;
         default:
             break;

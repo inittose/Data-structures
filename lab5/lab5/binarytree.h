@@ -16,19 +16,20 @@ private:
     int DigitPlace(int number);
     int FindDepth(BinaryTreeNode* node, int depth);
     void UpdateDepth();
+    void Add(BinaryTreeNode* node, const int & data);
+    bool Remove(BinaryTreeNode* node, const int & data);
+    BinaryTreeNode* Search(BinaryTreeNode* node, const int & data);
+    BinaryTreeNode* SearchMin(BinaryTreeNode* node);
+    BinaryTreeNode* SearchMax(BinaryTreeNode* node);
 
 public:
     BinaryTree();
     ~BinaryTree();
-    void Add(BinaryTreeNode* node, const int & data);
+
     void Add(const int & data);
-    bool Remove(BinaryTreeNode* node, const int & data);
     bool Remove(const int & data);
-    BinaryTreeNode* Search(BinaryTreeNode* node, const int & data);
     BinaryTreeNode* Search(const int & data);
-    BinaryTreeNode* SearchMin(BinaryTreeNode* node);
     BinaryTreeNode* SearchMin();
-    BinaryTreeNode* SearchMax(BinaryTreeNode* node);
     BinaryTreeNode* SearchMax();
     void Show();
     void ShowDetails(const int & data);

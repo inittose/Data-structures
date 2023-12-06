@@ -9,7 +9,9 @@ add_executable(lab5 main.cpp
     binarytreenode.h binarytreenode.cpp
     binarytree.h binarytree.cpp
     queue.h queue.cpp
-    queuenode.h queuenode.cpp)
+    queuenode.h queuenode.cpp
+    treapnode.h treapnode.cpp
+    treap.h treap.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS lab5
