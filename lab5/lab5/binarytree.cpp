@@ -121,19 +121,10 @@ bool BinaryTree::Remove(const int & data)
     if (removeElement->Left && removeElement->Right)
     {
         swapElement = SearchMin(removeElement->Right);
-    }
-    else if (removeElement->Left)
-    {
-        swapElement = removeElement->Left;
-    }
-    else if (removeElement->Right)
-    {
-        swapElement = removeElement->Right;
-    }
-    if (swapElement)
-    {
+        removeElement->Left->Parent = swapElement;
         if (swapElement->Parent != removeElement)
         {
+            swapElement->Parent->Parent = swapElement;
             swapElement->Parent->Left = swapElement->Right;
             if (swapElement->Right)
             {
@@ -146,6 +137,14 @@ bool BinaryTree::Remove(const int & data)
         }
         swapElement->Left = removeElement->Left;
         swapElement->Right = removeElement->Right;
+    }
+    else if (removeElement->Left)
+    {
+        swapElement = removeElement->Left;
+    }
+    else if (removeElement->Right)
+    {
+        swapElement = removeElement->Right;
     }
     if (removeElement->Parent)
     {
@@ -254,6 +253,44 @@ void BinaryTree::Show()
         }
     }
     cout << "\nDepth = " << FindDepth(_root, 0) << endl;
+}
+
+void BinaryTree::ShowDetails(const int & data)
+{
+    BinaryTreeNode* node = Search(data);
+    if (!node)
+    {
+        cout << "There are no element with value " << data << "!\n";
+    }
+    cout << "_root: " << _root <<"\nValue: " << data << "\tPointer: " << node;
+    cout << "\nParent: ";
+    if (node->Parent)
+    {
+        cout << node->Parent << " | " << node->Parent->Data;
+    }
+    else
+    {
+        cout << "nullptr";
+    }
+    cout << "\nLeft: ";
+    if (node->Left)
+    {
+        cout << node->Left << " | " << node->Left->Data;
+    }
+    else
+    {
+        cout << "nullptr";
+    }
+    cout << "\nRight: ";
+    if (node->Right)
+    {
+        cout << node->Right << " | " << node->Right->Data;
+    }
+    else
+    {
+        cout << "nullptr";
+    }
+    cout << endl;
 }
 
 BinaryTreeNode* BinaryTree::SearchMin(BinaryTreeNode* node)

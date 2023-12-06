@@ -31,6 +31,7 @@ public:
     BinaryTreeNode* SearchMax(BinaryTreeNode* node);
     BinaryTreeNode* SearchMax();
     void Show();
+    void ShowDetails(const int & data);
 };
 
 #endif // BINARYTREE_H

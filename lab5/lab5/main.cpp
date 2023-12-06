@@ -25,7 +25,7 @@ int main()
  */
 void MenuController()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search max value\n5 - Search min value\nq - Quit\nYour choice: ";
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search max value\n5 - Search min value\n6 - Show details of element\nq - Quit\nYour choice: ";
     int data;
     BinaryTree binaryTree;
     char mode = '\0';
@@ -85,6 +85,11 @@ void MenuController()
             {
                 cout << "No nodes in binary tree!\n";
             }
+            break;
+        case '6':
+            cout << "Enter value for details: ";
+            ValidInput(data);
+            binaryTree.ShowDetails(data);
             break;
         default:
             break;
