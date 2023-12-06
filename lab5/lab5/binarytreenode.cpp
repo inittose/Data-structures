@@ -1,10 +1,9 @@
 #include "binarytreenode.h"
 
-BinaryTreeNode::BinaryTreeNode(const int & data, const int & depth, BinaryTreeNode * parent, BinaryTreeNode * left, BinaryTreeNode * right)
+BinaryTreeNode::BinaryTreeNode(const int & data, BinaryTreeNode* parent, BinaryTreeNode * left, BinaryTreeNode * right)
 {
     Data = data;
-    Depth = depth;
+    Parent = parent;
     Left = left;
     Right = right;
-    Parent = parent;
 }

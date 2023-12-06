@@ -51,56 +51,161 @@ BinaryTree::~BinaryTree()
     }
 }
 
-void BinaryTree::Add(BinaryTreeNode* node, const int& data, int depth)
+int BinaryTree::FindDepth(BinaryTreeNode* node, int depth)
 {
     if (!node)
     {
-        _root = new BinaryTreeNode(data, depth);
+        return depth;
+    }
+    depth++;
+    int leftDepth = FindDepth(node->Left, depth);
+    int rightDepth = FindDepth(node->Right, depth);
+    return leftDepth > rightDepth ? leftDepth : rightDepth;
+}
+
+void BinaryTree::UpdateDepth()
+{
+    _depth = FindDepth(_root, 0);
+}
+
+void BinaryTree::Add(BinaryTreeNode* node, const int& data)
+{
+    if (!node)
+    {
+        _root = new BinaryTreeNode(data);
         _depth = 1;
         return;
     }
-    depth++;
-    if (depth > _depth)
+    if (data == node->Data)
     {
-        _depth = depth;
+        return;
     }
     if (data < node->Data)
     {
         if (node->Left)
         {
-            Add(node->Left, data, depth);
+            Add(node->Left, data);
         }
         else
         {
-            node->Left = new BinaryTreeNode(data, depth, node);
+            node->Left = new BinaryTreeNode(data, node);
         }
     }
     else
     {
         if (node->Right)
         {
-            Add(node->Right, data, depth);
+            Add(node->Right, data);
         }
         else
         {
-            node->Right = new BinaryTreeNode(data, depth, node);
+            node->Right = new BinaryTreeNode(data, node);
         }
     }
+    UpdateDepth();
 }
 
 void BinaryTree::Add(const int & data)
 {
-    Add(_root, data, 1);
+    Add(_root, data);
+}
+
+bool BinaryTree::Remove(const int & data)
+{
+    BinaryTreeNode* removeElement = Search(data);
+    BinaryTreeNode* swapElement = nullptr;
+    if (!removeElement)
+    {
+        return false;
+    }
+    if (removeElement->Left && removeElement->Right)
+    {
+        swapElement = SearchMin(removeElement->Right);
+    }
+    else if (removeElement->Left)
+    {
+        swapElement = removeElement->Left;
+    }
+    else if (removeElement->Right)
+    {
+        swapElement = removeElement->Right;
+    }
+    if (swapElement)
+    {
+        if (swapElement->Parent != removeElement)
+        {
+            swapElement->Parent->Left = swapElement->Right;
+            if (swapElement->Right)
+            {
+                swapElement->Right->Parent = swapElement->Parent;
+            }
+        }
+        else
+        {
+            removeElement->Right = swapElement->Right;
+        }
+        swapElement->Left = removeElement->Left;
+        swapElement->Right = removeElement->Right;
+    }
+    if (removeElement->Parent)
+    {
+        if (removeElement->Parent->Left == removeElement)
+        {
+            removeElement->Parent->Left = swapElement;
+        }
+        else
+        {
+            removeElement->Parent->Right = swapElement;
+        }
+    }
+    else
+    {
+        _root = swapElement;
+        if (swapElement)
+        {
+            swapElement->Parent = nullptr;
+        }
+    }
+    delete removeElement;
+    UpdateDepth();
+    return true;
+}
+
+BinaryTreeNode* BinaryTree::Search(BinaryTreeNode* node, const int & data)
+{
+    if (!node)
+    {
+        return nullptr;
+    }
+    if (data == node->Data)
+    {
+        return node;
+    }
+    if (data < node->Data)
+    {
+        return Search(node->Left, data);
+    }
+    else
+    {
+        return Search(node->Right, data);
+    }
+}
+
+BinaryTreeNode* BinaryTree::Search(const int & data)
+{
+    return Search(_root, data);
 }
 
 void BinaryTree::Show()
 {
     if (!_root)
     {
+        cout << "Binary tree is empty..." << endl;
         return;
     }
+    cout << "Binary tree:" << endl;
     Queue queue;
-    queue.Push(_root, _root->Depth);
+    queue.Push(_root, 1);
     int depthObserver = 1;
     while(!queue.IsEmpty())
     {
@@ -125,27 +230,15 @@ void BinaryTree::Show()
             }
             cout << temp->Data;
             backspaceCounter = DigitPlace(temp->Data);
-
-            if (temp->Left)
-            {
-                queue.Push(temp->Left, temp->Depth + 1);
-            }
-            else
-            {
-                queue.Push(nullptr, temp->Depth + 1);
-            }
-            if (temp->Right)
-            {
-                queue.Push(temp->Right, temp->Depth + 1);
-            }
-            else
-            {
-                queue.Push(nullptr, temp->Depth + 1);
-            }
         }
-        else
+        if (depthObserver < _depth)
         {
-            if (depthObserver < _depth)
+            if (temp)
+            {
+                queue.Push(temp->Left, depthObserver + 1);
+                queue.Push(temp->Right, depthObserver + 1);
+            }
+            else
             {
                 queue.Push(nullptr, depthObserver + 1);
                 queue.Push(nullptr, depthObserver + 1);
@@ -160,6 +253,7 @@ void BinaryTree::Show()
             cout << '\b';
         }
     }
+    cout << "\nDepth = " << FindDepth(_root, 0) << endl;
 }
 
 BinaryTreeNode* BinaryTree::SearchMin(BinaryTreeNode* node)
@@ -178,6 +272,11 @@ BinaryTreeNode* BinaryTree::SearchMin(BinaryTreeNode* node)
     }
 }
 
+BinaryTreeNode* BinaryTree::SearchMin()
+{
+    return SearchMin(_root);
+}
+
 BinaryTreeNode* BinaryTree::SearchMax(BinaryTreeNode* node)
 {
     if (!node)
@@ -192,4 +291,9 @@ BinaryTreeNode* BinaryTree::SearchMax(BinaryTreeNode* node)
     {
         return node;
     }
+}
+
+BinaryTreeNode* BinaryTree::SearchMax()
+{
+    return SearchMax(_root);
 }
