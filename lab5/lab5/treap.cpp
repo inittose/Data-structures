@@ -180,6 +180,12 @@ bool Treap::Add(const int & key)
     return true;
 }
 
+/*!
+ * \brief Оптимизированный метод добавления
+ * \param node Узел поддерева
+ * \param newNode Новый узел
+ * \param parent Предок
+ */
 void Treap::LightAdd(TreapNode* node, TreapNode* newNode, TreapNode* parent)
 {
     if (node && newNode->Priority < node->Priority)
@@ -223,6 +229,10 @@ void Treap::LightAdd(TreapNode* node, TreapNode* newNode, TreapNode* parent)
     }
 }
 
+/*!
+ * \brief Оптимизированный метод добавления
+ * \param key Ключ
+ */
 void Treap::LightAdd(const int & key)
 {
     if (!Search(key))
@@ -250,6 +260,13 @@ bool Treap::Remove(const int & key)
     return result;
 }
 
+/*!
+ * \brief Оптимизированный метод удаления узла
+ * \param node Узел поддерева
+ * \param key Ключ
+ * \param parent Предок
+ * \return Статус удаления
+ */
 bool Treap::LightRemove(TreapNode* node, const int & key, TreapNode* parent)
 {
     if (!node)
@@ -288,6 +305,11 @@ bool Treap::LightRemove(TreapNode* node, const int & key, TreapNode* parent)
     }
 }
 
+/*!
+ * \brief Оптимизированный метод удаления узла
+ * \param key Ключ
+ * \return Статус удаления
+ */
 bool Treap::LightRemove(const int & key)
 {
     return LightRemove(_root, key);
