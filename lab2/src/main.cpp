@@ -12,7 +12,7 @@ void ResearchTime();
 
 int main()
 {
-	MainProgram();
+	ResearchTime();
 	return 0;
 }
 
@@ -44,8 +44,8 @@ void ResearchTime()
 	ofstream delout;
 	ofstream insout;
 
-	delout.open("output/Delete.txt");
-	insout.open("output/Insert.txt");
+	delout.open("./output/Delete.txt");
+	insout.open("./output/Insert.txt");
 
 	for (int i = 1; i < numberOfLists; i++)
 	{

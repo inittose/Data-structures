@@ -9,7 +9,8 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-.vscode/*
+.vscode
+.DS_Store
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -21,6 +22,9 @@ _deps
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Qt creator built
+build*
 
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
