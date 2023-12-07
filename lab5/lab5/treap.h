@@ -7,10 +7,20 @@
 using std::cout;
 using std::endl;
 
+/*!
+ * \brief Декартово дерево
+ */
 class Treap
 {
 private:
+    /*!
+     * \brief Корень дерамиды
+     */
     TreapNode* _root;
+
+    /*!
+     * \brief Глубина дерамиды
+     */
     int _depth;
 
     TreapNode* Merge(TreapNode* a, TreapNode* b);

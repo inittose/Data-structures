@@ -1,5 +1,9 @@
 #include "treapnode.h"
 
+/*!
+ * \brief Конструктор узла декартова дерева
+ * \param key Ключ узла
+ */
 TreapNode::TreapNode(const int & key)
 {
     Key = key;

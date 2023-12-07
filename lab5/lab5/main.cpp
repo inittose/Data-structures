@@ -23,6 +23,9 @@ int main()
     return 0;
 }
 
+/*!
+ * \brief Главное меню и выбор структур данных для работы
+ */
 void MainController()
 {
     string menu = "Choose one of structure:\n1 - Binary tree\n2 - Treap\nq - Quit\nYour choice: ";
@@ -124,7 +127,7 @@ void ControllerBinaryTree()
 }
 
 /*!
- * \brief Меню и управление бинарным деревом поиска
+ * \brief Меню и управление дерамидой (Декартово дерево)
  */
 void ControllerTreap()
 {

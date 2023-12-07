@@ -9,7 +9,8 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-.vscode/*
+.vscode
+.DS_Store
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

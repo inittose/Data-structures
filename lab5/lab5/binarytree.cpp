@@ -1,5 +1,11 @@
 #include "binarytree.h"
 
+/*!
+ * \brief Возведение в степень
+ * \param number Число
+ * \param power Степень
+ * \return Число возведенное в степень
+ */
 int BinaryTree::Power(const int &number, const int &power)
 {
     int result = 1;
@@ -10,6 +16,11 @@ int BinaryTree::Power(const int &number, const int &power)
     return result;
 }
 
+/*!
+ * \brief Получение количества знаков числа
+ * \param number Число
+ * \return Количество знаков у числа
+ */
 int BinaryTree::DigitPlace(int number)
 {
     int i = 1;
@@ -22,12 +33,18 @@ int BinaryTree::DigitPlace(int number)
     return i;
 }
 
+/*!
+ * \brief Конструктор двоичного дерева поиска
+ */
 BinaryTree::BinaryTree()
 {
     _depth = 0;
     _root = nullptr;
 }
 
+/*!
+ * \brief Деструктор двоичного дерева поиска
+ */
 BinaryTree::~BinaryTree()
 {
     if (!_root)
@@ -51,6 +68,12 @@ BinaryTree::~BinaryTree()
     }
 }
 
+/*!
+ * \brief Нахождение глубины
+ * \param node Узел
+ * \param depth Глубина узла
+ * \return Глубина дерева
+ */
 int BinaryTree::FindDepth(BinaryTreeNode* node, int depth)
 {
     if (!node)
@@ -63,11 +86,19 @@ int BinaryTree::FindDepth(BinaryTreeNode* node, int depth)
     return leftDepth > rightDepth ? leftDepth : rightDepth;
 }
 
+/*!
+ * \brief Установить корректное значение глубины дерева
+ */
 void BinaryTree::UpdateDepth()
 {
     _depth = FindDepth(_root, 0);
 }
 
+/*!
+ * \brief Добавить узел в поддерево
+ * \param node Узел
+ * \param data Значение
+ */
 void BinaryTree::Add(BinaryTreeNode* node, const int& data)
 {
     if (!node)
@@ -105,11 +136,20 @@ void BinaryTree::Add(BinaryTreeNode* node, const int& data)
     UpdateDepth();
 }
 
+/*!
+ * \brief Добавить узел в дерево
+ * \param Значение
+ */
 void BinaryTree::Add(const int & data)
 {
     Add(_root, data);
 }
 
+/*!
+ * \brief Удаление узла из дерева
+ * \param data Значение
+ * \return Статус удаления
+ */
 bool BinaryTree::Remove(const int & data)
 {
     BinaryTreeNode* removeElement = Search(data);
@@ -170,6 +210,12 @@ bool BinaryTree::Remove(const int & data)
     return true;
 }
 
+/*!
+ * \brief Поиск узла дерева по значению
+ * \param node Узел поддерева
+ * \param data Значение
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::Search(BinaryTreeNode* node, const int & data)
 {
     if (!node)
@@ -190,11 +236,19 @@ BinaryTreeNode* BinaryTree::Search(BinaryTreeNode* node, const int & data)
     }
 }
 
+/*!
+ * \brief Поиск узла дерева по значению
+ * \param data Значение
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::Search(const int & data)
 {
     return Search(_root, data);
 }
 
+/*!
+ * \brief Вывод дерева
+ */
 void BinaryTree::Show()
 {
     if (!_root)
@@ -255,6 +309,10 @@ void BinaryTree::Show()
     cout << "\nDepth = " << _depth << endl;
 }
 
+/*!
+ * \brief Вывод деталей конкретного узла
+ * \param data Значение узла
+ */
 void BinaryTree::ShowDetails(const int & data)
 {
     BinaryTreeNode* node = Search(data);
@@ -294,6 +352,11 @@ void BinaryTree::ShowDetails(const int & data)
     cout << endl;
 }
 
+/*!
+ * \brief Поиск минимального узла
+ * \param node Узел поддерева
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::SearchMin(BinaryTreeNode* node)
 {
     if (!node)
@@ -310,11 +373,20 @@ BinaryTreeNode* BinaryTree::SearchMin(BinaryTreeNode* node)
     }
 }
 
+/*!
+ * \brief Поиск минимального узла
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::SearchMin()
 {
     return SearchMin(_root);
 }
 
+/*!
+ * \brief Поиск максимального узла
+ * \param node Узел поддерева
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::SearchMax(BinaryTreeNode* node)
 {
     if (!node)
@@ -323,7 +395,7 @@ BinaryTreeNode* BinaryTree::SearchMax(BinaryTreeNode* node)
     }
     if (node->Right)
     {
-        return SearchMin(node->Right);
+        return SearchMax(node->Right);
     }
     else
     {
@@ -331,6 +403,10 @@ BinaryTreeNode* BinaryTree::SearchMax(BinaryTreeNode* node)
     }
 }
 
+/*!
+ * \brief Поиск максимального узла
+ * \return Найденный узел
+ */
 BinaryTreeNode* BinaryTree::SearchMax()
 {
     return SearchMax(_root);

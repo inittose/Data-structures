@@ -3,20 +3,37 @@
 
 #include "queuenode.h"
 
+/*!
+ * \brief Очередь
+ */
 template <typename type>
 class Queue
 {
 private:
+    /*!
+     * \brief Голова очереди
+     */
     QueueNode<type>* _head;
+
+    /*!
+     * \brief Хвост очереди
+     */
     QueueNode<type>* _tail;
 
 public:
+
+    /*!
+     * \brief Конструктор очереди
+     */
     Queue()
     {
         _head = nullptr;
         _tail = nullptr;
     }
 
+    /*!
+     * \brief Деструктор очереди
+     */
     ~Queue()
     {
         QueueNode<type>* deleteItem = _head;
@@ -28,6 +45,10 @@ public:
         }
     }
 
+    /*!
+     * \brief Извлечение элемента из очереди
+     * \return Извлеченный элемент
+     */
     type* Pop()
     {
         if (!_head)
@@ -51,6 +72,10 @@ public:
         return popItem;
     }
 
+    /*!
+     * \brief Получить глубину первого элемента в очереди
+     * \return Глубина элемента
+     */
     int GetDepth()
     {
         return _head->Depth;
@@ -70,6 +95,9 @@ public:
         }
     }
 
+    /*!
+     * \brief Проверка пустая ли очередь
+     */
     bool IsEmpty()
     {
         return !_head;

@@ -1,11 +1,18 @@
 #include "treap.h"
 
+/*!
+ * \brief Конструктор дерамиды (декартово дерево)
+ */
 Treap::Treap()
 {
     _depth = 0;
     _root = nullptr;
 }
 
+/*!
+ * \brief Удаление поддерева
+ * \param node Узел поддерева
+ */
 void Treap::DeleteTreap(TreapNode* node)
 {
     if (node)
@@ -16,11 +23,20 @@ void Treap::DeleteTreap(TreapNode* node)
     }
 }
 
+/*!
+ * \brief Деструктор дерамиды (декартово дерево)
+ */
 Treap::~Treap()
 {
     DeleteTreap(_root);
 }
 
+/*!
+ * \brief Возведение в степень
+ * \param number Число
+ * \param power Степень
+ * \return Число возведенное в степень
+ */
 int Treap::Power(const int &number, const int &power)
 {
     int result = 1;
@@ -31,6 +47,11 @@ int Treap::Power(const int &number, const int &power)
     return result;
 }
 
+/*!
+ * \brief Получение количества знаков числа
+ * \param number Число
+ * \return Количество знаков у числа
+ */
 int Treap::DigitPlace(int number)
 {
     int i = 1;
@@ -43,6 +64,12 @@ int Treap::DigitPlace(int number)
     return i;
 }
 
+/*!
+ * \brief Нахождение глубины
+ * \param node Узел
+ * \param depth Глубина узла
+ * \return Глубина дерева
+ */
 int Treap::FindDepth(TreapNode* node, int depth)
 {
     if (!node)
@@ -55,12 +82,20 @@ int Treap::FindDepth(TreapNode* node, int depth)
     return leftDepth > rightDepth ? leftDepth : rightDepth;
 }
 
+/*!
+ * \brief Установить корректное значение глубины дерева
+ */
 void Treap::UpdateDepth()
 {
     _depth = FindDepth(_root, 0);
 }
 
-// Все ключи из a должны быть меньше ключей из b
+/*!
+ * \brief Слияние двух дерамид (где все ключи левой дерамиды меньше, чем у правой)
+ * \param left Левая дерамида
+ * \param right Правая дерамида
+ * \return Одно дерево
+ */
 TreapNode* Treap::Merge(TreapNode* left, TreapNode* right)
 {
     if (!right)
@@ -83,6 +118,13 @@ TreapNode* Treap::Merge(TreapNode* left, TreapNode* right)
     }
 }
 
+/*!
+ * \brief Разделить дерамиду по ключу
+ * \param node Узел поддерева
+ * \param key Ключ
+ * \param left Полученная левая дерамида
+ * \param right Полученная правая дерамида
+ */
 void Treap::Split(TreapNode* node, int key, TreapNode*& left, TreapNode*& right)
 {
     if (!node)
@@ -102,6 +144,11 @@ void Treap::Split(TreapNode* node, int key, TreapNode*& left, TreapNode*& right)
     }
 }
 
+/*!
+ * \brief Поиск узла по ключу
+ * \param key Ключ
+ * \return Найденный узел
+ */
 TreapNode* Treap::Search(const int & key)
 {
     TreapNode* less;
@@ -113,6 +160,11 @@ TreapNode* Treap::Search(const int & key)
     return equal;
 }
 
+/*!
+ * \brief Добавление узла
+ * \param key Ключ
+ * \return Статус добавления
+ */
 bool Treap::Add(const int & key)
 {
     if (Search(key))
@@ -128,6 +180,11 @@ bool Treap::Add(const int & key)
     return true;
 }
 
+/*!
+ * \brief Удаление узла по ключу
+ * \param key Ключ
+ * \return Статус удаления
+ */
 bool Treap::Remove(const int & key)
 {
     TreapNode* less;
@@ -142,6 +199,9 @@ bool Treap::Remove(const int & key)
     return result;
 }
 
+/*!
+ * \brief Вывод дерамиды
+ */
 void Treap::Show()
 {
     if (!_root)
@@ -202,6 +262,10 @@ void Treap::Show()
     cout << "\nDepth = " << _depth << endl;
 }
 
+/*!
+ * \brief Вывод деталей узла дерамиды
+ * \param data Ключ
+ */
 void Treap::ShowDetails(const int & data)
 {
     TreapNode* node = Search(data);

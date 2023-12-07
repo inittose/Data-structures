@@ -8,8 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(lab5 main.cpp
     binarytreenode.h binarytreenode.cpp
     binarytree.h binarytree.cpp
-    queue.h queue.cpp
-    queuenode.h queuenode.cpp
+    queue.h
+    queuenode.h
     treapnode.h treapnode.cpp
     treap.h treap.cpp)
 

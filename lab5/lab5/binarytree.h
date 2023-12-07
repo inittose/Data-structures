@@ -6,10 +6,20 @@
 using std::cout;
 using std::endl;
 
+/*!
+ * \brief Двоичное дерево поиска
+ */
 class BinaryTree
 {
 private:
+    /*!
+     * \brief Корень дерева
+     */
     BinaryTreeNode* _root;
+
+    /*!
+     * \brief Глубина дерева
+     */
     int _depth;
 
     int Power(const int &number, const int &power);
