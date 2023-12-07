@@ -27,8 +27,9 @@ public:
     ~Treap();
     bool Add(const int & key);
     bool Remove(const int & key);
-    bool Search(const int & key);
+    TreapNode* Search(const int & key);
     void Show();
+    void ShowDetails(const int & data);
 };
 
 #endif // TREAP_H

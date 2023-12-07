@@ -61,53 +61,56 @@ void Treap::UpdateDepth()
 }
 
 // Все ключи из a должны быть меньше ключей из b
-TreapNode* Treap::Merge(TreapNode* a, TreapNode* b)
+TreapNode* Treap::Merge(TreapNode* left, TreapNode* right)
 {
-    if (!a || !b)
+    if (!right)
     {
-        return a ? a : b;
+        return left;
     }
-    if (a->Priority > b->Priority)
+    if (!left)
     {
-        a->Right = Merge(a->Left, b);
-        return a;
+        return right;
+    }
+    if (left->Priority > right->Priority)
+    {
+        left->Right = Merge(left->Right, right);
+        return left;
     }
     else
     {
-        b->Left = Merge(a, b->Right);
-        return b;
+        right->Left = Merge(left, right->Left);
+        return right;
     }
 }
 
-void Treap::Split(TreapNode* node, int key, TreapNode*& a, TreapNode*& b)
+void Treap::Split(TreapNode* node, int key, TreapNode*& left, TreapNode*& right)
 {
     if (!node)
     {
-        a = b = nullptr;
+        left = right = nullptr;
         return;
     }
     if (node->Key < key)
     {
-        Split(node->Right, key, node->Right, b);
-        a = node;
+        Split(node->Right, key, node->Right, right);
+        left = node;
     }
     else
     {
-        Split(node->Left, key, a, node->Left);
-        b = node;
+        Split(node->Left, key, left, node->Left);
+        right = node;
     }
 }
 
-bool Treap::Search(const int & key)
+TreapNode* Treap::Search(const int & key)
 {
     TreapNode* less;
     TreapNode* equal;
     TreapNode* greater;
     Split(_root, key, less, greater);
     Split(greater, key + 1, equal, greater);
-    bool result = equal;
     _root = Merge(Merge(less, equal), greater);
-    return result;
+    return equal;
 }
 
 bool Treap::Add(const int & key)
@@ -146,8 +149,8 @@ void Treap::Show()
         cout << "Treap is empty..." << endl;
         return;
     }
-    cout << "Treap is... " << endl;
-    /*Queue<TreapNode> queue;
+    cout << "Treap:" << endl;
+    Queue<TreapNode> queue;
     queue.Push(_root, 1);
     int depthObserver = 1;
     while(!queue.IsEmpty())
@@ -163,7 +166,7 @@ void Treap::Show()
         int backspaceCounter = 0;
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << "  ";
+            cout << "    ";
         }
         if (temp)
         {
@@ -171,8 +174,8 @@ void Treap::Show()
             {
                 cout << '\b';
             }
-            cout << temp->Key << "; " << temp->Priority;
-            backspaceCounter = DigitPlace(temp->Key);
+            cout << "(" << temp->Key << " " << temp->Priority << ")";
+            backspaceCounter = 3 + DigitPlace(temp->Key) + DigitPlace(temp->Priority);
         }
         if (depthObserver < _depth)
         {
@@ -189,12 +192,42 @@ void Treap::Show()
         }
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << "  ";
+            cout << "    ";
         }
         for (int i = 0; i < backspaceCounter; i++)
         {
             cout << '\b';
         }
-    }*/
-    cout << "\nDepth = " << FindDepth(_root, 0) << endl;
+    }
+    cout << "\nDepth = " << _depth << endl;
+}
+
+void Treap::ShowDetails(const int & data)
+{
+    TreapNode* node = Search(data);
+    if (!node)
+    {
+        cout << "There are no element with value " << data << "!\n";
+        return;
+    }
+    cout << "_root: " << _root <<"\nValue: " << data << "\tPointer: " << node;
+    cout << "\nLeft: ";
+    if (node->Left)
+    {
+        cout << node->Left << " | " << node->Left->Key << "; " << node->Left->Priority;
+    }
+    else
+    {
+        cout << "nullptr";
+    }
+    cout << "\nRight: ";
+    if (node->Right)
+    {
+        cout << node->Right << " | " << node->Right->Key << "; " << node->Right->Priority;
+    }
+    else
+    {
+        cout << "nullptr";
+    }
+    cout << endl;
 }

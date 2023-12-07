@@ -2,6 +2,7 @@
 #define TREAPNODE_H
 
 #include <cstdlib>
+#include <ctime>
 
 struct TreapNode
 {

@@ -252,7 +252,7 @@ void BinaryTree::Show()
             cout << '\b';
         }
     }
-    cout << "\nDepth = " << FindDepth(_root, 0) << endl;
+    cout << "\nDepth = " << _depth << endl;
 }
 
 void BinaryTree::ShowDetails(const int & data)
@@ -261,6 +261,7 @@ void BinaryTree::ShowDetails(const int & data)
     if (!node)
     {
         cout << "There are no element with value " << data << "!\n";
+        return;
     }
     cout << "_root: " << _root <<"\nValue: " << data << "\tPointer: " << node;
     cout << "\nParent: ";

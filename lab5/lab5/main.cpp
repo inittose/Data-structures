@@ -9,6 +9,7 @@ using namespace std;
 
 void ControllerBinaryTree();
 void ControllerTreap();
+void MainController();
 template <typename T>
 void ValidInput(T &variable);
 string GetTypeName(const char *letter);
@@ -17,9 +18,32 @@ void ClearTerminal();
 
 int main()
 {
-    ControllerTreap();
+    MainController();
 
     return 0;
+}
+
+void MainController()
+{
+    string menu = "Choose one of structure:\n1 - Binary tree\n2 - Treap\nq - Quit\nYour choice: ";
+    char mode = '\0';
+
+    while (mode != 'q')
+    {
+        cout << menu;
+        ValidInput(mode);
+        ClearTerminal();
+        switch (mode) {
+        case '1':
+            ControllerBinaryTree();
+            break;
+        case '2':
+            ControllerTreap();
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 /*!
@@ -27,7 +51,7 @@ int main()
  */
 void ControllerBinaryTree()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search max value\n5 - Search min value\n6 - Show details of element\nq - Quit\nYour choice: ";
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search min value\n5 - Search max value\n6 - Show details of element\nq - Exit to main menu\nYour choice: ";
     int data;
     BinaryTree binaryTree;
     char mode = '\0';
@@ -104,8 +128,8 @@ void ControllerBinaryTree()
  */
 void ControllerTreap()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\nq - Quit\nYour choice: ";
-    int data;
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Deatails of element\nq - Exit to main menu\nYour choice: ";
+    int key;
     Treap treap;
     char mode = '\0';
 
@@ -118,32 +142,37 @@ void ControllerTreap()
         switch (mode) {
         case '1':
             cout << "Enter value for adding: ";
-            ValidInput(data);
-            treap.Add(data);
+            ValidInput(key);
+            treap.Add(key);
             break;
         case '2':
             cout << "Enter value for deletion: ";
-            ValidInput(data);
-            if (treap.Remove(data))
+            ValidInput(key);
+            if (treap.Remove(key))
             {
                 cout << "Deletion successful!\n";
             }
             else
             {
-                cout << "No value " << data << " in treap!\n";
+                cout << "No value " << key << " in treap!\n";
             }
             break;
         case '3':
             cout << "Enter value for search: ";
-            ValidInput(data);
-            if (treap.Search(data))
+            ValidInput(key);
+            if (treap.Search(key))
             {
-                cout << "Value " << data << " is contained in treap!\n";
+                cout << "Value " << key << " is contained in treap!\n";
             }
             else
             {
-                cout << "No value " << data << " in treap!\n";
+                cout << "No value " << key << " in treap!\n";
             }
+            break;
+        case '4':
+            cout << "Enter value for details: ";
+            ValidInput(key);
+            treap.ShowDetails(key);
             break;
         default:
             break;
