@@ -180,6 +180,57 @@ bool Treap::Add(const int & key)
     return true;
 }
 
+void Treap::LightAdd(TreapNode* node, TreapNode* newNode, TreapNode* parent)
+{
+    if (node && newNode->Priority < node->Priority)
+    {
+        if (newNode->Key == node->Key)
+        {
+            return;
+        }
+        if (newNode->Key < node->Key)
+        {
+            LightAdd(node->Left, newNode, node);
+        }
+        else
+        {
+            LightAdd(node->Right, newNode, node);
+        }
+    }
+    else
+    {
+        TreapNode* left;
+        TreapNode* right;
+        Split(node, newNode->Key, left, right);
+        newNode->Left = left;
+        newNode->Right = right;
+        if (parent)
+        {
+            if (newNode->Key < parent->Key)
+            {
+                parent->Left = newNode;
+            }
+            else
+            {
+                parent->Right = newNode;
+            }
+        }
+        else
+        {
+            _root = newNode;
+        }
+        UpdateDepth();
+    }
+}
+
+void Treap::LightAdd(const int & key)
+{
+    if (!Search(key))
+    {
+        LightAdd(_root, new TreapNode(key), nullptr);
+    }
+}
+
 /*!
  * \brief Удаление узла по ключу
  * \param key Ключ
@@ -197,6 +248,49 @@ bool Treap::Remove(const int & key)
     delete equal;
     UpdateDepth();
     return result;
+}
+
+bool Treap::LightRemove(TreapNode* node, const int & key, TreapNode* parent)
+{
+    if (!node)
+    {
+        return false;
+    }
+    if (key == node->Key)
+    {
+        TreapNode* newNode = Merge(node->Left, node->Right);
+        if (parent)
+        {
+            if (node == parent->Left)
+            {
+                parent->Left = newNode;
+            }
+            else
+            {
+                parent->Right = newNode;
+            }
+        }
+        else
+        {
+            _root = newNode;
+        }
+        delete node;
+        UpdateDepth();
+        return true;
+    }
+    if (key < node->Key)
+    {
+        return LightRemove(node->Left, key, node);
+    }
+    else
+    {
+        return LightRemove(node->Right, key, node);
+    }
+}
+
+bool Treap::LightRemove(const int & key)
+{
+    return LightRemove(_root, key);
 }
 
 /*!

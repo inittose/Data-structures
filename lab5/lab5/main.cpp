@@ -131,7 +131,7 @@ void ControllerBinaryTree()
  */
 void ControllerTreap()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Deatails of element\nq - Exit to main menu\nYour choice: ";
+    string menu = "Choose one of activity:\n1 - Add\n2 - Light add\n3 - Remove\n4 - Light remove\n5 - Search\n6 - Deatails of element\nq - Exit to main menu\nYour choice: ";
     int key;
     Treap treap;
     char mode = '\0';
@@ -149,6 +149,11 @@ void ControllerTreap()
             treap.Add(key);
             break;
         case '2':
+            cout << "Enter value for adding: ";
+            ValidInput(key);
+            treap.LightAdd(key);
+            break;
+        case '3':
             cout << "Enter value for deletion: ";
             ValidInput(key);
             if (treap.Remove(key))
@@ -160,7 +165,19 @@ void ControllerTreap()
                 cout << "No value " << key << " in treap!\n";
             }
             break;
-        case '3':
+        case '4':
+            cout << "Enter value for deletion: ";
+            ValidInput(key);
+            if (treap.LightRemove(key))
+            {
+                cout << "Deletion successful!\n";
+            }
+            else
+            {
+                cout << "No value " << key << " in treap!\n";
+            }
+            break;
+        case '5':
             cout << "Enter value for search: ";
             ValidInput(key);
             if (treap.Search(key))
@@ -172,7 +189,7 @@ void ControllerTreap()
                 cout << "No value " << key << " in treap!\n";
             }
             break;
-        case '4':
+        case '6':
             cout << "Enter value for details: ";
             ValidInput(key);
             treap.ShowDetails(key);

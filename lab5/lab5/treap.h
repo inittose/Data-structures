@@ -26,6 +26,8 @@ private:
     TreapNode* Merge(TreapNode* a, TreapNode* b);
     void Split(TreapNode* node, int key, TreapNode*& a, TreapNode*& b);
     void DeleteTreap(TreapNode* node);
+    void LightAdd(TreapNode* node, TreapNode* newNode, TreapNode* parent = nullptr);
+    bool LightRemove(TreapNode* node, const int & key, TreapNode* parent = nullptr);
 
     int Power(const int &number, const int &power);
     int DigitPlace(int number);
@@ -36,7 +38,9 @@ public:
     Treap();
     ~Treap();
     bool Add(const int & key);
+    void LightAdd(const int & key);
     bool Remove(const int & key);
+    bool LightRemove(const int & key);
     TreapNode* Search(const int & key);
     void Show();
     void ShowDetails(const int & data);
