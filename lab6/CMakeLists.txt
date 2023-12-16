@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(lab6 main.cpp
-    redblacktree.h redblacktree.cpp
-    redblacktreenode.h redblacktreenode.cpp
+    rbtree.h rbtree.cpp
+    rbtreenode.h rbtreenode.cpp
     avltree.h avltree.cpp
     avltreenode.h avltreenode.cpp
-    queue.h queue.cpp)
+    queue.h
+    queuenode.h
+)
 
 include(GNUInstallDirs)
 install(TARGETS lab6
