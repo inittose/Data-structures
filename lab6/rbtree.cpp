@@ -53,7 +53,7 @@ RBTreeNode* RBTree::Recoloring(RBTreeNode* node)
     return node;
 }
 
-RBTreeNode* RBTree::Rebalance(RBTreeNode* node)
+RBTreeNode* RBTree::Rebalance(RBTreeNode* node, bool &isDisbalanced)
 {
     if (node == nullptr)
     {
@@ -63,22 +63,25 @@ RBTreeNode* RBTree::Rebalance(RBTreeNode* node)
     {
         if (node->Left->Color == Red && node->Right->Color == Red)
         {
-            return Rebalance(Recoloring(node));
+            isDisbalanced = true;
+            return Rebalance(Recoloring(node), isDisbalanced);
         }
     }
     if (node->Right && node->Right->Color == Red)
     {
-        return Rebalance(TurnLeft(node));
+        isDisbalanced = true;
+        return Rebalance(TurnLeft(node), isDisbalanced);
     }
     if (node->Left && node->Left->Left)
     {
         if (node->Left->Color == Red && node->Left->Left->Color == Red)
         {
-            return Rebalance(TurnRight(node));
+            isDisbalanced = true;
+            return Rebalance(TurnRight(node), isDisbalanced);
         }
     }
-    node->Left = Rebalance(node->Left);
-    node->Right = Rebalance(node->Right);
+    node->Left = Rebalance(node->Left, isDisbalanced);
+    node->Right = Rebalance(node->Right, isDisbalanced);
     return node;
 }
 
@@ -92,7 +95,7 @@ RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
     {
         return new RBTreeNode(data, Red);
     }
-    if (node->Data > data)
+    if (data > node->Data)
     {
         node->Right = AddNode(node->Right, data);
     }
@@ -106,10 +109,15 @@ RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
 void RBTree::AddNode(const int &data)
 {
     _root = AddNode(_root, data);
-    Rebalance(_root);
+    bool isDisbalanced = true;
+    while(isDisbalanced)
+    {
+        isDisbalanced = false;
+        _root = Rebalance(_root, isDisbalanced);
+    }
 }
 
-int GetDepth(RBTreeNode* node, int currentDepth)
+int RBTree::GetDepth(RBTreeNode* node, int currentDepth)
 {
     if (node == nullptr)
     {
@@ -133,12 +141,12 @@ Queue<RBTreeNode> RBTree::GetLayers()
     Queue<RBTreeNode> queue;
     Queue<RBTreeNode> queueBypass;
     int treeDepth = GetDepth(_root);
-    int depthObserver = 1;
+    int depthObserver = 0;
     queue.Push(_root, depthObserver);
     queueBypass.Push(_root, depthObserver);
+    depthObserver = queueBypass.GetDepth();
     while(depthObserver < treeDepth)
     {
-        depthObserver = queueBypass.GetDepth();
         RBTreeNode* node = queueBypass.Pop();
         if (node)
         {
@@ -169,6 +177,7 @@ Queue<RBTreeNode> RBTree::GetLayers()
             queueBypass.Push(nullptr, depthObserver + 1);
             queueBypass.Push(nullptr, depthObserver + 1);
         }
+        depthObserver = queueBypass.GetDepth();
     }
     return queue;
 }

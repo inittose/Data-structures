@@ -13,7 +13,7 @@ private:
     RBTreeNode* TurnLeft(RBTreeNode* node);
     RBTreeNode* TurnRight(RBTreeNode* node);
     RBTreeNode* Recoloring(RBTreeNode* node);
-    RBTreeNode* Rebalance(RBTreeNode* node);
+    RBTreeNode* Rebalance(RBTreeNode* node, bool &isDisbalanced);
     RBTreeNode* AddNode(RBTreeNode* node, const int &data);
     int GetDepth(RBTreeNode* node, int currentDepth = 0);
 

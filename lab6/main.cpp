@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string.h>
-//#include "rbtree.h"
+#include "rbtree.h"
 
 using namespace std;
 
@@ -9,8 +9,8 @@ void ControllerAVLTree();
 void MainController();
 template <typename T>
 void ValidInput(T &variable);
-//template <typename T>
-//void ShowTree(Queue<T> queue);
+template <typename T>
+void ShowTree(Queue<T> queue);
 string GetTypeName(const char *letter);
 void ClearTerminal();
 int Power(const int &number, const int &power);
@@ -51,18 +51,18 @@ void MainController()
 }
 
 /*!
- * \brief Меню и управление бинарным деревом поиска
+ * \brief Меню и управление красно-черным деревом
  */
 void ControllerRBTree()
 {
     string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search min value\n5 - Search max value\n6 - Show details of element\nq - Exit to main menu\nYour choice: ";
-    /*int data;
+    int data;
     RBTree redBlackTree;
     char mode = '\0';
 
     while (mode != 'q')
     {
-        //ShowTree(redBlackTree.GetLayers());
+        ShowTree(redBlackTree.GetLayers());
         cout << menu;
         ValidInput(mode);
         ClearTerminal();
@@ -72,7 +72,7 @@ void ControllerRBTree()
             ValidInput(data);
             redBlackTree.AddNode(data);
             break;
-        case '2':
+        /*case '2':
             cout << "Enter value for deletion: ";
             ValidInput(data);
             if (redBlackTree.Remove(data))
@@ -120,11 +120,11 @@ void ControllerRBTree()
             cout << "Enter value for details: ";
             ValidInput(data);
             redBlackTree.ShowDetails(data);
-            break;
+            break;*/
         default:
             break;
         }
-    }*/
+    }
 }
 
 /*!
@@ -257,34 +257,35 @@ int DigitPlace(int number)
     return i;
 }
 
-/*template <typename T>
+template <typename T>
 void ShowTree(Queue<T> queue)
 {
-    string redColor = "\033[31m";
+    // ESC codes
     string brightRedColor = "\033[91m";
     string reset = "\033[0m";
+
     int treeDepth = queue.GetMaxDepth();
-    int depthObserver = 1;
-    if (queue.IsEmpty())
+    int depthObserver = queue.GetDepth();
+    bool redColor = queue.GetColor();
+    int depth = queue.GetDepth();
+    T* temp = queue.Pop();
+    if (temp == nullptr)
     {
         cout << "Red-black tree is empty!" << endl;
         return;
     }
     while (!queue.IsEmpty())
     {
-        bool redColor = queue.GetColor();
-        int depth = queue.GetDepth();
         if (depthObserver != depth)
         {
             depthObserver = depth;
-            cout << endl;
+            cout << endl << endl;
         }
-        T* temp = queue.Pop();
         int spaceCounter = Power(2, treeDepth - depth + 1);
         int backspaceCounter = 0;
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << " ";
+            cout << "  ";
         }
         if (temp)
         {
@@ -301,15 +302,18 @@ void ShowTree(Queue<T> queue)
         }
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << " ";
+            cout << "  ";
         }
         for (int i = 0; i < backspaceCounter; i++)
         {
             cout << '\b';
         }
+        redColor = queue.GetColor();
+        depth = queue.GetDepth();
+        temp = queue.Pop();
     }
-    cout << "Depth of red-black tree: " << treeDepth << endl;
-}*/
+    cout << "\nDepth of red-black tree: " << treeDepth - 1 << endl;
+}
 
 /*!
  * \brief Ввод с проверкой
