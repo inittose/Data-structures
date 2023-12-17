@@ -27,7 +27,7 @@ RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
     RBTreeNode* rightNode = node->Right;
     node->Right = rightNode->Left;
     rightNode->Left = node;
-    rightNode->Color = Black;
+    rightNode->Color = node->Color;
     node->Color = Red;
     return rightNode;
 }
@@ -37,7 +37,7 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
     RBTreeNode* leftNode = node->Left;
     node->Left = leftNode->Right;
     leftNode->Right = node;
-    leftNode->Color = Black;
+    leftNode->Color = node->Color;
     node->Color = Red;
     return leftNode;
 }
@@ -53,7 +53,7 @@ RBTreeNode* RBTree::Recoloring(RBTreeNode* node)
     return node;
 }
 
-RBTreeNode* RBTree::Rebalance(RBTreeNode* node, bool &isDisbalanced)
+RBTreeNode* RBTree::Rebalance(RBTreeNode* node)
 {
     if (node == nullptr)
     {
@@ -63,25 +63,22 @@ RBTreeNode* RBTree::Rebalance(RBTreeNode* node, bool &isDisbalanced)
     {
         if (node->Left->Color == Red && node->Right->Color == Red)
         {
-            isDisbalanced = true;
-            return Rebalance(Recoloring(node), isDisbalanced);
+            return Rebalance(Recoloring(node));
         }
     }
     if (node->Right && node->Right->Color == Red)
     {
-        isDisbalanced = true;
-        return Rebalance(TurnLeft(node), isDisbalanced);
+        return Rebalance(TurnLeft(node));
     }
     if (node->Left && node->Left->Left)
     {
         if (node->Left->Color == Red && node->Left->Left->Color == Red)
         {
-            isDisbalanced = true;
-            return Rebalance(TurnRight(node), isDisbalanced);
+            return Rebalance(TurnRight(node));
         }
     }
-    node->Left = Rebalance(node->Left, isDisbalanced);
-    node->Right = Rebalance(node->Right, isDisbalanced);
+    //node->Left = Rebalance(node->Left);
+    //node->Right = Rebalance(node->Right);
     return node;
 }
 
@@ -95,6 +92,10 @@ RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
     {
         return new RBTreeNode(data, Red);
     }
+    if (data == node->Data)
+    {
+        return node;
+    }
     if (data > node->Data)
     {
         node->Right = AddNode(node->Right, data);
@@ -103,18 +104,119 @@ RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
     {
         node->Left = AddNode(node->Left, data);
     }
-    return node;
+    return Rebalance(node);
 }
 
 void RBTree::AddNode(const int &data)
 {
     _root = AddNode(_root, data);
-    bool isDisbalanced = true;
-    while(isDisbalanced)
+}
+
+RBTreeNode* RBTree::GetMin(RBTreeNode* node)
+{
+    if (node->Left == nullptr)
     {
-        isDisbalanced = false;
-        _root = Rebalance(_root, isDisbalanced);
+        return node;
     }
+    else
+    {
+        return GetMin(node->Left);
+    }
+}
+
+RBTreeNode* RBTree::GetMax(RBTreeNode* node)
+{
+    if (node->Right == nullptr)
+    {
+        return node;
+    }
+    else
+    {
+        return GetMax(node->Right);
+    }
+}
+
+RBTreeNode* RBTree::RemoveMinNode(RBTreeNode* node)
+{
+    if (node->Left == nullptr)
+    {
+        return node->Right;
+    }
+    node->Left = RemoveMinNode(node->Left);
+    return Rebalance(node);
+}
+
+RBTreeNode* RBTree::RemoveNode(RBTreeNode* node, const int &data)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    }
+    if (node->Data == data)
+    {
+        RBTreeNode* left = node->Left;
+        RBTreeNode* right = node->Right;
+        RBColor color = node->Color;
+        delete node;
+        if (left != nullptr && right != nullptr)
+        {
+            RBTreeNode* swapNode = GetMin(right);
+            swapNode->Right = RemoveMinNode(right);
+            swapNode->Left = left;
+            swapNode->Color = color;
+            return Rebalance(swapNode);
+        }
+        if (left != nullptr)
+        {
+            left->Color = color;
+            return left;
+        }
+        if (right != nullptr)
+        {
+            right->Color = color;
+            return right;
+        }
+        return nullptr;
+    }
+    if (data > node->Data)
+    {
+        node->Right = RemoveNode(node->Right, data);
+    }
+    else
+    {
+        node->Left = RemoveNode(node->Left, data);
+    }
+    return Rebalance(node);
+}
+
+void RBTree::RemoveNode(const int &data)
+{
+    _root = RemoveNode(_root, data);
+}
+
+RBTreeNode* RBTree::SearchNode(RBTreeNode* node, const int &data)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    }
+    if (node->Data == data)
+    {
+        return node;
+    }
+    if (data > node->Data)
+    {
+        return SearchNode(node->Right, data);
+    }
+    else
+    {
+        return SearchNode(node->Left, data);
+    }
+}
+
+RBTreeNode* RBTree::SearchNode(const int &data)
+{
+    return SearchNode(_root, data);
 }
 
 int RBTree::GetDepth(RBTreeNode* node, int currentDepth)

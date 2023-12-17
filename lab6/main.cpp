@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "rbtree.h"
+#include "avltree.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ void ValidInput(T &variable);
 template <typename T>
 void ShowTree(Queue<T> queue);
 string GetTypeName(const char *letter);
+string GetTreeName(const string &name);
 void ClearTerminal();
 int Power(const int &number, const int &power);
 int DigitPlace(int number);
@@ -19,6 +21,9 @@ int DigitPlace(int number);
 
 int main()
 {
+    //RBTree redBlackTree;
+    //AVLTree avlTree;
+    //cout << "Red-black Tree: " << typeid(redBlackTree).name() << "\nAVL Tree: " << typeid(avlTree).name() << endl;
     MainController();
 
     return 0;
@@ -55,7 +60,7 @@ void MainController()
  */
 void ControllerRBTree()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search min value\n5 - Search max value\n6 - Show details of element\nq - Exit to main menu\nYour choice: ";
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\nq - Exit to main menu\nYour choice: ";
     int data;
     RBTree redBlackTree;
     char mode = '\0';
@@ -72,55 +77,23 @@ void ControllerRBTree()
             ValidInput(data);
             redBlackTree.AddNode(data);
             break;
-        /*case '2':
+        case '2':
             cout << "Enter value for deletion: ";
             ValidInput(data);
-            if (redBlackTree.Remove(data))
-            {
-                cout << "Deletion successful!\n";
-            }
-            else
-            {
-                cout << "No value " << data << " in binary tree!\n";
-            }
+            redBlackTree.RemoveNode(data);
             break;
         case '3':
             cout << "Enter value for search: ";
             ValidInput(data);
-            if (redBlackTree.Search(data))
+            if (redBlackTree.SearchNode(data) != nullptr)
             {
-                cout << "Value " << data << " is contained in binary tree!\n";
+                cout << "Value " << data << " is contained in red-black tree!\n";
             }
             else
             {
-                cout << "No value " << data << " in binary tree!\n";
+                cout << "No value " << data << " in red-black tree!\n";
             }
             break;
-        case '4':
-            if (redBlackTree.SearchMin())
-            {
-                cout << "Value " << binaryTree.SearchMin()->Data << " is minimum in binary tree!\n";
-            }
-            else
-            {
-                cout << "No nodes in binary tree!\n";
-            }
-            break;
-        case '5':
-            if (redBlackTree.SearchMax())
-            {
-                cout << "Value " << redBlackTree.SearchMax()->Data << " is maximum in binary tree!\n";
-            }
-            else
-            {
-                cout << "No nodes in binary tree!\n";
-            }
-            break;
-        case '6':
-            cout << "Enter value for details: ";
-            ValidInput(data);
-            redBlackTree.ShowDetails(data);
-            break;*/
         default:
             break;
         }
@@ -128,77 +101,48 @@ void ControllerRBTree()
 }
 
 /*!
- * \brief Меню и управление дерамидой (Декартово дерево)
+ * \brief Меню и управление АВЛ-деревом
  */
 void ControllerAVLTree()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Light add\n3 - Remove\n4 - Light remove\n5 - Search\n6 - Deatails of element\nq - Exit to main menu\nYour choice: ";
-    /*int key;
-    Treap treap;
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\nq - Exit to main menu\nYour choice: ";
+    int value;
+    AVLTree avlTree;
     char mode = '\0';
 
     while (mode != 'q')
     {
-        treap.Show();
+        ShowTree(avlTree.GetLayers());
         cout << menu;
         ValidInput(mode);
         ClearTerminal();
         switch (mode) {
         case '1':
             cout << "Enter value for adding: ";
-            ValidInput(key);
-            treap.Add(key);
+            ValidInput(value);
+            avlTree.AddNode(value);
             break;
         case '2':
             cout << "Enter value for adding: ";
-            ValidInput(key);
-            treap.LightAdd(key);
+            ValidInput(value);
+            avlTree.RemoveNode(value);
             break;
         case '3':
-            cout << "Enter value for deletion: ";
-            ValidInput(key);
-            if (treap.Remove(key))
-            {
-                cout << "Deletion successful!\n";
-            }
-            else
-            {
-                cout << "No value " << key << " in treap!\n";
-            }
-            break;
-        case '4':
-            cout << "Enter value for deletion: ";
-            ValidInput(key);
-            if (treap.LightRemove(key))
-            {
-                cout << "Deletion successful!\n";
-            }
-            else
-            {
-                cout << "No value " << key << " in treap!\n";
-            }
-            break;
-        case '5':
             cout << "Enter value for search: ";
-            ValidInput(key);
-            if (treap.Search(key))
+            ValidInput(value);
+            if (avlTree.SearchNode(value) != nullptr)
             {
-                cout << "Value " << key << " is contained in treap!\n";
+                cout << "Value " << value << " is contained in AVL-tree!\n";
             }
             else
             {
-                cout << "No value " << key << " in treap!\n";
+                cout << "No value " << value << " in AVL-tree!\n";
             }
-            break;
-        case '6':
-            cout << "Enter value for details: ";
-            ValidInput(key);
-            treap.ShowDetails(key);
             break;
         default:
             break;
         }
-    }*/
+    }
 }
 
 /*!
@@ -257,6 +201,25 @@ int DigitPlace(int number)
     return i;
 }
 
+string GetTreeName(const string &name)
+{
+    string treeName;
+    //cout << name << endl;
+    switch(name[3])
+    {
+    case 'R':
+        treeName = "Red-black tree";
+        break;
+    case 'A':
+        treeName = "AVL-tree";
+        break;
+    default:
+        treeName = "Unknown tree";
+        break;
+    }
+    return treeName;
+}
+
 template <typename T>
 void ShowTree(Queue<T> queue)
 {
@@ -269,11 +232,14 @@ void ShowTree(Queue<T> queue)
     bool redColor = queue.GetColor();
     int depth = queue.GetDepth();
     T* temp = queue.Pop();
+    string treeName = GetTreeName(typeid(temp).name());
+
     if (temp == nullptr)
     {
-        cout << "Red-black tree is empty!" << endl;
+        cout << treeName << " is empty!" << endl;
         return;
     }
+    cout << treeName << ":\n";
     while (!queue.IsEmpty())
     {
         if (depthObserver != depth)
@@ -312,7 +278,7 @@ void ShowTree(Queue<T> queue)
         depth = queue.GetDepth();
         temp = queue.Pop();
     }
-    cout << "\nDepth of red-black tree: " << treeDepth - 1 << endl;
+    cout << "\nDepth of " << treeName << ": " << treeDepth << endl;
 }
 
 /*!

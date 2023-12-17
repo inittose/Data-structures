@@ -12,10 +12,9 @@ struct RBTreeNode
     int Data;
     RBTreeNode* Left;
     RBTreeNode* Right;
-    RBTreeNode* Parent;
     RBColor Color;
 
-    RBTreeNode(const int &data, RBColor color, RBTreeNode* parent = nullptr, RBTreeNode* left = nullptr, RBTreeNode* right = nullptr);
+    RBTreeNode(const int &data, RBColor color, RBTreeNode* left = nullptr, RBTreeNode* right = nullptr);
 };
 
 #endif // RBTREENODE_H
