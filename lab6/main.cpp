@@ -60,7 +60,7 @@ void MainController()
  */
 void ControllerRBTree()
 {
-    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\nq - Exit to main menu\nYour choice: ";
+    string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Show details of node\nq - Exit to main menu\nYour choice: ";
     int data;
     RBTree redBlackTree;
     char mode = '\0';
@@ -94,6 +94,34 @@ void ControllerRBTree()
                 cout << "No value " << data << " in red-black tree!\n";
             }
             break;
+        case '4':
+            cout << "Enter value for search: ";
+            ValidInput(data);
+            if (redBlackTree.SearchNode(data) != nullptr)
+            {
+                RBTreeNode* node = redBlackTree.SearchNode(data);
+                cout << "Ptr: " << node << "  Data: " << node->Data << "  Color: " << node->Color << endl;
+                if (node->Left)
+                {
+                    cout << "Left: Ptr: " << node->Left << "  Data: " << node->Left->Data << "  Color: " << node->Left->Color << endl;
+                }
+                else
+                {
+                    cout << "Left: nullptr\n";
+                }
+                if (node->Right)
+                {
+                    cout << "Right: Ptr: " << node->Right << "  Data: " << node->Right->Data << "  Color: " << node->Right->Color << endl;
+                }
+                else
+                {
+                    cout << "Right: nullptr\n";
+                }
+            }
+            else
+            {
+                cout << "No value " << data << " in red-black tree!\n";
+            }
         default:
             break;
         }

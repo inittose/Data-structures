@@ -20,6 +20,7 @@ private:
     RBTreeNode* RemoveMinNode(RBTreeNode* node);
     RBTreeNode* RemoveNode(RBTreeNode* node, const int &data);
     RBTreeNode* SearchNode(RBTreeNode* node, const int &data);
+    RBTreeNode* RecolorLeft(RBTreeNode* node);
     int GetDepth(RBTreeNode* node, int currentDepth = 0);
 
 public:

@@ -44,7 +44,11 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
 
 RBTreeNode* RBTree::Recoloring(RBTreeNode* node)
 {
-    if (node != _root)
+    if (node == _root)
+    {
+        node->Color = Black;
+    }
+    else
     {
         node->Color = Red;
     }
@@ -61,6 +65,10 @@ RBTreeNode* RBTree::Rebalance(RBTreeNode* node)
     }
     if (node->Left && node->Right)
     {
+        if (node->Color == Red && node->Left->Color == Red)
+        {
+            return Rebalance(TurnRight(node));
+        }
         if (node->Left->Color == Red && node->Right->Color == Red)
         {
             return Rebalance(Recoloring(node));
@@ -110,6 +118,7 @@ RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
 void RBTree::AddNode(const int &data)
 {
     _root = AddNode(_root, data);
+    _root->Color = Black;
 }
 
 RBTreeNode* RBTree::GetMin(RBTreeNode* node)
@@ -140,9 +149,17 @@ RBTreeNode* RBTree::RemoveMinNode(RBTreeNode* node)
 {
     if (node->Left == nullptr)
     {
+        if (node->Right != nullptr)
+        {
+            node->Right->Color = Red;
+        }
         return node->Right;
     }
     node->Left = RemoveMinNode(node->Left);
+    if (node->Right != nullptr)
+    {
+        node->Right->Color = Red;
+    }
     return Rebalance(node);
 }
 
@@ -157,23 +174,31 @@ RBTreeNode* RBTree::RemoveNode(RBTreeNode* node, const int &data)
         RBTreeNode* left = node->Left;
         RBTreeNode* right = node->Right;
         RBColor color = node->Color;
+        //bool isRoot = node == _root;
         delete node;
         if (left != nullptr && right != nullptr)
         {
             RBTreeNode* swapNode = GetMin(right);
+            //right->Color = Red;
             swapNode->Right = RemoveMinNode(right);
             swapNode->Left = left;
+            if (left->Right != nullptr && swapNode->Right == nullptr)
+            {
+                left->Right->Color = Red;
+                swapNode->Left = Rebalance(left);
+            }
+            left->Color = Red;
             swapNode->Color = color;
             return Rebalance(swapNode);
         }
         if (left != nullptr)
         {
-            left->Color = color;
+            left->Color = Red;
             return left;
         }
         if (right != nullptr)
         {
-            right->Color = color;
+            right->Color = Red;
             return right;
         }
         return nullptr;
@@ -192,6 +217,12 @@ RBTreeNode* RBTree::RemoveNode(RBTreeNode* node, const int &data)
 void RBTree::RemoveNode(const int &data)
 {
     _root = RemoveNode(_root, data);
+    Rebalance(_root);
+    if (_root != nullptr)
+    {
+        _root->Color = Black;
+    }
+
 }
 
 RBTreeNode* RBTree::SearchNode(RBTreeNode* node, const int &data)
@@ -244,7 +275,14 @@ Queue<RBTreeNode> RBTree::GetLayers()
     Queue<RBTreeNode> queueBypass;
     int treeDepth = GetDepth(_root);
     int depthObserver = 0;
-    queue.Push(_root, depthObserver);
+    if (_root != nullptr)
+    {
+        queue.Push(_root, depthObserver, _root->Color);
+    }
+    else
+    {
+        queue.Push(_root, depthObserver);
+    }
     queueBypass.Push(_root, depthObserver);
     depthObserver = queueBypass.GetDepth();
     while(depthObserver < treeDepth)
