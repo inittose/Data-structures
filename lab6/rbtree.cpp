@@ -2,17 +2,19 @@
 
 RBTree::RBTree()
 {
-    _root = nullptr;
+    _nil = new RBTreeNode(0, Black);
+    _root = _nil;
 }
 
 RBTree::~RBTree()
 {
     DeleteNode(_root);
+    delete _nil;
 }
 
 void RBTree::DeleteNode(RBTreeNode* node)
 {
-    if (node == nullptr)
+    if (node == _nil)
     {
         return;
     }
@@ -26,9 +28,29 @@ RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
 {
     RBTreeNode* rightNode = node->Right;
     node->Right = rightNode->Left;
+    if (rightNode->Left != _nil)
+    {
+        rightNode->Left->Parent = node;
+    }
+
     rightNode->Left = node;
-    rightNode->Color = node->Color;
-    node->Color = Red;
+    rightNode->Parent = node->Parent;
+    if (node->Parent == _nil)
+    {
+        _root = rightNode;
+    }
+    else
+    {
+        if (node == node->Parent->Left)
+        {
+            node->Parent->Left = rightNode;
+        }
+        else
+        {
+            node->Parent->Right = rightNode;
+        }
+    }
+    node->Parent = rightNode;
     return rightNode;
 }
 
@@ -36,218 +58,308 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
 {
     RBTreeNode* leftNode = node->Left;
     node->Left = leftNode->Right;
+    if (leftNode->Right != _nil)
+    {
+        leftNode->Right->Parent = node;
+    }
+
     leftNode->Right = node;
-    leftNode->Color = node->Color;
-    node->Color = Red;
+    leftNode->Parent = node->Parent;
+    if (node->Parent == _nil)
+    {
+        _root = leftNode;
+    }
+    else
+    {
+        if (node == node->Parent->Left)
+        {
+            node->Parent->Left = leftNode;
+        }
+        else
+        {
+            node->Parent->Right = leftNode;
+        }
+    }
+    node->Parent = leftNode;
     return leftNode;
-}
-
-RBTreeNode* RBTree::Recoloring(RBTreeNode* node)
-{
-    if (node == _root)
-    {
-        node->Color = Black;
-    }
-    else
-    {
-        node->Color = Red;
-    }
-    node->Left->Color = Black;
-    node->Right->Color = Black;
-    return node;
-}
-
-RBTreeNode* RBTree::Rebalance(RBTreeNode* node)
-{
-    if (node == nullptr)
-    {
-        return nullptr;
-    }
-    if (node->Left && node->Right)
-    {
-        if (node->Color == Red && node->Left->Color == Red)
-        {
-            return Rebalance(TurnRight(node));
-        }
-        if (node->Left->Color == Red && node->Right->Color == Red)
-        {
-            return Rebalance(Recoloring(node));
-        }
-    }
-    if (node->Right && node->Right->Color == Red)
-    {
-        return Rebalance(TurnLeft(node));
-    }
-    if (node->Left && node->Left->Left)
-    {
-        if (node->Left->Color == Red && node->Left->Left->Color == Red)
-        {
-            return Rebalance(TurnRight(node));
-        }
-    }
-    //node->Left = Rebalance(node->Left);
-    //node->Right = Rebalance(node->Right);
-    return node;
-}
-
-RBTreeNode* RBTree::AddNode(RBTreeNode* node, const int &data)
-{
-    if (_root == nullptr)
-    {
-        return new RBTreeNode(data, Black);
-    }
-    if (node == nullptr)
-    {
-        return new RBTreeNode(data, Red);
-    }
-    if (data == node->Data)
-    {
-        return node;
-    }
-    if (data > node->Data)
-    {
-        node->Right = AddNode(node->Right, data);
-    }
-    else
-    {
-        node->Left = AddNode(node->Left, data);
-    }
-    return Rebalance(node);
 }
 
 void RBTree::AddNode(const int &data)
 {
-    _root = AddNode(_root, data);
+    RBTreeNode* newNode = new RBTreeNode(data, Red, _nil, _nil);
+    if (_root == _nil)
+    {
+        _root = newNode;
+        newNode->Parent = _nil;
+    }
+    else
+    {
+        RBTreeNode* bypassNode = _root;
+        RBTreeNode* parent = _nil;
+        while (bypassNode != _nil)
+        {
+            parent = bypassNode;
+            if (newNode->Data > bypassNode->Data)
+            {
+                bypassNode = bypassNode->Right;
+            }
+            else
+            {
+                bypassNode = bypassNode->Left;
+            }
+        }
+        newNode->Parent = parent;
+
+        if (newNode->Data > parent->Data)
+        {
+            parent->Right = newNode;
+        }
+        else
+        {
+            parent->Left = newNode;
+        }
+    }
+    FixAddNode(newNode);
+}
+
+void RBTree::FixAddNode(RBTreeNode* node)
+{
+    if (node == _root)
+    {
+        node->Color = Black;
+        return;
+    }
+
+    while (node->Parent->Color == Red)
+    {
+        RBTreeNode* parent = node->Parent;
+        RBTreeNode* grandparent = parent->Parent;
+        if (grandparent != _nil)
+        {
+            if (node->Parent == grandparent->Left)
+            {
+                RBTreeNode* uncle = grandparent->Right;
+                if (uncle != _nil && uncle->Color == Red)
+                {
+                    parent->Color = Black;
+                    uncle->Color = Black;
+                    grandparent->Color = Red;
+                    node = grandparent;
+                }
+                else
+                {
+                    if (node == parent->Right)
+                    {
+                        node = parent;
+                        TurnLeft(node);
+                        parent = node->Parent;
+                        grandparent = parent->Parent;
+                    }
+                    parent->Color = Black;
+                    grandparent->Color = Red;
+                    TurnRight(grandparent);
+                }
+            }
+            else
+            {
+                RBTreeNode* uncle = grandparent->Left;
+                if (uncle != _nil && uncle->Color == Red)
+                {
+                    parent->Color = Black;
+                    uncle->Color = Black;
+                    grandparent->Color = Red;
+                    node = grandparent;
+                }
+                else
+                {
+                    if (node == parent->Left)
+                    {
+                        node = parent;
+                        TurnRight(node);
+                        parent = node->Parent;
+                        grandparent = parent->Parent;
+                    }
+                    parent->Color = Black;
+                    grandparent->Color = Red;
+                    TurnLeft(grandparent);
+                }
+            }
+        }
+    }
+
     _root->Color = Black;
 }
 
-RBTreeNode* RBTree::GetMin(RBTreeNode* node)
+void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
 {
-    if (node->Left == nullptr)
+    if (old->Parent == _nil)
     {
-        return node;
+        _root = swop;
     }
     else
     {
-        return GetMin(node->Left);
-    }
-}
-
-RBTreeNode* RBTree::GetMax(RBTreeNode* node)
-{
-    if (node->Right == nullptr)
-    {
-        return node;
-    }
-    else
-    {
-        return GetMax(node->Right);
-    }
-}
-
-RBTreeNode* RBTree::RemoveMinNode(RBTreeNode* node)
-{
-    if (node->Left == nullptr)
-    {
-        if (node->Right != nullptr)
+        if (old == old->Parent->Left)
         {
-            node->Right->Color = Red;
+            old->Parent->Left = swop;
         }
-        return node->Right;
-    }
-    node->Left = RemoveMinNode(node->Left);
-    if (node->Right != nullptr)
-    {
-        node->Right->Color = Red;
-    }
-    return Rebalance(node);
-}
-
-RBTreeNode* RBTree::RemoveNode(RBTreeNode* node, const int &data)
-{
-    if (node == nullptr)
-    {
-        return nullptr;
-    }
-    if (node->Data == data)
-    {
-        RBTreeNode* left = node->Left;
-        RBTreeNode* right = node->Right;
-        RBColor color = node->Color;
-        //bool isRoot = node == _root;
-        delete node;
-        if (left != nullptr && right != nullptr)
+        else
         {
-            RBTreeNode* swapNode = GetMin(right);
-            //right->Color = Red;
-            swapNode->Right = RemoveMinNode(right);
-            swapNode->Left = left;
-            if (left->Right != nullptr && swapNode->Right == nullptr)
-            {
-                left->Right->Color = Red;
-                swapNode->Left = Rebalance(left);
-            }
-            left->Color = Red;
-            swapNode->Color = color;
-            return Rebalance(swapNode);
+            old->Parent->Right = swop;
         }
-        if (left != nullptr)
-        {
-            left->Color = Red;
-            return left;
-        }
-        if (right != nullptr)
-        {
-            right->Color = Red;
-            return right;
-        }
-        return nullptr;
     }
-    if (data > node->Data)
-    {
-        node->Right = RemoveNode(node->Right, data);
-    }
-    else
-    {
-        node->Left = RemoveNode(node->Left, data);
-    }
-    return Rebalance(node);
+    swop->Parent = old->Parent;
 }
 
 void RBTree::RemoveNode(const int &data)
 {
-    _root = RemoveNode(_root, data);
-    Rebalance(_root);
-    if (_root != nullptr)
+    RBTreeNode* removeNode = SearchNode(data);
+    if (removeNode == nullptr)
     {
-        _root->Color = Black;
+        return;
     }
 
-}
+    RBTreeNode* fixNode;
+    RBColor fixFactor = removeNode->Color;
 
-RBTreeNode* RBTree::SearchNode(RBTreeNode* node, const int &data)
-{
-    if (node == nullptr)
+    if (removeNode->Left == _nil)
     {
-        return nullptr;
-    }
-    if (node->Data == data)
-    {
-        return node;
-    }
-    if (data > node->Data)
-    {
-        return SearchNode(node->Right, data);
+        fixNode = removeNode->Right;
+        Swap(removeNode, removeNode->Right);
     }
     else
     {
-        return SearchNode(node->Left, data);
+        if (removeNode->Right == _nil)
+        {
+            fixNode = removeNode->Left;
+            Swap(removeNode, removeNode->Left);
+        }
+        else
+        {
+            RBTreeNode* swop = GetMin(removeNode->Right);
+            fixFactor = swop->Color;
+            fixNode = swop->Left;
+            if (removeNode == swop->Parent)
+            {
+                fixNode->Parent = swop; // Без комментариев (Кормен 357 стр.)
+            }
+            else
+            {
+                Swap(swop, swop->Right);
+                swop->Right = removeNode->Right;
+                swop->Right->Parent = swop;
+            }
+            Swap(removeNode, swop);
+            swop->Left = removeNode->Left;
+            swop->Left->Parent = swop;
+            swop->Color = removeNode->Color;
+        }
     }
+    delete removeNode;
+    if (fixFactor == Black)
+    {
+        FixRemoveNode(fixNode);
+    }
+}
+
+void RBTree::FixRemoveNode(RBTreeNode* node)
+{
+    while (node != _nil && node != _root && node->Color == Black)
+    {
+        RBTreeNode* parent = node->Parent;
+        if (node == parent->Left)
+        {
+            RBTreeNode* brother = parent->Right;
+            if (brother != _nil && brother->Color == Red)
+            {
+                brother->Color = Black;
+                parent->Color = Red;
+                TurnLeft(parent);
+                brother = parent->Right;
+            }
+            if (brother->Left != _nil && brother->Right != _nil && brother->Left->Color == Black && brother->Right->Color == Black)
+            {
+                brother->Color = Red;
+                node = node->Parent;
+            }
+            else
+            {
+                if (brother->Right != _nil && brother->Right->Color == Black)
+                {
+                    brother->Left->Color = Black;
+                    brother->Color = Red;
+                    TurnRight(brother);
+                    brother = parent->Right;
+                }
+                brother->Color = parent->Color;
+                parent->Color = Black;
+                brother->Right->Color = Black;
+                TurnLeft(parent);
+                node = _root;
+            }
+        }
+        else
+        {
+            RBTreeNode* brother = parent->Left;
+            if (brother->Color == Red)
+            {
+                brother->Color = Black;
+                parent->Color = Red;
+                TurnRight(parent);
+                brother = parent->Left;
+            }
+            if (brother->Left->Color == Black && brother->Right->Color == Black)
+            {
+                brother->Color = Red;
+                node = node->Parent;
+            }
+            else
+            {
+                if (brother->Left->Color == Black)
+                {
+                    brother->Right->Color = Black;
+                    brother->Color = Red;
+                    TurnLeft(brother);
+                    brother = parent->Left;
+                }
+                brother->Color = parent->Color;
+                parent->Color = Black;
+                brother->Left->Color = Black;
+                TurnRight(parent);
+                node = _root;
+            }
+        }
+    }
+    node->Color = Black;
+}
+
+RBTreeNode* RBTree::GetMin(RBTreeNode* node)
+{
+    while (node->Left != _nil)
+    {
+        node = node->Left;
+    }
+    return node;
 }
 
 RBTreeNode* RBTree::SearchNode(const int &data)
 {
-    return SearchNode(_root, data);
+    RBTreeNode* bypassNode = _root;
+    while (bypassNode != _nil)
+    {
+        if (data == bypassNode->Data)
+        {
+            return bypassNode;
+        }
+        if (data > bypassNode->Data)
+        {
+            bypassNode = bypassNode->Right;
+        }
+        else
+        {
+            bypassNode = bypassNode->Left;
+        }
+    }
+    return nullptr;
 }
 
 int RBTree::GetDepth(RBTreeNode* node, int currentDepth)

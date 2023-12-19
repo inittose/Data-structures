@@ -7,30 +7,27 @@
 class RBTree
 {
 private:
+    RBTreeNode* _nil;
     RBTreeNode* _root;
 
     void DeleteNode(RBTreeNode* node);
     RBTreeNode* TurnLeft(RBTreeNode* node);
     RBTreeNode* TurnRight(RBTreeNode* node);
-    RBTreeNode* Recoloring(RBTreeNode* node);
-    RBTreeNode* Rebalance(RBTreeNode* node);
-    RBTreeNode* AddNode(RBTreeNode* node, const int &data);
-    RBTreeNode* GetMin(RBTreeNode* node);
-    RBTreeNode* GetMax(RBTreeNode* node);
-    RBTreeNode* RemoveMinNode(RBTreeNode* node);
-    RBTreeNode* RemoveNode(RBTreeNode* node, const int &data);
-    RBTreeNode* SearchNode(RBTreeNode* node, const int &data);
-    RBTreeNode* RecolorLeft(RBTreeNode* node);
     int GetDepth(RBTreeNode* node, int currentDepth = 0);
+    void FixAddNode(RBTreeNode* node);
+    void FixRemoveNode(RBTreeNode* node);
+    RBTreeNode* GetMin(RBTreeNode* node);
+    void Swap(RBTreeNode* old, RBTreeNode* swop);
 
 public:
     RBTree();
     ~RBTree();
 
+    Queue<RBTreeNode> GetLayers();
     void AddNode(const int &data);
     void RemoveNode(const int &data);
-    Queue<RBTreeNode> GetLayers();
     RBTreeNode* SearchNode(const int &data);
+
 };
 
 #endif // RBTREE_H

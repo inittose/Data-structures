@@ -22,7 +22,7 @@ struct QueueNode
      */
     int Depth;
 
-    bool Color;
+    char Color;
 
     /*!
      * \brief Конструктор узла очереди
@@ -30,7 +30,7 @@ struct QueueNode
      * \param depth Глубина узла
      * \param next Следующий элемент
      */
-    QueueNode(type* data = nullptr, const int & depth = 0, bool color = 0, QueueNode* next = nullptr)
+    QueueNode(type* data = nullptr, const int & depth = 0, char color = 0, QueueNode* next = nullptr)
     {
         Data = data;
         Depth = depth;

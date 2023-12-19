@@ -100,23 +100,10 @@ void ControllerRBTree()
             if (redBlackTree.SearchNode(data) != nullptr)
             {
                 RBTreeNode* node = redBlackTree.SearchNode(data);
+                cout << "Parent: Ptr: " << node->Parent << "  Data: " << node->Parent->Data << "  Color: " << node->Parent->Color << endl;
                 cout << "Ptr: " << node << "  Data: " << node->Data << "  Color: " << node->Color << endl;
-                if (node->Left)
-                {
-                    cout << "Left: Ptr: " << node->Left << "  Data: " << node->Left->Data << "  Color: " << node->Left->Color << endl;
-                }
-                else
-                {
-                    cout << "Left: nullptr\n";
-                }
-                if (node->Right)
-                {
-                    cout << "Right: Ptr: " << node->Right << "  Data: " << node->Right->Data << "  Color: " << node->Right->Color << endl;
-                }
-                else
-                {
-                    cout << "Right: nullptr\n";
-                }
+                cout << "Left: Ptr: " << node->Left << "  Data: " << node->Left->Data << "  Color: " << node->Left->Color << endl;
+                cout << "Right: Ptr: " << node->Right << "  Data: " << node->Right->Data << "  Color: " << node->Right->Color << endl;
             }
             else
             {
@@ -257,12 +244,12 @@ void ShowTree(Queue<T> queue)
 
     int treeDepth = queue.GetMaxDepth();
     int depthObserver = queue.GetDepth();
-    bool redColor = queue.GetColor();
+    char color = queue.GetColor();
     int depth = queue.GetDepth();
     T* temp = queue.Pop();
     string treeName = GetTreeName(typeid(temp).name());
 
-    if (temp == nullptr)
+    if (temp == nullptr || color == 2)
     {
         cout << treeName << " is empty!" << endl;
         return;
@@ -279,11 +266,11 @@ void ShowTree(Queue<T> queue)
         int backspaceCounter = 0;
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << "  ";
+            cout << " ";
         }
         if (temp)
         {
-            if (redColor)
+            if (color == 1)
             {
                 cout << brightRedColor;
             }
@@ -296,17 +283,25 @@ void ShowTree(Queue<T> queue)
         }
         for (int i = 0; i < spaceCounter; i++)
         {
-            cout << "  ";
+            cout << " ";
         }
         for (int i = 0; i < backspaceCounter; i++)
         {
             cout << '\b';
         }
-        redColor = queue.GetColor();
+        color = queue.GetColor();
         depth = queue.GetDepth();
         temp = queue.Pop();
     }
-    cout << "\nDepth of " << treeName << ": " << treeDepth << endl;
+    cout << "\nDepth of " << treeName << ": ";
+    if (treeName[0] == 'R')
+    {
+        cout << treeDepth - 1 << endl;
+    }
+    else
+    {
+        cout << treeDepth << endl;
+    }
 }
 
 /*!

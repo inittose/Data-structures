@@ -91,7 +91,7 @@ public:
         return _tail->Depth;
     }
 
-    void Push(type* item, const int & depth = 0, bool color = 0)
+    void Push(type* item, const int & depth = 0, char color = 0)
     {
         QueueNode<type>* newQueueItem = new QueueNode(item, depth, color);
         if (_tail)
