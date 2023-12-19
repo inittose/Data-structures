@@ -70,7 +70,7 @@ void ControllerRBTree()
         ShowTree(redBlackTree.GetLayers());
         cout << menu;
         ValidInput(mode);
-        ClearTerminal();
+        //ClearTerminal();
         switch (mode) {
         case '1':
             cout << "Enter value for adding: ";

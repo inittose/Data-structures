@@ -263,7 +263,7 @@ void RBTree::RemoveNode(const int &data)
 
 void RBTree::FixRemoveNode(RBTreeNode* node)
 {
-    while (node != _nil && node != _root && node->Color == Black)
+    while (node != _root && node->Color == Black)
     {
         RBTreeNode* parent = node->Parent;
         if (node == parent->Left)
@@ -276,14 +276,14 @@ void RBTree::FixRemoveNode(RBTreeNode* node)
                 TurnLeft(parent);
                 brother = parent->Right;
             }
-            if (brother->Left != _nil && brother->Right != _nil && brother->Left->Color == Black && brother->Right->Color == Black)
+            if (brother->Left->Color == Black && brother->Right->Color == Black)
             {
                 brother->Color = Red;
                 node = node->Parent;
             }
             else
             {
-                if (brother->Right != _nil && brother->Right->Color == Black)
+                if (brother->Right->Color == Black)
                 {
                     brother->Left->Color = Black;
                     brother->Color = Red;
