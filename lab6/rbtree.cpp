@@ -237,10 +237,10 @@ void RBTree::RemoveNode(const int &data)
         {
             RBTreeNode* swop = GetMin(removeNode->Right);
             fixFactor = swop->Color;
-            fixNode = swop->Left;
+            fixNode = swop->Right;
             if (removeNode == swop->Parent)
             {
-                fixNode->Parent = swop; // Без комментариев (Кормен 357 стр.)
+                fixNode->Parent = swop;
             }
             else
             {
@@ -269,7 +269,7 @@ void RBTree::FixRemoveNode(RBTreeNode* node)
         if (node == parent->Left)
         {
             RBTreeNode* brother = parent->Right;
-            if (brother != _nil && brother->Color == Red)
+            if (brother->Color == Red)
             {
                 brother->Color = Black;
                 parent->Color = Red;
