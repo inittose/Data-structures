@@ -6,6 +6,9 @@
 
 class AVLTree
 {
+public:
+    int Rotations;
+
 private:
     AVLTreeNode* _root;
 

@@ -2,6 +2,7 @@
 
 RBTree::RBTree()
 {
+    Rotations = 0;
     _nil = new RBTreeNode(0, Black);
     _root = _nil;
 }
@@ -51,6 +52,7 @@ RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
         }
     }
     node->Parent = rightNode;
+    ++Rotations;
     return rightNode;
 }
 
@@ -81,11 +83,13 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
         }
     }
     node->Parent = leftNode;
+    ++Rotations;
     return leftNode;
 }
 
 void RBTree::AddNode(const int &data)
 {
+    Rotations = 0;
     RBTreeNode* newNode = new RBTreeNode(data, Red, _nil, _nil);
     if (_root == _nil)
     {
@@ -212,6 +216,7 @@ void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
 
 void RBTree::RemoveNode(const int &data)
 {
+    Rotations = 0;
     RBTreeNode* removeNode = SearchNode(data);
     if (removeNode == nullptr)
     {

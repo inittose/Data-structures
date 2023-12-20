@@ -2,6 +2,7 @@
 
 AVLTree::AVLTree()
 {
+    Rotations = 0;
     _root = nullptr;
 }
 
@@ -59,6 +60,7 @@ AVLTreeNode* AVLTree::TurnLeft(AVLTreeNode* node)
     rightNode->Left = node;
     RebalanceHeight(node);
     RebalanceHeight(rightNode);
+    ++Rotations;
     return rightNode;
 }
 
@@ -69,6 +71,7 @@ AVLTreeNode* AVLTree::TurnRight(AVLTreeNode* node)
     leftNode->Right = node;
     RebalanceHeight(node);
     RebalanceHeight(leftNode);
+    ++Rotations;
     return leftNode;
 }
 
@@ -96,6 +99,7 @@ AVLTreeNode* AVLTree::Rebalance(AVLTreeNode* node)
 
 AVLTreeNode* AVLTree::AddNode(AVLTreeNode* node, const int &data)
 {
+    Rotations = 0;
     if (node == nullptr)
     {
         return new AVLTreeNode(data);
@@ -156,6 +160,7 @@ AVLTreeNode* AVLTree::RemoveMinNode(AVLTreeNode* node)
 
 AVLTreeNode* AVLTree::RemoveNode(AVLTreeNode* node, const int &data)
 {
+    Rotations = 0;
     if (node == nullptr)
     {
         return nullptr;

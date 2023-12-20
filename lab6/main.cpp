@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string.h>
+#include <chrono>
 #include "rbtree.h"
 #include "avltree.h"
 
+using std::chrono::steady_clock;
 using namespace std;
 
 void ControllerRBTree();
@@ -17,15 +19,22 @@ string GetTreeName(const string &name);
 void ClearTerminal();
 int Power(const int &number, const int &power);
 int DigitPlace(int number);
+void AnalyzeTrees();
 
 
 int main()
 {
-    //RBTree redBlackTree;
-    //AVLTree avlTree;
-    //cout << "Red-black Tree: " << typeid(redBlackTree).name() << "\nAVL Tree: " << typeid(avlTree).name() << endl;
-    MainController();
+    for (int i = 0; i < 10; i++)
+    {
+        steady_clock::time_point begin = steady_clock::now();
+        steady_clock::time_point end = steady_clock::now();
 
+        cout << "Time difference = " << chrono::duration_cast<chrono::microseconds>(end - begin).count() << "[µs]" << endl;
+    }
+
+
+    //cout << "Time difference = " << chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+    //MainController();
     return 0;
 }
 
@@ -70,17 +79,19 @@ void ControllerRBTree()
         ShowTree(redBlackTree.GetLayers());
         cout << menu;
         ValidInput(mode);
-        //ClearTerminal();
+        ClearTerminal();
         switch (mode) {
         case '1':
             cout << "Enter value for adding: ";
             ValidInput(data);
             redBlackTree.AddNode(data);
+            cout << "Rotations: " << redBlackTree.Rotations << endl;
             break;
         case '2':
             cout << "Enter value for deletion: ";
             ValidInput(data);
             redBlackTree.RemoveNode(data);
+            cout << "Rotations: " << redBlackTree.Rotations << endl;
             break;
         case '3':
             cout << "Enter value for search: ";
@@ -136,11 +147,13 @@ void ControllerAVLTree()
             cout << "Enter value for adding: ";
             ValidInput(value);
             avlTree.AddNode(value);
+            cout << "Rotations: " << avlTree.Rotations << endl;
             break;
         case '2':
-            cout << "Enter value for adding: ";
+            cout << "Enter value for deletion: ";
             ValidInput(value);
             avlTree.RemoveNode(value);
+            cout << "Rotations: " << avlTree.Rotations << endl;
             break;
         case '3':
             cout << "Enter value for search: ";

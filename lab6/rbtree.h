@@ -6,6 +6,9 @@
 
 class RBTree
 {
+public:
+    int Rotations;
+
 private:
     RBTreeNode* _nil;
     RBTreeNode* _root;
