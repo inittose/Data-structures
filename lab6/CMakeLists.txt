@@ -12,6 +12,8 @@ add_executable(lab6 main.cpp
     avltreenode.h avltreenode.cpp
     queue.h
     queuenode.h
+    analysis.h
+    analysis.cpp
 )
 
 include(GNUInstallDirs)
