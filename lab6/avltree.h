@@ -34,6 +34,7 @@ public:
     void RemoveNode(const int &data);
     AVLTreeNode* SearchNode(const int &data);
     Queue<AVLTreeNode> GetLayers();
+    int GetRoot();
 };
 
 #endif // AVLTREE_H

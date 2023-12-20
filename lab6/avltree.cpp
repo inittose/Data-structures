@@ -99,15 +99,14 @@ AVLTreeNode* AVLTree::Rebalance(AVLTreeNode* node)
 
 AVLTreeNode* AVLTree::AddNode(AVLTreeNode* node, const int &data)
 {
-    Rotations = 0;
     if (node == nullptr)
     {
         return new AVLTreeNode(data);
     }
-    if (data == node->Data)
+    /*if (data == node->Data)
     {
         return node;
-    }
+    }*/
     if (data > node->Data)
     {
         node->Right = AddNode(node->Right, data);
@@ -121,6 +120,7 @@ AVLTreeNode* AVLTree::AddNode(AVLTreeNode* node, const int &data)
 
 void AVLTree::AddNode(const int &data)
 {
+    Rotations = 0;
     _root = AddNode(_root, data);
 }
 
@@ -160,7 +160,6 @@ AVLTreeNode* AVLTree::RemoveMinNode(AVLTreeNode* node)
 
 AVLTreeNode* AVLTree::RemoveNode(AVLTreeNode* node, const int &data)
 {
-    Rotations = 0;
     if (node == nullptr)
     {
         return nullptr;
@@ -200,6 +199,7 @@ AVLTreeNode* AVLTree::RemoveNode(AVLTreeNode* node, const int &data)
 
 void AVLTree::RemoveNode(const int &data)
 {
+    Rotations = 0;
     _root = RemoveNode(_root, data);
 }
 
@@ -291,4 +291,9 @@ Queue<AVLTreeNode> AVLTree::GetLayers()
         depthObserver = queueBypass.GetDepth();
     }
     return queue;
+}
+
+int AVLTree::GetRoot()
+{
+    return _root->Data;
 }

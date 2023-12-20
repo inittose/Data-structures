@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <chrono>
+#include <fstream>
 #include "rbtree.h"
 #include "avltree.h"
 
@@ -24,18 +25,100 @@ void AnalyzeTrees();
 
 int main()
 {
-    for (int i = 0; i < 10; i++)
-    {
-        steady_clock::time_point begin = steady_clock::now();
-        steady_clock::time_point end = steady_clock::now();
-
-        cout << "Time difference = " << chrono::duration_cast<chrono::microseconds>(end - begin).count() << "[µs]" << endl;
-    }
-
-
-    //cout << "Time difference = " << chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+    AnalyzeTrees();
     //MainController();
     return 0;
+}
+
+void AnalyzeTrees()
+{
+    int columns = 5;
+    int rows = 12;
+    int startPower = 5;
+    string tables[rows];
+    srand(time(nullptr));
+    for (int i = 0; i < columns; i++)
+    {
+        steady_clock::time_point begin;
+        steady_clock::time_point end;
+        int maxNodes = Power(10, startPower + i);
+        RBTree redBlackTree;
+        AVLTree avlTree;
+        long long RBAddTime = 0;
+        long long RBAddRotation = 0;
+        long long RBRemoveTime = 0;
+        long long RBRemoveRotation = 0;
+        long long AVLAddTime = 0;
+        long long AVLAddRotation = 0;
+        long long AVLRemoveTime = 0;
+        long long AVLRemoveRotation = 0;
+        if (i == 0)
+        {
+            tables[0] = "Insert [Microseconds]\t";
+            tables[3] = "\nInsert [Rotations]\t";
+            tables[6] = "\nRemove [Microseconds]\t";
+            tables[9] = "\nRemove [Rotations]\t";
+            tables[1] = tables[4] = tables[7] = tables[10] = "Red-black tree\t";
+            tables[2] = tables[5] = tables[8] = tables[11] = "AVL-tree\t";
+        }
+        tables[0] += to_string(maxNodes) + '\t';
+        tables[3] += to_string(maxNodes) + '\t';
+        tables[6] += to_string(maxNodes) + '\t';
+        tables[9] += to_string(maxNodes) + '\t';
+        for (int j = 0; j < maxNodes; j++)
+        {
+            int newKey = rand() % 198 - 99;
+
+            begin = steady_clock::now();
+            redBlackTree.AddNode(newKey);
+            end = steady_clock::now();
+            RBAddTime += chrono::duration_cast<chrono::microseconds>(end - begin).count();
+            RBAddRotation += redBlackTree.Rotations;
+
+            begin = steady_clock::now();
+            avlTree.AddNode(newKey);
+            end = steady_clock::now();
+            AVLAddTime += chrono::duration_cast<chrono::microseconds>(end - begin).count();
+            AVLAddRotation += avlTree.Rotations;
+        }
+
+        for (int j = 0; j < maxNodes; j++)
+        {
+            begin = steady_clock::now();
+            redBlackTree.RemoveNode(redBlackTree.GetRoot());
+            end = steady_clock::now();
+            RBRemoveTime += chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+            RBRemoveRotation += redBlackTree.Rotations;
+
+            begin = steady_clock::now();
+            avlTree.RemoveNode(avlTree.GetRoot());
+            end = steady_clock::now();
+            AVLRemoveTime += chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+            AVLRemoveRotation += avlTree.Rotations;
+        }
+
+        tables[1] += to_string(RBAddTime) + '\t';
+        tables[4] += to_string(RBAddRotation) + '\t';
+
+        tables[2] += to_string(AVLAddTime) + '\t';
+        tables[5] += to_string(AVLAddRotation) + '\t';
+
+        tables[7] += to_string(RBRemoveTime) + '\t';
+        tables[10] += to_string(RBRemoveRotation) + '\t';
+
+        tables[8] += to_string(AVLRemoveTime) + '\t';
+        tables[11] += to_string(AVLRemoveRotation) + '\t';
+
+        //cout << chrono::duration_cast<chrono::microseconds>(end - begin).count() << "\n";
+    }
+    cout << "Done!\n";
+    ofstream file;
+    file.open("tables.txt");
+    for (int i = 0; i < rows; i++)
+    {
+        cout << tables[i] << endl;
+        file << tables[i] << endl;
+    }
 }
 
 /*!

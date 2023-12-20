@@ -438,3 +438,8 @@ Queue<RBTreeNode> RBTree::GetLayers()
     }
     return queue;
 }
+
+int RBTree::GetRoot()
+{
+    return _root->Data;
+}

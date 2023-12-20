@@ -30,7 +30,7 @@ public:
     void AddNode(const int &data);
     void RemoveNode(const int &data);
     RBTreeNode* SearchNode(const int &data);
-
+    int GetRoot();
 };
 
 #endif // RBTREE_H
