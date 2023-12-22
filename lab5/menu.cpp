@@ -11,7 +11,7 @@ void MainController()
         mode = ValidInput<char>();
         ClearTerminal();
         //TODO: RSDN
-        //UDP: Добавил табуляцию
+        //UPD: Добавил табуляцию
         switch (mode)
         {
             case '1':
@@ -29,18 +29,18 @@ void MainController()
 void ControllerBinaryTree()
 {
     //TODO: RSDN
-    //UDP: Перенес половину строки на следующую
+    //UPD: Перенес половину строки на следующую
     string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\
         \n4 - Search min value\n5 - Search max value\nq - Exit to main menu\nYour choice: ";
     //TODO: переменная должна объявляться как можно ближе к инициализации RSDN
-    //UDP: переменную data поместил в switch
+    //UPD: переменную data поместил в switch
 
     //TODO: выделение памяти через new
-    //UDP: Выделил
+    //UPD: Выделил
     BinaryTree* binaryTree = new BinaryTree;
     char mode = '\0';
 
-    //UDP: Создал строки, чтобы не повторяться (DRY)
+    //UPD: Создал строки, чтобы не повторяться (DRY)
     string enterMessage = "Enter value for ";
     string treeName = "binary tree";
     string failMessage = "No this node in " + treeName + "!\n";
@@ -124,7 +124,7 @@ void ControllerTreap()
 
     Treap* treap = new Treap;
     char mode = '\0';
-    //UDP: Создал строки, чтобы не повторяться (DRY)
+    //UPD: Создал строки, чтобы не повторяться (DRY)
     string enterMessage = "Enter value for ";
     string treeName = "treap";
     string failMessage = "No this node in " + treeName + "!\n";
@@ -356,7 +356,7 @@ void ShowTreap(Treap* tree)
 }
 
 //TODO: я бы переделал валидацию слева от метода - переменная = метод валидации, который внутри уже всё проверяет
-//UDP: Переделал, теперь создается отдельная переменная
+//UPD: Переделал, теперь создается отдельная переменная
 template <typename T>
 T ValidInput()
 {
