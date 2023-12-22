@@ -212,48 +212,34 @@ BinaryTreeNode* BinaryTree::SearchMax()
     return SearchMax(_root);
 }
 
-Queue<BinaryTreeNode> BinaryTree::GetLayers()
+Queue<BinaryTreeNode>* BinaryTree::GetLayers()
 {
-    Queue<BinaryTreeNode> queue;
-    Queue<BinaryTreeNode> queueBypass;
+    Queue<BinaryTreeNode>* queue = new Queue<BinaryTreeNode>();
+    Queue<BinaryTreeNode>* queueBypass = new Queue<BinaryTreeNode>();
     int treeDepth = FindDepth(_root, 0);
     int depthObserver = 0;
-    queue.Push(_root, depthObserver);
-    queueBypass.Push(_root, depthObserver);
-    depthObserver = queueBypass.GetDepth();
+    queue->Push(_root, depthObserver);
+    queueBypass->Push(_root, depthObserver);
+    depthObserver = queueBypass->GetDepth();
     while(depthObserver < treeDepth)
     {
-        BinaryTreeNode* node = queueBypass.Pop();
+        BinaryTreeNode* node = queueBypass->Pop();
         if (node)
         {
-            if (node->Left)
-            {
-                queue.Push(node->Left, depthObserver + 1);
-            }
-            else
-            {
-                queue.Push(node->Left, depthObserver + 1);
-            }
-
-            if (node->Right)
-            {
-                queue.Push(node->Right, depthObserver + 1);
-            }
-            else
-            {
-                queue.Push(node->Right, depthObserver + 1);
-            }
-            queueBypass.Push(node->Left, depthObserver + 1);
-            queueBypass.Push(node->Right, depthObserver + 1);
+            queue->Push(node->Left, depthObserver + 1);
+            queue->Push(node->Right, depthObserver + 1);
+            queueBypass->Push(node->Left, depthObserver + 1);
+            queueBypass->Push(node->Right, depthObserver + 1);
         }
         else
         {
-            queue.Push(nullptr, depthObserver + 1);
-            queue.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
         }
-        depthObserver = queueBypass.GetDepth();
+        depthObserver = queueBypass->GetDepth();
     }
+    delete queueBypass;
     return queue;
 }

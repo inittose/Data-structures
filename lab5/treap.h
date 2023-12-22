@@ -119,5 +119,5 @@ public:
     * \brief Обойти дерево в широту
     * \return Очередь узлов по слоям
     */
-    Queue<TreapNode> GetLayers();
+    Queue<TreapNode>* GetLayers();
 };

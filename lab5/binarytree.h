@@ -109,5 +109,5 @@ public:
     * \brief Обойти дерево в широту
     * \return Очередь узлов по слоям
     */
-    Queue<BinaryTreeNode> GetLayers();
+    Queue<BinaryTreeNode>* GetLayers();
 };

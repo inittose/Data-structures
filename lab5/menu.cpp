@@ -239,11 +239,11 @@ int DigitPlace(int number)
 
 void ShowBinaryTree(BinaryTree* tree)
 {
-    Queue<BinaryTreeNode> queue = tree->GetLayers();
-    int treeDepth = queue.GetMaxDepth();
-    int depthObserver = queue.GetDepth();
-    int depth = queue.GetDepth();
-    BinaryTreeNode* temp = queue.Pop();
+    Queue<BinaryTreeNode>* queue = tree->GetLayers();
+    int treeDepth = queue->GetMaxDepth();
+    int depthObserver = queue->GetDepth();
+    int depth = queue->GetDepth();
+    BinaryTreeNode* temp = queue->Pop();
     string treeName = "Binary tree";
 
     if (temp == nullptr)
@@ -252,7 +252,7 @@ void ShowBinaryTree(BinaryTree* tree)
         return;
     }
     cout << treeName << ":\n";
-    while (!queue.IsEmpty())
+    while (!queue->IsEmpty())
     {
         if (depthObserver != depth)
         {
@@ -282,8 +282,8 @@ void ShowBinaryTree(BinaryTree* tree)
         {
             cout << '\b';
         }
-        depth = queue.GetDepth();
-        temp = queue.Pop();
+        depth = queue->GetDepth();
+        temp = queue->Pop();
     }
     cout << "\nDepth of " << treeName << ": ";
     if (treeName[0] == 'R')
@@ -294,16 +294,17 @@ void ShowBinaryTree(BinaryTree* tree)
     {
         cout << treeDepth << endl;
     }
+    delete queue;
 }
 
 void ShowTreap(Treap* tree)
 {
-    Queue<TreapNode> queue = tree->GetLayers();
-    int treeDepth = queue.GetMaxDepth();
-    int depthObserver = queue.GetDepth();
-    int depth = queue.GetDepth();
-    TreapNode* temp = queue.Pop();
-    string treeName = "Binary tree";
+    Queue<TreapNode>* queue = tree->GetLayers();
+    int treeDepth = queue->GetMaxDepth();
+    int depthObserver = queue->GetDepth();
+    int depth = queue->GetDepth();
+    TreapNode* temp = queue->Pop();
+    string treeName = "Treap";
 
     if (temp == nullptr)
     {
@@ -311,7 +312,7 @@ void ShowTreap(Treap* tree)
         return;
     }
     cout << treeName << ":\n";
-    while (!queue.IsEmpty())
+    while (!queue->IsEmpty())
     {
         if (depthObserver != depth)
         {
@@ -341,8 +342,8 @@ void ShowTreap(Treap* tree)
         {
             cout << '\b';
         }
-        depth = queue.GetDepth();
-        temp = queue.Pop();
+        depth = queue->GetDepth();
+        temp = queue->Pop();
     }
     cout << "\nDepth of " << treeName << ": ";
     if (treeName[0] == 'R')
@@ -353,6 +354,7 @@ void ShowTreap(Treap* tree)
     {
         cout << treeDepth << endl;
     }
+    delete queue;
 }
 
 //TODO: я бы переделал валидацию слева от метода - переменная = метод валидации, который внутри уже всё проверяет
