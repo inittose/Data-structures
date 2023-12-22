@@ -2,6 +2,7 @@
 #define BINARYTREE_H
 
 #include "queue.h"
+#include "binarytreenode.h"
 #include <iostream>
 using std::cout;
 using std::endl;
