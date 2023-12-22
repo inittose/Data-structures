@@ -1,3 +1,4 @@
+//TODO: перейти на pragma ones
 #ifndef QUEUE_H
 #define QUEUE_H
 

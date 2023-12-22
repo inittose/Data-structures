@@ -34,6 +34,7 @@ struct TreapNode
      */
     TreapNode* Right;
 
+    //TODO: RSDN
     TreapNode(const int & key);
 };
 

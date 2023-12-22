@@ -1,8 +1,10 @@
+//TODO: перейти на pragma ones
 #ifndef TREAP_H
 #define TREAP_H
 
 #include "treapnode.h"
 #include "queue.h"
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -23,6 +25,7 @@ private:
      */
     int _depth;
 
+    //TODO: RSDN naming - названия a и b не очень хорошо отражают назначение аргументов
     TreapNode* Merge(TreapNode* a, TreapNode* b);
     void Split(TreapNode* node, int key, TreapNode*& a, TreapNode*& b);
     void DeleteTreap(TreapNode* node);

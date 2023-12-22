@@ -246,6 +246,7 @@ BinaryTreeNode* BinaryTree::Search(const int & data)
     return Search(_root, data);
 }
 
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 /*!
  * \brief Вывод дерева
  */
@@ -309,6 +310,7 @@ void BinaryTree::Show()
     cout << "\nDepth = " << _depth << endl;
 }
 
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 /*!
  * \brief Вывод деталей конкретного узла
  * \param data Значение узла

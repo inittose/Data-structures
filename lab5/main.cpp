@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//TODO: лучше в отдельный h файл
 void ControllerBinaryTree();
 void ControllerTreap();
 void MainController();
@@ -36,6 +37,7 @@ void MainController()
         cout << menu;
         ValidInput(mode);
         ClearTerminal();
+        //TODO: RSDN
         switch (mode) {
         case '1':
             ControllerBinaryTree();
@@ -54,8 +56,11 @@ void MainController()
  */
 void ControllerBinaryTree()
 {
+    //TODO: RSDN
     string menu = "Choose one of activity:\n1 - Add\n2 - Remove\n3 - Search\n4 - Search min value\n5 - Search max value\n6 - Show details of element\nq - Exit to main menu\nYour choice: ";
+    //TODO: переменная должна объявляться как можно ближе к инициализации RSDN
     int data;
+    //TODO: выделение памяти через new
     BinaryTree binaryTree;
     char mode = '\0';
 
@@ -63,6 +68,7 @@ void ControllerBinaryTree()
     {
         binaryTree.Show();
         cout << menu;
+        
         ValidInput(mode);
         ClearTerminal();
         switch (mode) {
@@ -78,6 +84,7 @@ void ControllerBinaryTree()
             {
                 cout << "Deletion successful!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No value " << data << " in binary tree!\n";
@@ -90,6 +97,7 @@ void ControllerBinaryTree()
             {
                 cout << "Value " << data << " is contained in binary tree!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No value " << data << " in binary tree!\n";
@@ -100,6 +108,7 @@ void ControllerBinaryTree()
             {
                 cout << "Value " << binaryTree.SearchMin()->Data << " is minimum in binary tree!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No nodes in binary tree!\n";
@@ -110,6 +119,7 @@ void ControllerBinaryTree()
             {
                 cout << "Value " << binaryTree.SearchMax()->Data << " is maximum in binary tree!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No nodes in binary tree!\n";
@@ -160,6 +170,7 @@ void ControllerTreap()
             {
                 cout << "Deletion successful!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No value " << key << " in treap!\n";
@@ -172,6 +183,7 @@ void ControllerTreap()
             {
                 cout << "Deletion successful!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No value " << key << " in treap!\n";
@@ -184,6 +196,7 @@ void ControllerTreap()
             {
                 cout << "Value " << key << " is contained in treap!\n";
             }
+            //TODO: DRY - don't repeat yourself
             else
             {
                 cout << "No value " << key << " in treap!\n";
@@ -207,6 +220,7 @@ void ControllerTreap()
  */
 string GetTypeName(const char *letter)
 {
+    //TODO: RSDN
     switch (*letter) {
     case 'c':
         return "char";
@@ -223,6 +237,7 @@ string GetTypeName(const char *letter)
     }
 }
 
+//TODO: я бы переделал валидацию слева от метода - переменная = метод валидации, который внутри уже всё проверяет
 /*!
  * \brief Ввод с проверкой
  * \param variable Переменная любого типа данных

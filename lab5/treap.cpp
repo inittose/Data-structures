@@ -315,6 +315,7 @@ bool Treap::LightRemove(const int & key)
     return LightRemove(_root, key);
 }
 
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 /*!
  * \brief Вывод дерамиды
  */
@@ -378,6 +379,7 @@ void Treap::Show()
     cout << "\nDepth = " << _depth << endl;
 }
 
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 /*!
  * \brief Вывод деталей узла дерамиды
  * \param data Ключ

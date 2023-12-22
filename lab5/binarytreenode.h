@@ -1,3 +1,4 @@
+//TODO: перейти на pragma ones
 #ifndef BINARYTREENODE_H
 #define BINARYTREENODE_H
 
@@ -27,6 +28,7 @@ struct BinaryTreeNode
      */
     BinaryTreeNode* Right;
 
+    //TODO: RSDN
     BinaryTreeNode(const int & data = 0, BinaryTreeNode* parent = nullptr, BinaryTreeNode * left = nullptr, BinaryTreeNode * right = nullptr);
 };
 

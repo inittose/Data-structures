@@ -1,8 +1,10 @@
+//TODO: перейти на pragma ones
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
 #include "queue.h"
 #include "binarytreenode.h"
+//TODO: убрать из СД операциии IO должны быть отдельно от СД
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -18,6 +20,8 @@ private:
      */
     BinaryTreeNode* _root;
 
+    //TODO: считается некорректно, как максимальная глубина левого или правого пути дерева. 
+    //TODO: На самом деле - один из центральных узлов может иметь более длинный путь
     /*!
      * \brief Глубина дерева
      */
