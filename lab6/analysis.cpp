@@ -4,14 +4,10 @@
 #include <chrono>
 #include <cmath>
 #include <fstream>
+#include <sstream>
 using namespace std;
 using std::chrono::steady_clock;
 
-/*!
- * \brief Проанализировать деревья и получить таблицы
- * \param startPower Начальная степень десяти
- * \param measureCount Количество измерений
- */
 void AnalyzeTrees(const int &startPower, const int &measureCount)
 {
     int rows = 4 * (measureCount + 1);
@@ -22,7 +18,7 @@ void AnalyzeTrees(const int &startPower, const int &measureCount)
     SetTree(redBlackTree, startNodes, seed);
     AVLTree avlTree;
     SetTree(avlTree, startNodes, seed);
-    string tables[rows];
+    string* tables = new string[rows];
     tables[0] = "Insert [Microseconds]\tRed-black tree (SUM)\tRed-black tree (MAX)\t";
     tables[0] += "AVL-tree (SUM)\tAVL-tree (MAX)";
     tables[(measureCount + 1)] = "\nInsert [Rotations]\t";
@@ -36,8 +32,10 @@ void AnalyzeTrees(const int &startPower, const int &measureCount)
         auto avlMeasures = GetAddingMeasures(avlTree, startNodes / 10, seed);
 
         tables[i + 1] += to_string(maxNodes) + '\t' + rbMeasures.first + avlMeasures.first;
-        tables[(measureCount + 1) + i + 1] += to_string(maxNodes) +
-                                              '\t' + rbMeasures.second + avlMeasures.second;
+
+        tables[(measureCount + 1) + i + 1] += 
+            to_string(maxNodes) + '\t' + 
+            rbMeasures.second + avlMeasures.second;
     }
     for (int i = 0; i < measureCount; i++)
     {
@@ -45,11 +43,14 @@ void AnalyzeTrees(const int &startPower, const int &measureCount)
         auto rbMeasures = GetRemovingMeasures(redBlackTree, startNodes / 10, seed);
         auto avlMeasures = GetRemovingMeasures(avlTree, startNodes / 10, seed);
 
-        tables[2 * (measureCount + 1) + (measureCount - i)] += to_string(maxNodes) +
-                                                  '\t' + rbMeasures.first + avlMeasures.first;
+        tables[2 * (measureCount + 1) + (measureCount - i)] += 
+            to_string(maxNodes) + '\t' + 
+            rbMeasures.first + avlMeasures.first;
 
-        tables[3 * (measureCount + 1) + (measureCount - i)] += to_string(maxNodes) +
-                                                  '\t' + rbMeasures.second + avlMeasures.second;
+        tables[3 * (measureCount + 1) + (measureCount - i)] += 
+            to_string(maxNodes) + '\t' + 
+            rbMeasures.second + avlMeasures.second;
+
         maxNodes -= startNodes / 10;
     }
     cout << "Done!\n";
@@ -61,13 +62,17 @@ void AnalyzeTrees(const int &startPower, const int &measureCount)
         cout << tables[i] << endl;
         file << tables[i] << endl;
     }
+    delete[] tables;
 }
 
-/*!
- * \brief Сравнение на максимальное число
- * \param max Максимальное число
- * \param value Новое число
- */
+template <typename Type>
+string to_string(const Type& value)
+{
+    stringstream buffer;
+    buffer << value;
+    return buffer.str();
+}
+
 void SetMax(int &max, const int &value)
 {
     if (value > max)
@@ -76,12 +81,6 @@ void SetMax(int &max, const int &value)
     }
 }
 
-/*!
- * \brief Получить случайное число в диапазоне
- * \param min Нижний диапазон
- * \param max Верхний диапазон
- * \return Случайное число
- */
 int GetRandomNumber(const int &min, const int &max)
 {
     if (min > max)
@@ -92,15 +91,8 @@ int GetRandomNumber(const int &min, const int &max)
     return rand() % (max - min) + min;
 }
 
-/*!
- * \brief Получить данные измерения вставки
- * \param tree Дерево
- * \param maxNodes Количество вставляемых узлов
- * \param seed Число для задания случайной генерации
- * \return Две строки с данными
- */
 template <typename Tree>
-std::pair<std::string, std::string> GetAddingMeasures(Tree &tree, const long long &maxNodes, const int &seed)
+pair<string, string> GetAddingMeasures(Tree &tree, const long long &maxNodes, const int &seed)
 {
     srand(seed);
     steady_clock::time_point begin;
@@ -128,15 +120,8 @@ std::pair<std::string, std::string> GetAddingMeasures(Tree &tree, const long lon
     return make_pair(first, second);
 }
 
-/*!
- * \brief Получить данные измерения удаления
- * \param tree Дерево
- * \param maxNodes Количество удаляемых узлов
- * \param seed Число для задания случайной генерации
- * \return Две строки с данными
- */
 template <typename Tree>
-std::pair<std::string, std::string> GetRemovingMeasures(Tree &tree, const long long &maxNodes, const int &seed)
+pair<string, string> GetRemovingMeasures(Tree &tree, const long long &maxNodes, const int &seed)
 {
     srand(seed);
     steady_clock::time_point begin;
@@ -164,12 +149,6 @@ std::pair<std::string, std::string> GetRemovingMeasures(Tree &tree, const long l
     return make_pair(first, second);
 }
 
-/*!
- * \brief Добавить в дерево элементы
- * \param tree Дерево
- * \param maxNodes Количество добавляемых элементов
- * \param seed Число для задания случайной генерации
- */
 template <typename Tree>
 void SetTree(Tree &tree, const long long &maxNodes, const int &seed)
 {

@@ -1,5 +1,4 @@
-#ifndef AVLTREENODE_H
-#define AVLTREENODE_H
+#pragma once
 
 /*!
  * \brief Узел АВЛ-дерева
@@ -26,7 +25,10 @@ struct AVLTreeNode
      */
     AVLTreeNode* Right;
 
-    AVLTreeNode(const int &data, const char height = 1, AVLTreeNode* left = nullptr, AVLTreeNode* right = nullptr);
+    /*!
+     * \brief Конструктор узла АВЛ-дерева
+     * \param data Данные узла
+     * \param height Высота узла
+     */
+    AVLTreeNode(const int &data, const char height = 1);
 };
-
-#endif // AVLTREENODE_H

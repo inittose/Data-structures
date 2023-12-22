@@ -1,8 +1,5 @@
 #include "rbtree.h"
 
-/*!
- * \brief Конструктор КЧД
- */
 RBTree::RBTree()
 {
     Rotations = 0;
@@ -10,19 +7,12 @@ RBTree::RBTree()
     _root = _nil;
 }
 
-/*!
- * \brief Деструктор КЧД
- */
 RBTree::~RBTree()
 {
     DeleteTree(_root);
     delete _nil;
 }
 
-/*!
- * \brief Удаление всех узлов
- * \param node Удаляемый узел
- */
 void RBTree::DeleteTree(RBTreeNode* node)
 {
     if (node == _nil)
@@ -35,11 +25,6 @@ void RBTree::DeleteTree(RBTreeNode* node)
     delete node;
 }
 
-/*!
- * \brief Поворот влево
- * \param node Верхний задействованный узел
- * \return Новый верхний узел
- */
 RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
 {
     RBTreeNode* rightNode = node->Right;
@@ -71,11 +56,6 @@ RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
     return rightNode;
 }
 
-/*!
- * \brief Поворот вправо
- * \param node Верхний задействованный узел
- * \return Новый верхний узел
- */
 RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
 {
     RBTreeNode* leftNode = node->Left;
@@ -107,10 +87,6 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
     return leftNode;
 }
 
-/*!
- * \brief Добавление узла
- * \param data Данные узла
- */
 void RBTree::AddNode(const int &data)
 {
     Rotations = 0;
@@ -150,10 +126,56 @@ void RBTree::AddNode(const int &data)
     FixAddNode(newNode);
 }
 
-/*!
- * \brief Балансировка послк добавления узла
- * \param node Балансируемый узел
- */
+void RBTree::FixAddLeft(RBTreeNode*& node, RBTreeNode* parent, RBTreeNode* grandparent)
+{
+    RBTreeNode* uncle = grandparent->Right;
+    if (uncle != _nil && uncle->Color == Red)
+    {
+        parent->Color = Black;
+        uncle->Color = Black;
+        grandparent->Color = Red;
+        node = grandparent;
+    }
+    else
+    {
+        if (node == parent->Right)
+        {
+            node = parent;
+            TurnLeft(node);
+            parent = node->Parent;
+            grandparent = parent->Parent;
+        }
+        parent->Color = Black;
+        grandparent->Color = Red;
+        TurnRight(grandparent);
+    }
+}
+
+void RBTree::FixAddRight(RBTreeNode*& node, RBTreeNode* parent, RBTreeNode* grandparent)
+{
+    RBTreeNode* uncle = grandparent->Left;
+    if (uncle != _nil && uncle->Color == Red)
+    {
+        parent->Color = Black;
+        uncle->Color = Black;
+        grandparent->Color = Red;
+        node = grandparent;
+    }
+    else
+    {
+        if (node == parent->Left)
+        {
+            node = parent;
+            TurnRight(node);
+            parent = node->Parent;
+            grandparent = parent->Parent;
+        }
+        parent->Color = Black;
+        grandparent->Color = Red;
+        TurnLeft(grandparent);
+    }
+}
+
 void RBTree::FixAddNode(RBTreeNode* node)
 {
     if (node == _root)
@@ -168,53 +190,13 @@ void RBTree::FixAddNode(RBTreeNode* node)
         RBTreeNode* grandparent = parent->Parent;
         if (grandparent != _nil)
         {
-            if (node->Parent == grandparent->Left)
+            if (parent == grandparent->Left)
             {
-                RBTreeNode* uncle = grandparent->Right;
-                if (uncle != _nil && uncle->Color == Red)
-                {
-                    parent->Color = Black;
-                    uncle->Color = Black;
-                    grandparent->Color = Red;
-                    node = grandparent;
-                }
-                else
-                {
-                    if (node == parent->Right)
-                    {
-                        node = parent;
-                        TurnLeft(node);
-                        parent = node->Parent;
-                        grandparent = parent->Parent;
-                    }
-                    parent->Color = Black;
-                    grandparent->Color = Red;
-                    TurnRight(grandparent);
-                }
+                FixAddLeft(node, parent, grandparent);
             }
             else
             {
-                RBTreeNode* uncle = grandparent->Left;
-                if (uncle != _nil && uncle->Color == Red)
-                {
-                    parent->Color = Black;
-                    uncle->Color = Black;
-                    grandparent->Color = Red;
-                    node = grandparent;
-                }
-                else
-                {
-                    if (node == parent->Left)
-                    {
-                        node = parent;
-                        TurnRight(node);
-                        parent = node->Parent;
-                        grandparent = parent->Parent;
-                    }
-                    parent->Color = Black;
-                    grandparent->Color = Red;
-                    TurnLeft(grandparent);
-                }
+                FixAddRight(node, parent, grandparent);
             }
         }
     }
@@ -222,11 +204,6 @@ void RBTree::FixAddNode(RBTreeNode* node)
     _root->Color = Black;
 }
 
-/*!
- * \brief Обмен двух узлов в дереве
- * \param old Узел, который заменят
- * \param swop Узел, на который заменят
- */
 void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
 {
     if (old->Parent == _nil)
@@ -247,10 +224,6 @@ void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
     swop->Parent = old->Parent;
 }
 
-/*!
- * \brief Удаление узла
- * \param data Данные узла
- */
 void RBTree::RemoveNode(const int &data)
 {
     Rotations = 0;
@@ -303,10 +276,70 @@ void RBTree::RemoveNode(const int &data)
     }
 }
 
-/*!
- * \brief Балансировка после удаления узла
- * \param node Балансируемый узел
- */
+void RBTree::FixRemoveLeft(RBTreeNode*& node, RBTreeNode* parent)
+{
+    RBTreeNode* brother = parent->Right;
+    if (brother->Color == Red)
+    {
+        brother->Color = Black;
+        parent->Color = Red;
+        TurnLeft(parent);
+        brother = parent->Right;
+    }
+    if (brother->Left->Color == Black && brother->Right->Color == Black)
+    {
+        brother->Color = Red;
+        node = node->Parent;
+    }
+    else
+    {
+        if (brother->Right->Color == Black)
+        {
+            brother->Left->Color = Black;
+            brother->Color = Red;
+            TurnRight(brother);
+            brother = parent->Right;
+        }
+        brother->Color = parent->Color;
+        parent->Color = Black;
+        brother->Right->Color = Black;
+        TurnLeft(parent);
+        node = _root;
+    }
+}
+
+void RBTree::FixRemoveRight(RBTreeNode*& node, RBTreeNode* parent)
+{
+    RBTreeNode* brother = parent->Left;
+    if (brother->Color == Red)
+    {
+        brother->Color = Black;
+        parent->Color = Red;
+        TurnRight(parent);
+        brother = parent->Left;
+    }
+    if (brother->Left->Color == Black && brother->Right->Color == Black)
+    {
+        brother->Color = Red;
+        node = node->Parent;
+    }
+    else
+    {
+        if (brother->Left->Color == Black)
+        {
+            brother->Right->Color = Black;
+            brother->Color = Red;
+            TurnLeft(brother);
+            brother = parent->Left;
+        }
+        brother->Color = parent->Color;
+        parent->Color = Black;
+        brother->Left->Color = Black;
+        TurnRight(parent);
+        node = _root;
+    }
+}
+
 void RBTree::FixRemoveNode(RBTreeNode* node)
 {
     while (node != _root && node->Color == Black)
@@ -314,75 +347,16 @@ void RBTree::FixRemoveNode(RBTreeNode* node)
         RBTreeNode* parent = node->Parent;
         if (node == parent->Left)
         {
-            RBTreeNode* brother = parent->Right;
-            if (brother->Color == Red)
-            {
-                brother->Color = Black;
-                parent->Color = Red;
-                TurnLeft(parent);
-                brother = parent->Right;
-            }
-            if (brother->Left->Color == Black && brother->Right->Color == Black)
-            {
-                brother->Color = Red;
-                node = node->Parent;
-            }
-            else
-            {
-                if (brother->Right->Color == Black)
-                {
-                    brother->Left->Color = Black;
-                    brother->Color = Red;
-                    TurnRight(brother);
-                    brother = parent->Right;
-                }
-                brother->Color = parent->Color;
-                parent->Color = Black;
-                brother->Right->Color = Black;
-                TurnLeft(parent);
-                node = _root;
-            }
+            FixRemoveLeft(node, parent);
         }
         else
         {
-            RBTreeNode* brother = parent->Left;
-            if (brother->Color == Red)
-            {
-                brother->Color = Black;
-                parent->Color = Red;
-                TurnRight(parent);
-                brother = parent->Left;
-            }
-            if (brother->Left->Color == Black && brother->Right->Color == Black)
-            {
-                brother->Color = Red;
-                node = node->Parent;
-            }
-            else
-            {
-                if (brother->Left->Color == Black)
-                {
-                    brother->Right->Color = Black;
-                    brother->Color = Red;
-                    TurnLeft(brother);
-                    brother = parent->Left;
-                }
-                brother->Color = parent->Color;
-                parent->Color = Black;
-                brother->Left->Color = Black;
-                TurnRight(parent);
-                node = _root;
-            }
+            FixRemoveRight(node, parent);
         }
     }
     node->Color = Black;
 }
 
-/*!
- * \brief Найти минимальный узел в поддереве
- * \param node Узел поддерева
- * \return Минимальный узел
- */
 RBTreeNode* RBTree::GetMin(RBTreeNode* node)
 {
     while (node->Left != _nil)
@@ -392,11 +366,6 @@ RBTreeNode* RBTree::GetMin(RBTreeNode* node)
     return node;
 }
 
-/*!
- * \brief Поиск узла
- * \param data Данные узла
- * \return Найденный узел
- */
 RBTreeNode* RBTree::SearchNode(const int &data)
 {
     RBTreeNode* bypassNode = _root;
@@ -418,12 +387,6 @@ RBTreeNode* RBTree::SearchNode(const int &data)
     return nullptr;
 }
 
-/*!
- * \brief Найти высоту дерева
- * \param node Узел поддерева
- * \param currentDepth высота поддерева
- * \return Высота дерева
- */
 int RBTree::GetDepth(RBTreeNode* node, int currentDepth)
 {
     if (node == nullptr)
@@ -443,59 +406,56 @@ int RBTree::GetDepth(RBTreeNode* node, int currentDepth)
     }
 }
 
-/*!
- * \brief Обойти дерево в широту
- * \return Очередь узлов по слоям
- */
-Queue<RBTreeNode> RBTree::GetLayers()
+Queue<RBTreeNode>* RBTree::GetLayers()
 {
-    Queue<RBTreeNode> queue;
-    Queue<RBTreeNode> queueBypass;
+    Queue<RBTreeNode>* queue = new Queue<RBTreeNode>;
+    Queue<RBTreeNode>* queueBypass = new Queue<RBTreeNode>;
     int treeDepth = GetDepth(_root);
     int depthObserver = 0;
     if (_root != nullptr)
     {
-        queue.Push(_root, depthObserver, _root->Color);
+        queue->Push(_root, depthObserver, _root->Color);
     }
     else
     {
-        queue.Push(_root, depthObserver);
+        queue->Push(_root, depthObserver);
     }
-    queueBypass.Push(_root, depthObserver);
-    depthObserver = queueBypass.GetDepth();
+    queueBypass->Push(_root, depthObserver);
+    depthObserver = queueBypass->GetDepth();
     while(depthObserver < treeDepth)
     {
-        RBTreeNode* node = queueBypass.Pop();
+        RBTreeNode* node = queueBypass->Pop();
         if (node)
         {
             if (node->Left)
             {
-                queue.Push(node->Left, depthObserver + 1, node->Left->Color);
+                queue->Push(node->Left, depthObserver + 1, node->Left->Color);
             }
             else
             {
-                queue.Push(node->Left, depthObserver + 1);
+                queue->Push(node->Left, depthObserver + 1);
             }
 
             if (node->Right)
             {
-                queue.Push(node->Right, depthObserver + 1, node->Right->Color);
+                queue->Push(node->Right, depthObserver + 1, node->Right->Color);
             }
             else
             {
-                queue.Push(node->Right, depthObserver + 1);
+                queue->Push(node->Right, depthObserver + 1);
             }
-            queueBypass.Push(node->Left, depthObserver + 1);
-            queueBypass.Push(node->Right, depthObserver + 1);
+            queueBypass->Push(node->Left, depthObserver + 1);
+            queueBypass->Push(node->Right, depthObserver + 1);
         }
         else
         {
-            queue.Push(nullptr, depthObserver + 1);
-            queue.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
         }
-        depthObserver = queueBypass.GetDepth();
+        depthObserver = queueBypass->GetDepth();
     }
+    delete queueBypass;
     return queue;
 }

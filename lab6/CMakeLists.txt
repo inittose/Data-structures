@@ -14,7 +14,7 @@ add_executable(lab6 main.cpp
     queuenode.h
     analysis.h
     analysis.cpp
-)
+ "menu.h" "menu.cpp")
 
 include(GNUInstallDirs)
 install(TARGETS lab6

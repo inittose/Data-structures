@@ -1,26 +1,16 @@
 #include "avltree.h"
 
-/*!
- * \brief Конструктор АВЛ=дерева
- */
 AVLTree::AVLTree()
 {
     Rotations = 0;
     _root = nullptr;
 }
 
-/*!
- * \brief Деструктор АВЛ-дерева
- */
 AVLTree::~AVLTree()
 {
     DeleteTree(_root);
 }
 
-/*!
- * \brief Рекурсивно удалить поддерево
- * \param node Узел поддерева
- */
 void AVLTree::DeleteTree(AVLTreeNode* node)
 {
     if (node == nullptr)
@@ -32,11 +22,6 @@ void AVLTree::DeleteTree(AVLTreeNode* node)
     delete node;
 }
 
-/*!
- * \brief Получить высоту узла
- * \param node Узел
- * \return Высота узла
- */
 int AVLTree::GetHeight(AVLTreeNode* node)
 {
     if (node == nullptr)
@@ -49,20 +34,11 @@ int AVLTree::GetHeight(AVLTreeNode* node)
     }
 }
 
-/*!
- * \brief Найти разность высот дочерних узлов
- * \param node Родительский узел
- * \return Разность высот
- */
 int AVLTree::GetDeltaHeight(AVLTreeNode* node)
 {
     return GetHeight(node->Left) - GetHeight(node->Right);
 }
 
-/*!
- * \brief Пересчитать высоту узла
- * \param node Узел
- */
 void AVLTree::RebalanceHeight(AVLTreeNode* node)
 {
     int leftHeight = GetHeight(node->Left);
@@ -77,11 +53,6 @@ void AVLTree::RebalanceHeight(AVLTreeNode* node)
     }
 }
 
-/*!
- * \brief Поворот налево
- * \param node Верхний задействованный узел
- * \return Новый верхний узел
- */
 AVLTreeNode* AVLTree::TurnLeft(AVLTreeNode* node)
 {
     AVLTreeNode* rightNode = node->Right;
@@ -93,11 +64,6 @@ AVLTreeNode* AVLTree::TurnLeft(AVLTreeNode* node)
     return rightNode;
 }
 
-/*!
- * \brief Поворот направо
- * \param node Верхний задействованный узел
- * \return Новый верхний узел
- */
 AVLTreeNode* AVLTree::TurnRight(AVLTreeNode* node)
 {
     AVLTreeNode* leftNode = node->Left;
@@ -109,11 +75,6 @@ AVLTreeNode* AVLTree::TurnRight(AVLTreeNode* node)
     return leftNode;
 }
 
-/*!
- * \brief Балансировка поддерева
- * \param node Корень поддерева
- * \return Сбалансированное поддерево
- */
 AVLTreeNode* AVLTree::Rebalance(AVLTreeNode* node)
 {
     RebalanceHeight(node);
@@ -136,22 +97,12 @@ AVLTreeNode* AVLTree::Rebalance(AVLTreeNode* node)
     return node;
 }
 
-/*!
- * \brief Добавить узел в поддерево
- * \param node Корень поддерева
- * \param data Данные нового узла
- * \return Сбалансированное поддерево
- */
 AVLTreeNode* AVLTree::AddNode(AVLTreeNode* node, const int &data)
 {
     if (node == nullptr)
     {
         return new AVLTreeNode(data);
     }
-    /*if (data == node->Data)
-    {
-        return node;
-    }*/
     if (data > node->Data)
     {
         node->Right = AddNode(node->Right, data);
@@ -163,21 +114,12 @@ AVLTreeNode* AVLTree::AddNode(AVLTreeNode* node, const int &data)
     return Rebalance(node);
 }
 
-/*!
- * \brief Добавить узел в дерево
- * \param data Данные узла
- */
 void AVLTree::AddNode(const int &data)
 {
     Rotations = 0;
     _root = AddNode(_root, data);
 }
 
-/*!
- * \brief Найти минимальный узел в поддереве
- * \param node Корень поддерева
- * \return Минимальный узел
- */
 AVLTreeNode* AVLTree::GetMin(AVLTreeNode* node)
 {
     if (node->Left == nullptr)
@@ -190,11 +132,6 @@ AVLTreeNode* AVLTree::GetMin(AVLTreeNode* node)
     }
 }
 
-/*!
- * \brief Найти максимальный узел поддерева
- * \param node Корень поддерева
- * \return Максимальный узел
- */
 AVLTreeNode* AVLTree::GetMax(AVLTreeNode* node)
 {
     if (node->Right == nullptr)
@@ -207,11 +144,6 @@ AVLTreeNode* AVLTree::GetMax(AVLTreeNode* node)
     }
 }
 
-/*!
- * \brief Рекурсивно удалить минимальный узел поддерева
- * \param node Корень поддерева
- * \return Сбалансированное поддерево
- */
 AVLTreeNode* AVLTree::RemoveMinNode(AVLTreeNode* node)
 {
     if (node->Left == nullptr)
@@ -222,12 +154,6 @@ AVLTreeNode* AVLTree::RemoveMinNode(AVLTreeNode* node)
     return Rebalance(node);
 }
 
-/*!
- * \brief Рекурсивно удалить узел поддерева
- * \param node Корень поддерева
- * \param data Данные узла
- * \return Сбалансированное поддерево
- */
 AVLTreeNode* AVLTree::RemoveNode(AVLTreeNode* node, const int &data)
 {
     if (node == nullptr)
@@ -267,22 +193,12 @@ AVLTreeNode* AVLTree::RemoveNode(AVLTreeNode* node, const int &data)
     return Rebalance(node);
 }
 
-/*!
- * \brief Удалить узел дерева
- * \param data Данные узла
- */
 void AVLTree::RemoveNode(const int &data)
 {
     Rotations = 0;
     _root = RemoveNode(_root, data);
 }
 
-/*!
- * \brief Найти узел в поддереве
- * \param node Корень поддерева
- * \param data Данные узла
- * \return Найденный узел
- */
 AVLTreeNode* AVLTree::SearchNode(AVLTreeNode* node, const int &data)
 {
     if (node == nullptr)
@@ -303,62 +219,39 @@ AVLTreeNode* AVLTree::SearchNode(AVLTreeNode* node, const int &data)
     }
 }
 
-/*!
- * \brief Найти узел в дереве
- * \param data Данные узла
- * \return Найденный узел
- */
 AVLTreeNode* AVLTree::SearchNode(const int &data)
 {
     return SearchNode(_root, data);
 }
 
-/*!
- * \brief Обойти дерево в широту
- * \return Очередь узлов по слоям
- */
-Queue<AVLTreeNode> AVLTree::GetLayers()
+Queue<AVLTreeNode>* AVLTree::GetLayers()
 {
-    Queue<AVLTreeNode> queue;
-    Queue<AVLTreeNode> queueBypass;
+    Queue<AVLTreeNode>* queue = new Queue<AVLTreeNode>;
+    Queue<AVLTreeNode>* queueBypass = new Queue<AVLTreeNode>;
     int treeDepth = GetHeight(_root);
     int depthObserver = 0;
-    queue.Push(_root, depthObserver);
-    queueBypass.Push(_root, depthObserver);
-    depthObserver = queueBypass.GetDepth();
+    queue->Push(_root, depthObserver);
+    queueBypass->Push(_root, depthObserver);
+    depthObserver = queueBypass->GetDepth();
     while(depthObserver < treeDepth)
     {
-        AVLTreeNode* node = queueBypass.Pop();
+        AVLTreeNode* node = queueBypass->Pop();
         if (node)
         {
-            if (node->Left)
-            {
-                queue.Push(node->Left, depthObserver + 1);
-            }
-            else
-            {
-                queue.Push(node->Left, depthObserver + 1);
-            }
-
-            if (node->Right)
-            {
-                queue.Push(node->Right, depthObserver + 1);
-            }
-            else
-            {
-                queue.Push(node->Right, depthObserver + 1);
-            }
-            queueBypass.Push(node->Left, depthObserver + 1);
-            queueBypass.Push(node->Right, depthObserver + 1);
+            queue->Push(node->Left, depthObserver + 1);
+            queue->Push(node->Right, depthObserver + 1);
+            queueBypass->Push(node->Left, depthObserver + 1);
+            queueBypass->Push(node->Right, depthObserver + 1);
         }
         else
         {
-            queue.Push(nullptr, depthObserver + 1);
-            queue.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
-            queueBypass.Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queue->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
+            queueBypass->Push(nullptr, depthObserver + 1);
         }
-        depthObserver = queueBypass.GetDepth();
+        depthObserver = queueBypass->GetDepth();
     }
+    delete queueBypass;
     return queue;
 }

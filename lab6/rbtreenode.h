@@ -1,5 +1,4 @@
-#ifndef RBTREENODE_H
-#define RBTREENODE_H
+#pragma once
 
 /*!
  * \brief Цветовой набор для КЧД
@@ -40,7 +39,11 @@ struct RBTreeNode
      */
     RBColor Color;
 
-    RBTreeNode(const int &data, RBColor color, RBTreeNode* left = nullptr, RBTreeNode* right = nullptr, RBTreeNode* parent = nullptr);
+    /*!
+     * \brief Конструктор узла КЧД
+     * \param data Данные узла
+     * \param color Цвет узла
+     */
+    RBTreeNode(const int &data, RBColor color, 
+        RBTreeNode* left = nullptr, RBTreeNode* right = nullptr);
 };
-
-#endif // RBTREENODE_H
