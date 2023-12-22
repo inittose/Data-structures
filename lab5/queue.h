@@ -1,6 +1,6 @@
 //TODO: перейти на pragma ones
-#ifndef QUEUE_H
-#define QUEUE_H
+//UPD: Теперь все headers используют pragma once
+#pragma once
 
 #include "queuenode.h"
 
@@ -74,6 +74,15 @@ public:
     }
 
     /*!
+     * \brief Получить глубину последнего элемента очереди
+     * \return Глубина элемента
+     */
+    int GetMaxDepth()
+    {
+        return _tail->Depth;
+    }
+
+    /*!
      * \brief Получить глубину первого элемента в очереди
      * \return Глубина элемента
      */
@@ -82,7 +91,13 @@ public:
         return _head->Depth;
     }
 
-    void Push(type* item, const int & depth = 0)
+    /*!
+     * \brief Добавить элемент в очередь
+     * \param item Элемент
+     * \param depth Глубина элемента
+     * \param color Цвет элемента
+     */
+    void Push(type* item, const int &depth = 0)
     {
         QueueNode<type>* newQueueItem = new QueueNode(item, depth);
         if (_tail)
@@ -104,6 +119,3 @@ public:
         return !_head;
     }
 };
-
-
-#endif // QUEUE_H

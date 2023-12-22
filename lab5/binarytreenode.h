@@ -1,7 +1,6 @@
 //TODO: перейти на pragma ones
-#ifndef BINARYTREENODE_H
-#define BINARYTREENODE_H
-
+//UPD: Теперь все headers используют pragma once
+#pragma once
 
 /*!
  * \brief Узел двоичного дерева поиска
@@ -28,8 +27,15 @@ struct BinaryTreeNode
      */
     BinaryTreeNode* Right;
 
+    /*!
+    * \brief Конструктор узла двоичного дерева поиска
+    * \param data Значение
+    * \param parent Предок узла
+    * \param left Левый узел
+    * \param right Правый узел
+    */
     //TODO: RSDN
-    BinaryTreeNode(const int & data = 0, BinaryTreeNode* parent = nullptr, BinaryTreeNode * left = nullptr, BinaryTreeNode * right = nullptr);
+    //UPD: Укоротил строчку, все комментарии теперь в header
+    BinaryTreeNode(const int &data, BinaryTreeNode* parent = nullptr);
 };
 
-#endif // BINARYTREENODE_H

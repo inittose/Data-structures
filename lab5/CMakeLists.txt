@@ -11,7 +11,9 @@ add_executable(lab5 main.cpp
     queue.h
     queuenode.h
     treapnode.h treapnode.cpp
-    treap.h treap.cpp)
+    treap.h treap.cpp
+    menu.h
+    menu.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS lab5

@@ -1,17 +1,11 @@
 #include "binarytreenode.h"
 
-/*!
- * \brief Конструктор узла двоичного дерева поиска
- * \param data Значение
- * \param parent Предок узла
- * \param left Левый узел
- * \param right Правый узел
- */
 //TODO: RSDN
-BinaryTreeNode::BinaryTreeNode(const int & data, BinaryTreeNode* parent, BinaryTreeNode * left, BinaryTreeNode * right)
+//UPD: Укоротил строчку
+BinaryTreeNode::BinaryTreeNode(const int &data, BinaryTreeNode* parent)
+    : Left{nullptr}, Right{nullptr}
 {
     Data = data;
     Parent = parent;
-    Left = left;
-    Right = right;
 }
+

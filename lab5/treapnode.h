@@ -1,5 +1,4 @@
-#ifndef TREAPNODE_H
-#define TREAPNODE_H
+#pragma once
 
 #include <cstdlib>
 #include <ctime>
@@ -35,7 +34,10 @@ struct TreapNode
     TreapNode* Right;
 
     //TODO: RSDN
-    TreapNode(const int & key);
+    //UPD: Все комментарии теперь в header
+    /*!
+    * \brief Конструктор узла декартова дерева
+    * \param key Ключ узла
+    */
+    TreapNode(const int &key);
 };
-
-#endif // TREAPNODE_H

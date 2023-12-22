@@ -1,6 +1,6 @@
 //TODO: перейти на pragma ones
-#ifndef QUEUENODE_H
-#define QUEUENODE_H
+//UPD: Теперь все headers используют pragma once
+#pragma once
 
 /*!
  * \brief Узел очереди
@@ -36,5 +36,3 @@ struct QueueNode
         Next = next;
     }
 };
-
-#endif // QUEUENODE_H
