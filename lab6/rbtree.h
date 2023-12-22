@@ -4,16 +4,29 @@
 #include "rbtreenode.h"
 #include "queue.h"
 
+/*!
+ * \brief Красно-черное дерево
+ */
 class RBTree
 {
 public:
+    /*!
+     * \brief Количество поворотов
+     */
     int Rotations;
 
 private:
+    /*!
+     * \brief Фиктивный лист
+     */
     RBTreeNode* _nil;
+
+    /*!
+     * \brief Корень дерева
+     */
     RBTreeNode* _root;
 
-    void DeleteNode(RBTreeNode* node);
+    void DeleteTree(RBTreeNode* node);
     RBTreeNode* TurnLeft(RBTreeNode* node);
     RBTreeNode* TurnRight(RBTreeNode* node);
     int GetDepth(RBTreeNode* node, int currentDepth = 0);
@@ -30,7 +43,6 @@ public:
     void AddNode(const int &data);
     void RemoveNode(const int &data);
     RBTreeNode* SearchNode(const int &data);
-    int GetRoot();
 };
 
 #endif // RBTREE_H

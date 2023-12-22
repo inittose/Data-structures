@@ -22,8 +22,8 @@ int DigitPlace(int number);
 
 int main()
 {
-    AnalyzeTrees(5, 4);
-    //MainController();
+    //AnalyzeTrees(8, 10);
+    MainController();
     return 0;
 }
 
@@ -218,6 +218,11 @@ int DigitPlace(int number)
     return i;
 }
 
+/*!
+ * \brief Конвертация typename в название дерева
+ * \param name Строка typename
+ * \return Строка название дерева
+ */
 string GetTreeName(const string &name)
 {
     string treeName;
@@ -237,6 +242,10 @@ string GetTreeName(const string &name)
     return treeName;
 }
 
+/*!
+ * \brief Вывод дерева
+ * \param queue Очередь с элементами дерева
+ */
 template <typename T>
 void ShowTree(Queue<T> queue)
 {

@@ -4,17 +4,25 @@
 #include "avltreenode.h"
 #include "queue.h"
 
+/*!
+ * \brief АВЛ-дерево
+ */
 class AVLTree
 {
 public:
+    /*!
+     * \brief Количество повороты
+     */
     int Rotations;
 
 private:
+    /*!
+     * \brief Корень дерева
+     */
     AVLTreeNode* _root;
 
-    void DeleteNode(AVLTreeNode* node);
+    void DeleteTree(AVLTreeNode* node);
     void RebalanceHeight(AVLTreeNode* node);
-    int GetDepth(AVLTreeNode* node, int currentDepth = 0);
     int GetHeight(AVLTreeNode* node);
     int GetDeltaHeight(AVLTreeNode* node);
     AVLTreeNode* TurnLeft(AVLTreeNode* node);
@@ -34,7 +42,6 @@ public:
     void RemoveNode(const int &data);
     AVLTreeNode* SearchNode(const int &data);
     Queue<AVLTreeNode> GetLayers();
-    int GetRoot();
 };
 
 #endif // AVLTREE_H

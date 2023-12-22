@@ -81,16 +81,30 @@ public:
         return _head->Depth;
     }
 
+    /*!
+     * \brief Получить цвет первого элемента в очереди
+     * \return Цвет узла
+     */
     int GetColor()
     {
         return _head->Color;
     }
 
+    /*!
+     * \brief Получить глубину последнего элемента очереди
+     * \return Глубина элемента
+     */
     int GetMaxDepth()
     {
         return _tail->Depth;
     }
 
+    /*!
+     * \brief Добавить элемент в очередь
+     * \param item Элемент
+     * \param depth Глубина элемента
+     * \param color Цвет элемента
+     */
     void Push(type* item, const int & depth = 0, char color = 0)
     {
         QueueNode<type>* newQueueItem = new QueueNode(item, depth, color);

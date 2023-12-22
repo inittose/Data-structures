@@ -1,5 +1,8 @@
 #include "rbtree.h"
 
+/*!
+ * \brief Конструктор КЧД
+ */
 RBTree::RBTree()
 {
     Rotations = 0;
@@ -7,24 +10,36 @@ RBTree::RBTree()
     _root = _nil;
 }
 
+/*!
+ * \brief Деструктор КЧД
+ */
 RBTree::~RBTree()
 {
-    DeleteNode(_root);
+    DeleteTree(_root);
     delete _nil;
 }
 
-void RBTree::DeleteNode(RBTreeNode* node)
+/*!
+ * \brief Удаление всех узлов
+ * \param node Удаляемый узел
+ */
+void RBTree::DeleteTree(RBTreeNode* node)
 {
     if (node == _nil)
     {
         return;
     }
 
-    DeleteNode(node->Left);
-    DeleteNode(node->Right);
+    DeleteTree(node->Left);
+    DeleteTree(node->Right);
     delete node;
 }
 
+/*!
+ * \brief Поворот влево
+ * \param node Верхний задействованный узел
+ * \return Новый верхний узел
+ */
 RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
 {
     RBTreeNode* rightNode = node->Right;
@@ -56,6 +71,11 @@ RBTreeNode* RBTree::TurnLeft(RBTreeNode* node)
     return rightNode;
 }
 
+/*!
+ * \brief Поворот вправо
+ * \param node Верхний задействованный узел
+ * \return Новый верхний узел
+ */
 RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
 {
     RBTreeNode* leftNode = node->Left;
@@ -87,6 +107,10 @@ RBTreeNode* RBTree::TurnRight(RBTreeNode* node)
     return leftNode;
 }
 
+/*!
+ * \brief Добавление узла
+ * \param data Данные узла
+ */
 void RBTree::AddNode(const int &data)
 {
     Rotations = 0;
@@ -126,6 +150,10 @@ void RBTree::AddNode(const int &data)
     FixAddNode(newNode);
 }
 
+/*!
+ * \brief Балансировка послк добавления узла
+ * \param node Балансируемый узел
+ */
 void RBTree::FixAddNode(RBTreeNode* node)
 {
     if (node == _root)
@@ -194,6 +222,11 @@ void RBTree::FixAddNode(RBTreeNode* node)
     _root->Color = Black;
 }
 
+/*!
+ * \brief Обмен двух узлов в дереве
+ * \param old Узел, который заменят
+ * \param swop Узел, на который заменят
+ */
 void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
 {
     if (old->Parent == _nil)
@@ -214,6 +247,10 @@ void RBTree::Swap(RBTreeNode* old, RBTreeNode* swop)
     swop->Parent = old->Parent;
 }
 
+/*!
+ * \brief Удаление узла
+ * \param data Данные узла
+ */
 void RBTree::RemoveNode(const int &data)
 {
     Rotations = 0;
@@ -266,6 +303,10 @@ void RBTree::RemoveNode(const int &data)
     }
 }
 
+/*!
+ * \brief Балансировка после удаления узла
+ * \param node Балансируемый узел
+ */
 void RBTree::FixRemoveNode(RBTreeNode* node)
 {
     while (node != _root && node->Color == Black)
@@ -337,6 +378,11 @@ void RBTree::FixRemoveNode(RBTreeNode* node)
     node->Color = Black;
 }
 
+/*!
+ * \brief Найти минимальный узел в поддереве
+ * \param node Узел поддерева
+ * \return Минимальный узел
+ */
 RBTreeNode* RBTree::GetMin(RBTreeNode* node)
 {
     while (node->Left != _nil)
@@ -346,6 +392,11 @@ RBTreeNode* RBTree::GetMin(RBTreeNode* node)
     return node;
 }
 
+/*!
+ * \brief Поиск узла
+ * \param data Данные узла
+ * \return Найденный узел
+ */
 RBTreeNode* RBTree::SearchNode(const int &data)
 {
     RBTreeNode* bypassNode = _root;
@@ -367,6 +418,12 @@ RBTreeNode* RBTree::SearchNode(const int &data)
     return nullptr;
 }
 
+/*!
+ * \brief Найти высоту дерева
+ * \param node Узел поддерева
+ * \param currentDepth высота поддерева
+ * \return Высота дерева
+ */
 int RBTree::GetDepth(RBTreeNode* node, int currentDepth)
 {
     if (node == nullptr)
@@ -386,6 +443,10 @@ int RBTree::GetDepth(RBTreeNode* node, int currentDepth)
     }
 }
 
+/*!
+ * \brief Обойти дерево в широту
+ * \return Очередь узлов по слоям
+ */
 Queue<RBTreeNode> RBTree::GetLayers()
 {
     Queue<RBTreeNode> queue;
@@ -437,9 +498,4 @@ Queue<RBTreeNode> RBTree::GetLayers()
         depthObserver = queueBypass.GetDepth();
     }
     return queue;
-}
-
-int RBTree::GetRoot()
-{
-    return _root->Data;
 }
