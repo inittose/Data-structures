@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "avltree.h"
 #include "rbtree.h"
+#include "queue.h"
 
 void MainController()
 {
@@ -144,7 +145,7 @@ void ControllerAVLTree()
                 }
                 else
                 {
-                    cout << "No value " << value << " in AVL-tree!\n";
+                    cout << "No this node in AVL-tree!\n";
                 }
                 break;
             default:
@@ -195,7 +196,7 @@ int DigitPlace(int number)
     return i;
 }
 
-string GetTreeName(const type_info& type)
+string GetTreeName(const std::type_info& type)
 {
     string treeName;
     RBTreeNode* rbTreeNode;

@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "queue.h"
 
 using std::string, std::cin, std::cout, std::endl;
 
@@ -47,7 +46,7 @@ string GetTypeName(const char* letter);
  * \param name Строка typename
  * \return Строка название дерева
  */
-string GetTreeName(const type_info& type);
+string GetTreeName(const std::type_info& type);
 
 /*!
  * \brief Очистить окно терминала

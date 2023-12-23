@@ -80,14 +80,14 @@ private:
      * \param node Балансируемый узел
      * \param parent Отец node
      */
-    void RBTree::FixRemoveLeft(RBTreeNode*& node, RBTreeNode* parent);
+    void FixRemoveLeft(RBTreeNode*& node, RBTreeNode* parent);
 
     /*!
      * \brief Часть балансировки удаления, когда узел находится справа
      * \param node Балансируемый узел
      * \param parent Отец node
      */
-    void RBTree::FixRemoveRight(RBTreeNode*& node, RBTreeNode* parent);
+    void FixRemoveRight(RBTreeNode*& node, RBTreeNode* parent);
 
     /*!
      * \brief Балансировка после удаления узла
