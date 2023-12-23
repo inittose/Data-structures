@@ -1,6 +1,4 @@
-#ifndef HASHTABLEITEM_H
-#define HASHTABLEITEM_H
-
+#pragma once
 #include <string>
 using std::string;
 
@@ -22,15 +20,14 @@ struct HashTableItem
     /*!
      * \brief Указатель на следующий элемент
      */
-    HashTableItem *Next;
+    HashTableItem* Next;
 
     /*!
-     * \brief Указатель на предыдущий элемент
-     */
-    HashTableItem *Prev;
-
-    HashTableItem();
-    HashTableItem(const string &key, const string &value, HashTableItem *prev = nullptr, HashTableItem *next = nullptr);
+    * \brief Конструктор элемента хэш-таблицы
+    * \param key Ключ
+    * \param value Значение
+    * \param prev Предыдущий элемент
+    * \param next Следующий элемент
+    */
+    HashTableItem(const string &key, const string &value, HashTableItem* next = nullptr);
 };
-
-#endif // HASHTABLEITEM_H
