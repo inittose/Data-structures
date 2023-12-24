@@ -1,183 +1,80 @@
 #include "RingBuffer.h"
 
-/*!
- * \brief Конструктор кольцевого буфера
- * \param size Размер буфера
- */
-RingBuffer::RingBuffer(const int &size)
+RingBuffer::RingBuffer(const int &capacity)
 {
-    _sizeBuffer = size;
-    _data = new int*[_sizeBuffer];
-    _head = -1;
-    _tail = 0;
-    for (int i = 0; i < _sizeBuffer; i++)
+    Capacity = capacity;
+    Data = new int*[Capacity];
+    Head = -1;
+    Tail = 0;
+    for (int i = 0; i < Capacity; i++)
     {
-        _data[i] = nullptr;
+        Data[i] = nullptr;
     }
 }
 
-/*!
- * \brief Деструктор кольцевого буфера
- */
 RingBuffer::~RingBuffer()
 {
-    for (int i = 0; i < _sizeBuffer; i++)
+    for (int i = 0; i < Capacity; i++)
     {
-        if (_data[i])
+        if (Data[i] != nullptr)
         {
-            delete _data[i];
+            delete Data[i];
         }
     }
-    delete[] _data;
+    delete[] Data;
 }
 
-/*!
- * \brief Найти свободное место в буфере
- * \return Количество свободного места
- */
 int RingBuffer::GetFreeSpace() const
 {
-    if (_head == -1)
+    if (Head == -1)
     {
-        return _sizeBuffer;
+        return Capacity;
     }
-    return _tail > _head ? _sizeBuffer - _tail + _head : _head - _tail;
+    return Tail > Head ? Capacity - Tail + Head : Head - Tail;
 }
 
-/*!
- * \brief Найти занятое место в буфере
- * \return Количество занятого места
- */
 int RingBuffer::GetOccupiedSpace() const
 {
-    return _sizeBuffer - GetFreeSpace();
+    return Capacity - GetFreeSpace();
 }
 
-/*!
- * \brief Добавить элемент в буфер
- * \param value Значение элемента
- */
-void RingBuffer::Push(const int & value)
+void RingBuffer::Push(const int &value)
 {
-    if (_head == _tail)
+    if (Head == Tail)
     {
-        _head++;
-        _head %= _sizeBuffer;
+        Head++;
+        Head %= Capacity;
     }
 
-    _data[_tail++] = new int(value);
-    _tail %= _sizeBuffer;
+    Data[Tail] = new int(value);
+    Tail++;
+    Tail %= Capacity;
 
-    if (_head == -1)
+    if (Head == -1)
     {
-        _head = _tail - 1;
-    }
-}
-
-/*!
- * \brief Вытолкнуть элемент из буфера
- * \return Значение элемента
- */
-int RingBuffer::Pop()
-{
-    int result;
-    if (_head == -1)
-    {
-        cout << "No element in ring buffer" << endl;
-        return 0;
-    }
-    result = *_data[_head];
-    delete _data[_head];
-    _data[_head++] = nullptr;
-
-    _head %= _sizeBuffer;
-    if (_head == _tail)
-    {
-        _head = -1;
-    }
-    //cout << "Pop element: " << result << endl;
-    return result;
-}
-
-/*!
- * \brief Вывести кольцевой буфер
- * \param os Объект потокового вывода
- * \param ringBuffer Кольцевой буфер
- * \return Объект потокового вывода
- */
-ostream& operator<<(ostream& os, const RingBuffer& ringBuffer)
-{
-    os << "Ring Buffer: [ ";
-    for (int i = 0; i < ringBuffer._sizeBuffer; i++)
-    {
-        if (ringBuffer._data[i])
+        if (Tail == 0)
         {
-            os << *ringBuffer._data[i] << " ";
+            Head = Capacity - 1;
         }
         else
         {
-            os << "* ";
+            Head = Tail - 1;
         }
     }
-    os << "]" << endl;
-
-    return os;
 }
 
-/*!
- * \brief Управляет кольцевым буфером по средствам меню
- * \return Возвращает символ при выходе из меню
- */
-char RingBuffer::Controller()
+int RingBuffer::Pop()
 {
-    const char* menu =
-        "Choose one of activity:\n. - Choose another structure\n1 - Push\n2 - Pop\n3 - Show free space\n4 - Show occupied space\nq - quit\nYour choice: ";
+    int result;
+    result = *Data[Head];
+    delete Data[Head];
+    Data[Head] = nullptr;
+    Head++;
 
-    char mode = '\0';
-    bool bWrongInput = false;
-
-    cout << *this;
-    while (true)
+    Head %= Capacity;
+    if (Head == Tail)
     {
-        int value;
-        cout << menu;
-        bWrongInput = ValidInput(mode, bWrongInput);
-        ClearTerminal();
-        switch (mode)
-        {
-        case '.':
-            return '.';
-        case '1':
-            cout << "Enter push element: ";
-            while(ValidInput(value))
-            {
-                cout << "Enter correct integer: ";
-            }
-            this->Push(value);
-            break;
-        case '2':
-            if (GetOccupiedSpace())
-            {
-                cout << "Pop element: " << this->Pop() << endl;
-            }
-            else
-            {
-                cout << "No element in ring buffer\n";
-            }
-            break;
-        case '3':
-            cout << "Free space: " << this->GetFreeSpace() << endl;
-            break;
-        case '4':
-            cout << "Occupied space: " << this->GetOccupiedSpace() << endl;
-            break;
-        case 'q':
-            return 'q';
-        default:
-            bWrongInput = true;
-            break;
-        }
-        cout << *this;
+        Head = -1;
     }
-    return '\0';
+    return result;
 }

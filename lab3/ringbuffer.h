@@ -1,11 +1,4 @@
-#ifndef RINGBUFFER_H
-#define RINGBUFFER_H
-#include <iostream>
-#include "iotool.h"
-using std::cout;
-using std::cin;
-using std::endl;
-using std::ostream;
+#pragma once
 
 /*!
  * \brief Кольцевой буфер
@@ -15,34 +8,56 @@ struct RingBuffer
     /*!
      * \brief Массив указателей (буфер)
      */
-    int **_data;
+    int **Data;
 
     /*!
      * \brief Размер буфера
      */
-    int _sizeBuffer;
+    int Capacity;
 
     /*!
      * \brief Индекс первого вошедшего элемента
      */
-    int _head;
+    int Head;
 
     /*!
      * \brief Индекс последнего вошедшего элемента
      */
-    int _tail;
+    int Tail;
 
-    RingBuffer(const int &size = 4);
+    /*!
+     * \brief Конструктор кольцевого буфера
+     * \param size Размер буфера
+     */
+    RingBuffer(const int &capacity = 4);
+
+    /*!
+     * \brief Деструктор кольцевого буфера
+     */
     ~RingBuffer();
 
+    /*!
+     * \brief Найти свободное место в буфере
+     * \return Количество свободного места
+     */
     int GetFreeSpace() const;
+
+    /*!
+     * \brief Найти занятое место в буфере
+     * \return Количество занятого места
+     */
     int GetOccupiedSpace() const;
 
-    void Push(const int & value);
-    int Pop();
+    /*!
+     * \brief Добавить элемент в буфер
+     * \param value Значение элемента
+     */
+    void Push(const int &value);
 
-    char Controller();
-    friend ostream& operator<<(ostream& os, const RingBuffer& ringBuffer);
+    /*!
+     * \brief Вытолкнуть элемент из буфера
+     * \return Значение элемента
+     */
+    int Pop();
 };
 
-#endif // RINGBUFFER_H

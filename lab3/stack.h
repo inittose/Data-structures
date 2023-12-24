@@ -1,12 +1,4 @@
-#ifndef STACK_H
-#define STACK_H
-#include <iostream>
-#include "iotool.h"
-
-using std::cout;
-using std::cin;
-using std::endl;
-using std::ostream;
+#pragma once
 
 /*!
  * \brief Стек
@@ -16,29 +8,50 @@ struct Stack
     /*!
      * \brief Данные стека
      */
-    int* _data;
+    int* Data;
 
     /*!
-     * \brief Размер стека
+     * \brief Мощность стека
      */
-    int _sizeStack;
+    int Capacity;
 
     /*!
      * \brief Длина занятого стека
      */
-    int _lenght;
+    int Length;
 
-    void ResizeStack(bool increase);
+    /*!
+     * \brief Поменять размер стека
+     * \param growthFactor Фактор роста мощности стека
+     */
+    void ResizeStack(const float &growthFactor);
 
-    Stack(const int & size = 4);
+    /*!
+     * \brief Конструктор стека
+     * \param capacity Изначальная мощность стека
+     */
+    Stack(const int &capacity = 4);
+
+    /*!
+     * \brief Деструктор стека
+     */
     ~Stack();
 
-    void Push(const int & value);
+    /*!
+     * \brief Добавить элемент в стек
+     * \param value Значение элемента
+     */
+    void Push(const int &value);
+
+    /*!
+     * \brief Вытолкнуть элемент из стека
+     * \return Значение элемента
+     */
     int Pop();
-    bool IsEmpty();
 
-    char Controller();
-    friend ostream& operator<<(ostream& os, const Stack& stack);
+    /*!
+     * \brief Проверить пустой ли стек
+     * \return true - пустой, иначе false
+     */
+    bool IsEmpty() const;
 };
-
-#endif // STACK_H

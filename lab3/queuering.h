@@ -1,5 +1,4 @@
-#ifndef QUEUERING_H
-#define QUEUERING_H
+#pragma once
 
 #include "ringbuffer.h"
 
@@ -19,16 +18,38 @@ private:
      */
     int _sizeBuffer;
 
-    void ResizeBuffer(bool increase);
+    /*!
+     * \brief Поменять размер буфера
+     * \param growthFactor Фактор роста буфера
+     */
+    void ResizeBuffer(const float &growthFactor);
 
 public:
+    /*!
+     * \brief Конструктор очереди
+     */
     QueueRing();
+
+    /*!
+     * \brief Деструктор очереди
+     */
     ~QueueRing();
+
+    /*!
+     * \brief Добавить элемент в очередь
+     * \param value Значение элемента
+     */
     void Enqueue(const int & value);
+
+    /*!
+     * \brief Снять элемент из очереди
+     * \return Значение снятого элемента
+     */
     int Dequeue();
 
-    void ShowQueue();
-    char Controller();
+    /*!
+    * \brief Получить объект кольцевого буфера
+    * \return Кольцевой буфер
+    */
+    const RingBuffer* GetRingBuffer();
 };
-
-#endif // QUEUERING_H
