@@ -10,7 +10,7 @@ int* HashTable::MakePearsonTable()
     }
     for(int i = 0; i < _capacity; i++)
     {
-        int swapIndex = arc4random() % _capacity;
+        int swapIndex = rand() % _capacity;
         int temp = pearsonTable[i];
         pearsonTable[i] = pearsonTable[swapIndex];
         pearsonTable[swapIndex] = temp;
@@ -64,6 +64,10 @@ void HashTable::Rehashig(const int &capacity)
     delete[] _pearsonTable;
     _pearsonTable = MakePearsonTable();
     _data = new HashTableItem*[_capacity];
+    for (int i = 0; i < _capacity; i++)
+    {
+        _data[i] = nullptr;
+    }
     _length = 0;
     for (int i = 0; i < prevCapacity; i++)
     {
@@ -87,7 +91,7 @@ HashTableItem* HashTable::AddRightOrder(HashTableItem* item, const string &key, 
     {
         return new HashTableItem(key, value);
     }
-    item->Next = ResolveCollision(item->Next, key, value);
+    item->Next = AddRightOrder(item->Next, key, value);
     return item;
 }
 
