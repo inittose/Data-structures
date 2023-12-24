@@ -1,5 +1,4 @@
-#ifndef QUEUENODE_H
-#define QUEUENODE_H
+#pragma once
 
 /*!
  * \brief Узел очереди
@@ -34,13 +33,11 @@ struct QueueNode
      * \param color Цвет узла
      * \param next Следующий элемент
      */
-    QueueNode(type* data = nullptr, const int & depth = 0, char color = 0, QueueNode* next = nullptr)
+    QueueNode(type* data = nullptr, const int & depth = 0, char color = 0)
     {
         Data = data;
         Depth = depth;
         Color = color;
-        Next = next;
+        Next = nullptr;
     }
 };
-
-#endif // QUEUENODE_H

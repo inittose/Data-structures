@@ -1,6 +1,4 @@
-#ifndef QUEUE_H
-#define QUEUE_H
-
+#pragma once
 #include "queuenode.h"
 
 /*!
@@ -127,6 +125,3 @@ public:
         return !_head;
     }
 };
-
-
-#endif // QUEUE_H

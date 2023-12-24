@@ -2,6 +2,6 @@
 
 int main()
 {
-    MenuController();
+    MainController();
     return 0;
 }

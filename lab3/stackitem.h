@@ -1,5 +1,4 @@
-#ifndef STACKITEM_H
-#define STACKITEM_H
+#pragma once
 
 /*!
  * \brief Элемент стека
@@ -16,8 +15,8 @@ struct StackItem
      */
     struct StackItem* Prev;
 
-    StackItem();
-    StackItem(const int & data);
+    /*!
+     * \brief Конструктор элемента стека
+     */
+    StackItem(const int & data = 0);
 };
-
-#endif // STACKITEM_H
