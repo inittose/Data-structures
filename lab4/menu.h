@@ -29,5 +29,14 @@ string GetTypeName(const char *letter);
  */
 void ClearTerminal();
 
+/*!
+ * \brief Вывод словаря
+ * \param dictionary Словарь
+ */
 void ShowDictionary(Dictionary* dictionary);
+
+/*!
+ * \brief Вывод хэш-таблицы
+ * \param dictionary Словарь
+ */
 void ShowHashTable(Dictionary* dictionary);

@@ -15,9 +15,9 @@ void Dictionary::Add(const string & key, const string & value)
     _hashTable->Add(key, value);
 }
 
-bool Dictionary::Delete(const string & key)
+void Dictionary::Delete(const string & key)
 {
-    return _hashTable->Delete(key);
+    _hashTable->Delete(key);
 }
 
 string Dictionary::Search(const string & key)

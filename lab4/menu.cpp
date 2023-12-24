@@ -44,14 +44,7 @@ void MenuController()
             case '3':
                 cout << enterMessage << "deletion: ";
                 key = ValidInput<string>();
-                if (dictionary->Delete(key))
-                {
-                    cout << "Deletion successful!\n";
-                }
-                else
-                {
-                    cout << failMessage;
-                }
+                dictionary->Delete(key);
                 break;
             case '4':
                 ShowHashTable(dictionary);
@@ -126,8 +119,8 @@ void ShowDictionary(Dictionary* dictionary)
                     cout << "\n->\t\t  ";
                 }
                 cout << "\"" << temp->Key << "\" : \"" << temp->Value << "\", ";
-                temp = temp->Next;
             }
+            temp = temp->Next;
         }
     }
     cout << "\b\b }\n";

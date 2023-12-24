@@ -35,7 +35,7 @@ public:
     * \param key Ключ
     * \return Статус удаления
     */
-    bool Delete(const string & key);
+    void Delete(const string & key);
 
     /*!
     * \brief Поиск значения по ключу

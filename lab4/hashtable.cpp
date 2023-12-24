@@ -71,12 +71,24 @@ void HashTable::Rehashig(const int &capacity)
         while (enumerate)
         {
             HashTableItem *temp = enumerate;
-            Add(enumerate->Key, enumerate->Value);
+            int hashCode = GetHashCode(enumerate->Key);
+            _data[hashCode] = AddRightOrder(_data[hashCode], enumerate->Key, enumerate->Value);
             enumerate = enumerate->Next;
             delete temp;
+            _length++;
         }
     }
     delete[] oldData;
+}
+
+HashTableItem* HashTable::AddRightOrder(HashTableItem* item, const string &key, const string &value)
+{
+    if (item == nullptr)
+    {
+        return new HashTableItem(key, value);
+    }
+    item->Next = ResolveCollision(item->Next, key, value);
+    return item;
 }
 
 HashTableItem* HashTable::ResolveCollision(HashTableItem* item, const string &key, const string &value)
@@ -108,7 +120,7 @@ void HashTable::Add(const string &key, const string &value)
         _data[hashCode] = ResolveCollision(_data[hashCode], key, value);
     }
     _length++;
-    if (_length == _capacity)
+    if (_length >= _capacity)
     {
         Rehashig(_capacity * 2);
     }
@@ -122,8 +134,10 @@ HashTableItem* HashTable::Delete(HashTableItem* item, const string &key)
     }
     if (item->Key == key)
     {
+
         HashTableItem* nextItem = item->Next;
         delete item;
+        _length--;
         return Delete(nextItem, key);
     }
     else
@@ -133,12 +147,15 @@ HashTableItem* HashTable::Delete(HashTableItem* item, const string &key)
     }
 }
 
-bool HashTable::Delete(const string &key)
+void HashTable::Delete(const string &key)
 {
     int hashCode = GetHashCode(key);
     HashTableItem *temp = _data[hashCode];
     _data[hashCode] = Delete(temp, key);
-    return false;
+    if (_length <= _capacity && _capacity > _minCapacity)
+    {
+        Rehashig(_capacity / 2);
+    }
 }
 
 HashTableItem * HashTable::Search(const string & key, int hashCode)

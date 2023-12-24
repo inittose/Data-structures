@@ -10,6 +10,7 @@
 class HashTable
 {
 private:
+    static const int _minCapacity = 4;
     /*!
      * \brief Мощность
      */
@@ -56,6 +57,20 @@ private:
     */
     HashTableItem* ResolveCollision(HashTableItem* item, const string &key, const string &value);
 
+    /*!
+    * \brief Добавить элемент в список в правильном порядке
+    * \param item Элемент списка
+    * \param key Ключ
+    * \param value Измененный элемент списка
+    */
+    HashTableItem* AddRightOrder(HashTableItem* item, const string &key, const string &value);
+
+    /*!
+     * \brief Удалить элемент
+     * \param item Элемент списка
+     * \param key Ключ удаляемого элемента
+     * \return Измененный элемент списка
+     */
     HashTableItem* Delete(HashTableItem* item, const string &key);
 
 public:
@@ -83,7 +98,7 @@ public:
     * \param key Ключ
     * \return Статус удаления
     */
-    bool Delete(const string &key);
+    void Delete(const string &key);
 
     /*!
     * \brief Поиск значения по ключу
