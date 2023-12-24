@@ -4,7 +4,7 @@
 /*!
  * \brief Класс очереди через 2 стека
  */
-class Queue
+class QueueStack
 {
 private:
     /*!
@@ -21,12 +21,12 @@ public:
     /*!
      * \brief Конструктор очереди
      */
-    Queue();
+    QueueStack();
 
     /*!
      * \brief Деструктор очереди
      */
-    ~Queue();
+    ~QueueStack();
 
     /*!
      * \brief Поставить элемент в очередь

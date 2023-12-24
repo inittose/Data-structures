@@ -43,7 +43,7 @@ void ShowStack(Stack* stack)
     cout << "\t`````" << endl;
 }
 
-void ShowStackQueue(Queue* queue)
+void ShowStackQueue(QueueStack* queue)
 {
     cout << "Stack in\tStack out\n";
     const Stack* stackIn = queue->GetStackIn();
@@ -201,7 +201,7 @@ void ControllerStackQueue()
     const char* menu = "Choose one of activity:\n1 - Enqueue\n2 - Dequeue\
                 \nq - Choose another structure\nYour choice: ";
     char mode = '\0';
-    Queue* queue = new Queue;
+    QueueStack* queue = new QueueStack;
 
     while (mode != 'q')
     {

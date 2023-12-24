@@ -8,10 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(lab3 main.cpp
     stack.h stack.cpp
     ringbuffer.h ringbuffer.cpp
-    queue.h queue.cpp
+    queuestack.h queuestack.cpp
     stackitem.h stackitem.cpp
     queuering.h queuering.cpp
-    menu.cpp menu.h main.cpp queue.cpp queue.h queuering.cpp queuering.h ringbuffer.cpp ringbuffer.h stack.cpp stack.h stackitem.cpp stackitem.h
+    menu.cpp menu.h main.cpp queuering.cpp queuering.h ringbuffer.cpp ringbuffer.h stack.cpp stack.h stackitem.cpp stackitem.h
 )
 
 include(GNUInstallDirs)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "queue.h"
+#include "queuestack.h"
 #include "queuering.h"
 #include "stack.h"
 #include "ringbuffer.h"
@@ -22,7 +22,7 @@ void ShowStack(Stack* stack);
 /*!
  * \brief Вывести очередь из двух стеков
  */
-void ShowStackQueue(Queue* queue);
+void ShowStackQueue(QueueStack* queue);
 
 /*!
  * \brief Вывести кольцевой буфер

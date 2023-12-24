@@ -1,23 +1,23 @@
-#include "queue.h"
+#include "queuestack.h"
 
-Queue::Queue()
+QueueStack::QueueStack()
 {
     _stackIn = new Stack;
     _stackOut = new Stack;
 }
 
-Queue::~Queue()
+QueueStack::~QueueStack()
 {
     delete _stackIn;
     delete _stackOut;
 }
 
-void Queue::Enqueue(const int & value)
+void QueueStack::Enqueue(const int & value)
 {
     _stackIn->Push(value);
 }
 
-int Queue::Dequeue()
+int QueueStack::Dequeue()
 {
     if (_stackOut->IsEmpty())
     {
@@ -37,12 +37,12 @@ int Queue::Dequeue()
     return result;
 }
 
-const Stack* Queue::GetStackIn()
+const Stack* QueueStack::GetStackIn()
 {
     return _stackIn;
 }
 
-const Stack* Queue::GetStackOut()
+const Stack* QueueStack::GetStackOut()
 {
     return _stackOut;
 }
