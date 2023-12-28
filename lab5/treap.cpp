@@ -34,11 +34,11 @@ int Treap::FindDepth(TreapNode* node, int depth)
 
 TreapNode* Treap::Merge(TreapNode* left, TreapNode* right)
 {
-    if (!right)
+    if (right == nullptr)
     {
         return left;
     }
-    if (!left)
+    if (left == nullptr)
     {
         return right;
     }
@@ -56,12 +56,12 @@ TreapNode* Treap::Merge(TreapNode* left, TreapNode* right)
 
 void Treap::Split(TreapNode* node, int key, TreapNode*& left, TreapNode*& right)
 {
-    if (!node)
+    if (node == nullptr)
     {
         left = right = nullptr;
         return;
     }
-    if (node->Key < key)
+    if (key > node->Key)
     {
         Split(node->Right, key, node->Right, right);
         left = node;

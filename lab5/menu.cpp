@@ -332,7 +332,7 @@ void ShowTreap(Treap* tree)
                 cout << '\b';
             }
             cout << "(" << temp->Key << ", " << temp->Priority << ")";
-            backspaceCounter = DigitPlace(temp->Key);
+            backspaceCounter = DigitPlace(temp->Key) + 4;
         }
         for (int i = 0; i < spaceCounter; i++)
         {
